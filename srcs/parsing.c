@@ -1,19 +1,23 @@
 #include "../parsing.h"
 
-static parse_floor(t_scene *scene, char *line)
+static void parse_floor(t_scene *scene, char *line)
 {
     char *r;
 
+    (void) scene;
     r = go_to_next_and_get_arg(&line);
-    printf("%s", r);
+    set_vector(r, scene->sky_color);
+   // printf("%s", r);
 }
 
-static parse_floor(t_scene *scene, char *line)
+static void parse_ceiling(t_scene *scene, char *line)
 {
     char *r;
 
+    (void) scene;
     r = go_to_next_and_get_arg(&line);
-    printf("%s", r);
+    set_vector(r, scene->sky_color);
+    //printf("%s", r);
 }
 
 static void parse_wall(t_scene *scene, char *line)
@@ -66,6 +70,6 @@ void parse_line(t_scene *scene, char *line)
     }
     else if (line[0] == 'C' && is_space(line[1]))
     {
-        parse_camera(scene, line);
+        parse_ceiling(scene, line);
     }
 }

@@ -3,6 +3,8 @@
 
 # include "header.h"
 
-static char *go_to_next_and_get_arg(char **line);
+char *go_to_next_and_get_arg(char **line);
+int is_space(char c);
+void	set_vector(char *str, t_vec *vec);
 
 #endif

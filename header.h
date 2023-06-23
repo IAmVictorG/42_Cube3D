@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "includes/get_next_line/get_next_line.h"
+#include "includes/libft/libft.h"
 #include <fcntl.h>
 
 
@@ -65,5 +66,7 @@ typedef struct s_scene
 } t_scene;
 
 int parse_map(char **map);
+void parse_line(t_scene *scene, char *line);
+
 
 #endif
