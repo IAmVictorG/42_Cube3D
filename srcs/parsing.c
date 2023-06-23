@@ -6,7 +6,7 @@ static void parse_floor(t_scene *scene, char *line)
 
     (void) scene;
     r = go_to_next_and_get_arg(&line);
-    set_vector(r, scene->sky_color);
+    set_vector(r, &scene->sky_color);
    // printf("%s", r);
 }
 
@@ -16,7 +16,7 @@ static void parse_ceiling(t_scene *scene, char *line)
 
     (void) scene;
     r = go_to_next_and_get_arg(&line);
-    set_vector(r, scene->sky_color);
+    set_vector(r, &scene->sky_color);
     //printf("%s", r);
 }
 
@@ -26,15 +26,31 @@ static void parse_wall(t_scene *scene, char *line)
     t_sprite *sprite;
 
     sprite = &scene->sprite;
-    r = go_to_next_and_get_arg(&line);
-    if (line[0] == 'N' && line[1] == 'O' && is_space(line[2])) // Sphere
+    if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
+    {
+        r = go_to_next_and_get_arg(&line);
         sprite->north = r;
-    else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2])) // Plane
+    }
+    else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2]))
+    {
+        r = go_to_next_and_get_arg(&line);
         sprite->south = r;
-    else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2])) // Cylinder
+    }
+    else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2]))
+    {
+        r = go_to_next_and_get_arg(&line);
         sprite->west = r;
-    else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2])) // Cylinder
+    }
+    else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2]))
+    {
+        r = go_to_next_and_get_arg(&line);
         sprite->east = r;
+    }
+    if (go_to_next_and_get_arg(&line) != NULL)
+    {
+        printf("[ERROR] Too many arguments on the line : %s |\n", line);
+        exit(EXIT_FAILURE);
+    }
 }
 
 static int check_if_is_wall(char *line)
