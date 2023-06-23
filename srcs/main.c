@@ -6,19 +6,11 @@ int main(int argc, char const *argv[])
     (void) argc;
     (void) argv;
 
-    //char *map[6];
-    
-    //parse_map(map);
+    char **map;
 
-    int fd = open("map0.cub", O_RDONLY);
+    map = map_creator("map0.cub"); 
+    display_map(map);
 
-    char *line = get_next_line(fd);
-
-
-    
-
-
-    printf("%s\n", line);
 
     return 0;
 }

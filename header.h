@@ -54,17 +54,27 @@ typedef struct s_sprite
 	char const *bonus;
 } t_sprite;
 
-typedef struct s_scene 
+typedef struct s_map
 {
 	char	**map;
-	int		sky_color;
-	int		floor_color;
+	int		height_map;
+	int		width_map;
+} t_map;
 
+typedef struct s_scene 
+{
+	int			sky_color;
+	int			floor_color;
+
+	t_map		map;
 	t_sprite	sprite;
 	t_player	player;
 	
 } t_scene;
 
-int parse_map(char **map);
+int		parse_map(char **map);
+int		height_map(int fd);
+char	**map_creator(char *file_name);
+void	display_map(char **map);
 
 #endif
