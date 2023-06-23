@@ -12,6 +12,7 @@ int main(int argc, char const *argv[])
     display_map(map);
 
 
+
     return 0;
 }
 

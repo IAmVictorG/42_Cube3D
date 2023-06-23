@@ -41,14 +41,13 @@ typedef struct s_player
 	t_vec	pos;
 	t_vec	dir;
 	float	speed;
-	
 } t_player;
 
 typedef struct s_sprite 
 {
 	char const *north;
 	char const *south;
-	char const *est;
+	char const *east;
 	char const *west;
 
 	char const *bonus;
