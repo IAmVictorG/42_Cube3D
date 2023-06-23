@@ -43,7 +43,7 @@ char **map_creator(char *file_name)
 	return (map);
 }
 
-int valid_first_line();
+//int valid_first_line();
 
 void	display_map(char **map)
 {
@@ -62,16 +62,16 @@ void	display_map(char **map)
 }
 
 
-int parse_map(char **map)
-{
-	int	i;
+// int parse_map(char **map)
+// {
+// 	int	i;
 
-	i = 0;
-	while (map[i] != NULL)
-	{
-		
+// 	i = 0;
+// 	while (map[i] != NULL)
+// 	{
 
-	}
 
-	return 0;
-}
+// 	}
+
+// 	return 0;
+// }
