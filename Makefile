@@ -7,7 +7,8 @@ LINUX_FLAGS = -lm -lX11 -lXext -lpthread
 MAC_FLAGS = -framework OpenGL -framework AppKit
 
 SRCS =  $(addprefix srcs/, main.c) \
-		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c)
+		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
+		srcs/map_parser.c
 
 LIBS = $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}
