@@ -9,7 +9,7 @@ MAC_FLAGS = -framework OpenGL -framework AppKit
 SRCS =  $(addprefix srcs/, main.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c)
 
-LIBS = #$(addprefix includes/, libft/libft.a)
+LIBS = $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}
 CFLAGS	=  -Wall -Wextra -Werror
 CC		= gcc
@@ -20,15 +20,15 @@ RM		= rm -f
 
 $(NAME): $(OBJS)
 	make -C includes/libft
-	make -C includes/minilibx-openGL
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/minilibx-openGL/libmlx.a $(MAC_FLAGS) -o $(NAME)
+	make -C includes/mlx_openGL
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_openGL/libmlx.a $(MAC_FLAGS) -o $(NAME)
 
 
 all:		$(NAME)
 
 clean:
 			$(RM) $(OBJS)
-			make clean -C includes/minilibx-openGL
+			make clean -C includes/mlx_openGL
 
 fclean:		clean
 			$(RM) $(NAME)
