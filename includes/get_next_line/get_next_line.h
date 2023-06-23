@@ -3,30 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcoindre <fcoindre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/05 13:19:30 by victorgiord       #+#    #+#             */
-/*   Updated: 2022/11/09 14:21:27 by vgiordan         ###   ########.fr       */
+/*   Created: 2022/12/08 10:50:55 by fcoindre          #+#    #+#             */
+/*   Updated: 2022/12/08 17:51:04 by fcoindre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <strings.h>
+# include <unistd.h> 
 # include <stdlib.h>
-# include <fcntl.h>
-# include <string.h>
 
 # ifndef BUFFER_SIZE
-#  define  BUFFER_SIZE 4
+#  define BUFFER_SIZE 5
 # endif
 
-char	*get_next_line(int fd);
-char	*add_buffer_to_line(char *line, int fd);
-char	*ft_strnjoin(char const *s1, char const *s2, int n);
+size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
-
+char	*ft_strdup(const char *s1);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strchr(const char *s, int c);
+char	*get_next_line(int fd);
+int		save_buffer(int fd, char **buf, char **stash);
 #endif

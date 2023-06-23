@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "includes/get_next_line/get_next_line.h"
+#include <fcntl.h>
+
 
 typedef struct	s_utils 
 {
@@ -61,5 +64,7 @@ typedef struct s_scene
 	t_player	player;
 	
 } t_scene;
+
+int parse_map(char **map);
 
 #endif
