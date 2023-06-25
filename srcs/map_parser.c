@@ -12,9 +12,10 @@ int height_map(const char *filename, int ind_map)
     if (fd == -1)
         return -1;
 	line = NULL;
-	while (ind_map > 0)
+	while (ind_map > 1)
 	{
 		line = get_next_line(fd);
+		free(line);
 		ind_map--;
 	}
 	size = 0;
@@ -22,10 +23,17 @@ int height_map(const char *filename, int ind_map)
 	{
 		line = get_next_line(fd);
 		size++;
-		if (line == NULL)
+		printf("line = %s\n", line);
+		if (line == NULL || line[0] == '\n')
+		{
+			printf("fd = %d, close 1 = %d\n", fd, close(fd));
+			if (line)
+				free(line);
 			return (size);
+		}
 	}
-	close(fd);
+	printf("close 2 = %d\n", close(fd));
+	//close(fd);
     if (line)
         free(line);
 	return(-1);
@@ -48,11 +56,13 @@ char **map_creator(const char *file_name, int h_map, int ind_map)
 	if (fd < 0)
 		return (NULL);
 
+	printf("fd = %d\n", fd);
 	i = 0;
+	line = NULL;
 	while (i < ind_map - 1)
 	{
 		line = get_next_line(fd);
-		//printf("i = %d : %s\n", i, line);
+		printf("i = %d : [%s]\n", i, line);
 
 		free(line);
 		i++;

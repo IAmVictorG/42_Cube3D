@@ -76,6 +76,8 @@ typedef struct s_scene
 /* parse_utils.c */
 int		is_space(char c);
 int		size_tab(char **tab);
+void	print_tab(char **tab);
+
 
 /* parsing.c */
 void	parse_line(t_scene *scene, char *line);

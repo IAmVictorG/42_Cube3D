@@ -15,6 +15,18 @@ int	size_tab(char **tab)
 	return (count);
 }
 
+void print_tab(char **tab)
+{
+    int i;
+    
+    i = 0;
+    while (tab[i] != NULL)
+    {
+        printf("%d : %s",i, tab[i]);
+        i++;
+    }
+}
+
 void	set_vector(char *str, t_vec *vec)
 {
 	int i;
