@@ -33,11 +33,12 @@ int height_map(const char *filename, int ind_map)
 
 /* Parcours les lignes du fichier depuis ind_map jusqu a ind_map + h_map */
 /* Renvoie un tableau 2D de char contenant toutes les lignes lues */
-char **map_creator(char *file_name, int h_map, int ind_map)
+char **map_creator(const char *file_name, int h_map, int ind_map)
 {
 	int 	fd;
 	char	**map;
 	int		i;
+	char	*line;
 
 	map = malloc(sizeof(char *) * (h_map + 1));
 	if (map == NULL)
@@ -48,9 +49,21 @@ char **map_creator(char *file_name, int h_map, int ind_map)
 		return (NULL);
 
 	i = 0;
-	while (i < size)
+	while (i < ind_map)
+	{
+		line = get_next_line(fd);
+		//printf("i = %d : %s\n", i, line);
+
+		free(line);
+		i++;
+	}
+	//printf("i = %d\n", i);
+	i = 0;
+	while (i < h_map)
 	{
 		map[i] = get_next_line(fd);
+		//printf("i = %d : %s\n", i, map[i]);
+
 		i++;
 	}
 	map[i] = NULL;

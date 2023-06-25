@@ -46,15 +46,28 @@ int main(int argc, char const *argv[])
     /* SCOPE TESTS FX */
     {
         char const *filename;
-        filename = "map0.cub";
+        filename = "map1.cub";
 
         int ind_map;
         ind_map = find_map(filename);
+        printf("Ind of map : %d\n", ind_map);
+
 
         int h_map;
         h_map = height_map(filename, ind_map);
-
         printf("Size of map : %d\n", h_map);
+
+
+        char **map_uncompleted;
+        map_uncompleted = map_creator(filename, h_map, ind_map);
+
+
+        t_scene *scene;
+        scene = malloc(sizeof(t_scene));
+        scene->map.map = map_uncompleted;
+
+
+        display_map(scene);
 
 
 
@@ -68,10 +81,8 @@ int main(int argc, char const *argv[])
 
     map = map_creator("map0.cub"); 
 
-    scene->map.map = map;
     scene->map.height_map = 42;
 
-    display_map(scene);
     */
 
     //printf("parse first wall = %d\n", parse_first_wall("111111111111111"));

@@ -84,7 +84,7 @@ int		find_map(const char *filename);
 int		parse_first_wall(char *line);
 int		parse_map(char **map);
 int		height_map(const char *filename, int ind_map);
-char	**map_creator(char *file_name);
+char	**map_creator(const char *filename, int h_map, int ind_map);
 void	display_map(t_scene *scene);
 
 #endif
