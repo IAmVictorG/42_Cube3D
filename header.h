@@ -75,11 +75,16 @@ typedef struct s_scene
 
 /* parse_utils.c */
 int		is_space(char c);
+int		size_tab(char **tab);
 
 /* parsing.c */
 void	parse_line(t_scene *scene, char *line);
 
 /* map_parser.c */
+int		check_first_one(char *line);
+int		check_last_one(char *line);
+int		check_last_first_one(char **map);
+int		find_largest_line(char **map);
 int		find_map(const char *filename);
 int		parse_first_wall(char *line);
 int		parse_map(char **map);

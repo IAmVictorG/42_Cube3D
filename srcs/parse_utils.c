@@ -5,6 +5,16 @@ int is_space(char c)
     return (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\f');
 }
 
+int	size_tab(char **tab)
+{
+	int	count;
+
+	count = 0;
+	while (tab[count] != NULL)
+		count++;
+	return (count);
+}
+
 void	set_vector(char *str, t_vec *vec)
 {
 	int i;

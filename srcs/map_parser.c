@@ -49,7 +49,7 @@ char **map_creator(const char *file_name, int h_map, int ind_map)
 		return (NULL);
 
 	i = 0;
-	while (i < ind_map)
+	while (i < ind_map - 1)
 	{
 		line = get_next_line(fd);
 		//printf("i = %d : %s\n", i, line);
@@ -63,12 +63,71 @@ char **map_creator(const char *file_name, int h_map, int ind_map)
 	{
 		map[i] = get_next_line(fd);
 		//printf("i = %d : %s\n", i, map[i]);
-
 		i++;
 	}
 	map[i] = NULL;
 	close(fd);
 	return (map);
+}
+
+int	check_first_one(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(line[i]) == 1 && line[i] != '\0')
+		i++;
+	if (line[i] == '1')
+		return (1);
+	return (0);
+}
+
+int check_last_one(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line);
+	while (is_space(line[i]) == 1 && i > 0)
+		i--;
+	i-=2;
+	//printf("c = [%c]\n", line[i]);
+	if (line[i] == '1')
+		return (1);
+	return (0);
+}
+
+int	check_last_first_one(char **map)
+{
+	int	i;
+
+	i = 0;
+	while(map[i] != NULL)
+	{
+		//printf("map[%d] = (%s)\n", i, map[i]);
+		if (check_first_one(map[i]) == 0 || check_last_one(map[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	find_largest_line(char **map)
+{
+	int	size_current_line;
+	int	max_size;
+	int	i;
+
+	i = 0;
+	max_size = 0;
+	while (map[i] != NULL)
+	{
+		size_current_line = ft_strlen(map[i]);
+		if (size_current_line > max_size)
+			max_size = size_current_line;
+		i++;
+	}
+
+	return (max_size);
 }
 
 int	find_map(const char *filename)

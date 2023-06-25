@@ -52,23 +52,22 @@ int main(int argc, char const *argv[])
         ind_map = find_map(filename);
         printf("Ind of map : %d\n", ind_map);
 
-
         int h_map;
         h_map = height_map(filename, ind_map);
         printf("Size of map : %d\n", h_map);
 
-
         char **map_uncompleted;
         map_uncompleted = map_creator(filename, h_map, ind_map);
-
 
         t_scene *scene;
         scene = malloc(sizeof(t_scene));
         scene->map.map = map_uncompleted;
 
-
         display_map(scene);
 
+        printf("check first last one = %d\n", check_last_first_one(map_uncompleted));
+        
+        printf("largest line = %d\n", find_largest_line(map_uncompleted));
 
 
     }
