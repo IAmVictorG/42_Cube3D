@@ -63,8 +63,8 @@ typedef struct s_map
 
 typedef struct s_scene 
 {
-	t_vec			sky_color;
-	t_vec			floor_color;
+	t_vec		sky_color;
+	t_vec		floor_color;
 
 	t_map		map;
 	t_sprite	sprite;
@@ -72,10 +72,19 @@ typedef struct s_scene
 	
 } t_scene;
 
-void parse_line(t_scene *scene, char *line);
+
+/* parse_utils.c */
+int		is_space(char c);
+
+/* parsing.c */
+void	parse_line(t_scene *scene, char *line);
+
+/* map_parser.c */
+int		find_map(const char *filename);
+int		parse_first_wall(char *line);
 int		parse_map(char **map);
 int		height_map(int fd);
 char	**map_creator(char *file_name);
-void	display_map(char **map);
+void	display_map(t_scene *scene);
 
 #endif

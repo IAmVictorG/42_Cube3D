@@ -45,8 +45,6 @@ char *go_to_next_and_get_arg(char **line)
 	{
 		(*line)++;
 	}
-
-
 	while (**line && is_space(**line))
 	{
 		(*line)++;;

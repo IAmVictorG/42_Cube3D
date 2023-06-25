@@ -43,18 +43,70 @@ char **map_creator(char *file_name)
 	return (map);
 }
 
-//int valid_first_line();
+void set_map(char **map, t_scene *scene)
+{
+	scene->map.map = map;
+}
 
-void	display_map(char **map)
+int	find_map(const char *filename)
+{
+    int		fd;
+    char	*line = NULL;
+	int		i;
+
+	i = 0;
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        return -1;
+    while ((line = get_next_line(fd)) != NULL)
+    {
+		printf("[%s] : %d\n", line, parse_first_wall(line));
+		if (parse_first_wall(line) == 1)
+		{
+			close(fd);
+			if (line)
+				free(line);			
+			return (i);
+		}
+		i++;
+    }
+    close(fd);
+    if (line)
+        free(line);
+    return (0);
+
+}
+
+int parse_first_wall(char *line)
+{
+	int i;
+	int	is_valid;
+
+	i = 0;
+	is_valid = 0;
+	while (line[i] != '\n' && line[i] != '\0')
+	{
+		if (!(is_space(line[i]) == 1 || line[i] == '1'))
+		{
+			return (0);
+		}
+		++i;
+	}
+	return (1);
+}
+
+void	display_map(t_scene *scene)
 {
 	int	i;
 
 	printf("---MAP--\n");
+	printf("Hauteur = %d\n", scene->map.height_map);
 	printf("\n");
+
 	i = 0;
-	while (map[i] != NULL)
+	while ((scene->map.map)[i] != NULL)
 	{
-		printf("%s", map[i]);
+		printf("%s", (scene->map.map)[i]);
 		i++;
 	}
 	printf("\n");

@@ -21,15 +21,15 @@ RM		= rm -f
 
 $(NAME): $(OBJS)
 	make -C includes/libft
-	make -C includes/mlx_openGL
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_openGL/libmlx.a $(MAC_FLAGS) -o $(NAME)
+	make -C includes/mlx_opengl
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a $(MAC_FLAGS) -o $(NAME)
 
 
 all:		$(NAME)
 
 clean:
 			$(RM) $(OBJS)
-			make clean -C includes/mlx_openGL
+			make clean -C includes/mlx_opengl
 
 fclean:		clean
 			$(RM) $(NAME)
