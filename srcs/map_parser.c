@@ -1,37 +1,52 @@
 #include "../header.h"
 
-int height_map(int fd)
+/* Renvoie le nombre de ligne que fait la map */
+/* Renvoie le nombre de ligne depuis ind_map jusqu'a EOF */
+int height_map(const char *filename, int ind_map)
 {
 	char	*line;
 	int		size;
+    int		fd;
 
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        return -1;
+	line = NULL;
+	while (ind_map > 0)
+	{
+		line = get_next_line(fd);
+		ind_map--;
+	}
 	size = 0;
 	while (42)
 	{
 		line = get_next_line(fd);
+		size++;
 		if (line == NULL)
 			return (size);
-		size++;
 	}
+	close(fd);
+    if (line)
+        free(line);
 	return(-1);
 }
 
-char **map_creator(char *file_name)
+/* Parcours les lignes du fichier depuis ind_map jusqu a ind_map + h_map */
+/* Renvoie un tableau 2D de char contenant toutes les lignes lues */
+char **map_creator(char *file_name, int h_map, int ind_map)
 {
 	int 	fd;
 	char	**map;
-	int		size;
 	int		i;
+
+	map = malloc(sizeof(char *) * (h_map + 1));
+	if (map == NULL)
+		return (NULL);
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	size = height_map(fd);
-	close(fd);
-	map = malloc(sizeof(char *) * (size + 1));
-	if (map == NULL)
-		return (NULL);
-	fd = open(file_name, O_RDONLY);
+
 	i = 0;
 	while (i < size)
 	{
@@ -43,24 +58,18 @@ char **map_creator(char *file_name)
 	return (map);
 }
 
-void set_map(char **map, t_scene *scene)
-{
-	scene->map.map = map;
-}
-
 int	find_map(const char *filename)
 {
     int		fd;
     char	*line = NULL;
 	int		i;
 
-	i = 0;
+	i = 1;
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         return -1;
     while ((line = get_next_line(fd)) != NULL)
     {
-		printf("[%s] : %d\n", line, parse_first_wall(line));
 		if (parse_first_wall(line) == 1)
 		{
 			close(fd);
@@ -74,7 +83,6 @@ int	find_map(const char *filename)
     if (line)
         free(line);
     return (0);
-
 }
 
 int parse_first_wall(char *line)
@@ -86,13 +94,17 @@ int parse_first_wall(char *line)
 	is_valid = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
-		if (!(is_space(line[i]) == 1 || line[i] == '1'))
+		if (is_space(line[i]) == 1 || line[i] == '1')
+		{
+			is_valid = 1;
+		}
+		else
 		{
 			return (0);
 		}
 		++i;
 	}
-	return (1);
+	return is_valid;
 }
 
 void	display_map(t_scene *scene)

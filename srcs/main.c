@@ -48,7 +48,13 @@ int main(int argc, char const *argv[])
         char const *filename;
         filename = "map0.cub";
 
-        printf("Map at line : %d\n", find_map(filename));
+        int ind_map;
+        ind_map = find_map(filename);
+
+        int h_map;
+        h_map = height_map(filename, ind_map);
+
+        printf("Size of map : %d\n", h_map);
 
 
 
