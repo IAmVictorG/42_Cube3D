@@ -6,7 +6,7 @@ static void parse_floor(t_scene *scene, char *line)
 
     (void) scene;
     r = go_to_next_and_get_arg(&line);
-    set_vector(r, &scene->sky_color);
+    set_vector(r, &scene->floor_color);
    // printf("%s", r);
 }
 
@@ -17,7 +17,7 @@ static void parse_ceiling(t_scene *scene, char *line)
     (void) scene;
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &scene->sky_color);
-    //printf("%s", r);
+
 }
 
 static void parse_wall(t_scene *scene, char *line)
@@ -26,6 +26,7 @@ static void parse_wall(t_scene *scene, char *line)
     t_sprite *sprite;
 
     sprite = &scene->sprite;
+
     if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
@@ -46,10 +47,11 @@ static void parse_wall(t_scene *scene, char *line)
         r = go_to_next_and_get_arg(&line);
         sprite->east = r;
     }
-    if (go_to_next_and_get_arg(&line) != NULL)
+    r = go_to_next_and_get_arg(&line);
+    if (ft_strlen(r) != 0 && string_is_only_space(r) == 0)
     {
-        printf("[ERROR] Too many arguments on the line : %s |\n", line);
-        exit(EXIT_FAILURE);
+        printf("R = %s\n", r);
+        printf("[Error] Too many arguments on line\n");
     }
 }
 
@@ -74,7 +76,7 @@ static int check_if_is_wall(char *line)
     return (0);
 }
 
-void parse_line(t_scene *scene, char *line)
+int parse_line(t_scene *scene, char *line)
 {
     if (check_if_is_wall(line))
     {
@@ -88,4 +90,7 @@ void parse_line(t_scene *scene, char *line)
     {
         parse_ceiling(scene, line);
     }
+    else
+        return (0);
+    return (1);
 }
