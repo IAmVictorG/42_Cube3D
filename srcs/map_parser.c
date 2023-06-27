@@ -22,17 +22,16 @@ int parse_first_wall(char *line)
 	return is_valid;
 }
 
-int	find_map(char **copy_file)
+int	find_map(char **copy_file, int end_part_1)
 {
-	int		i;
+	int	i;
+	//int	j;
 
-	i = 0;
-    while (copy_file[i] != NULL)
-    {
-		if (parse_first_wall(copy_file[i]) == 1)
-			return (i);
+	i = end_part_1 + 1;
+    while (string_is_only_space(copy_file[i]) == 1 && copy_file[i] != NULL)
 		i++;
-    }
+	if (copy_file[i] != NULL)
+		return (i);
     return (-1);
 }
 

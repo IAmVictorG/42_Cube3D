@@ -112,7 +112,7 @@ int		check_first_one(char *line);
 int		check_last_one(char *line);
 int		check_last_first_one(char **map);
 int		find_largest_line(char **map);
-int		find_map(char **copy_file);
+int		find_map(char **copy_file, int end_part_1);
 int		parse_first_wall(char *line);
 int		parse_map(char **map);
 int		height_map(char **copy_file, int ind_map);

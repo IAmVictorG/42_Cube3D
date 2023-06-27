@@ -69,6 +69,28 @@ char **copy_file(const char *filename, int size_file)
     return (copy);
 }
 
+int map_parser(t_scene *scene, char **copy, int end_parse_1)
+{
+    int ind_map;
+    int h_map;
+    (void) scene;
+
+    ind_map = find_map(copy, end_parse_1);
+    printf("ind_map = %s\n", copy[ind_map]);
+    if (ind_map == -1)
+    {
+        return (0);
+    }
+
+    h_map = height_map(copy, ind_map);
+    printf("hauteur de la map : %d\n", h_map);
+
+
+    return (-1561);
+
+}
+
+
 int main(int argc, char const *argv[])
 {
     (void) argc;
@@ -107,8 +129,17 @@ int main(int argc, char const *argv[])
 
     /* SCOPE TESTS FX */
     {
+
+        t_scene *scene;
+
         char const *filename;
         filename = "map2.cub";
+
+        scene = malloc(sizeof(t_scene));
+        if (scene == NULL)
+        {
+            return (0);
+        }
 
         int size_file;
         size_file = get_size_file(filename);
@@ -117,31 +148,40 @@ int main(int argc, char const *argv[])
         char **copy;
         copy = copy_file (filename, size_file);
 
+
         //print_tab(copy);
 
-        int ind_map;
-        ind_map = find_map(copy);
-        //printf("ind_map = %d\n", ind_map);
+        int end_part_1 = parser(scene, copy);
+        //printf("end = [%s]\n", copy[end]);
 
-        ind_map = 9;
+        int ind_map;
+        ind_map = find_map(copy, end_part_1);
+        printf("ind_map = %s\n", copy[ind_map]);
+        
+        map_parser(scene, copy, end_part_1);
+
 
         int h_map;
         h_map = height_map(copy, ind_map);
         printf("hauteur de la map : %d\n", h_map);
 
+
+        
         int chk_EOF;
         chk_EOF = check_EOF(copy, ind_map, h_map);
         printf("Fin du fichier : %d\n", chk_EOF);
 
+        
         char **map_uncompleted;
         map_uncompleted = map_creator(copy, h_map, ind_map);
-
         //print_tab(map_uncompleted);
 
+        
         int caract_ok;
         caract_ok = check_caract_map(map_uncompleted);
         printf("caract_ok = %d\n", caract_ok);
 
+        
         int largest_line;
         largest_line = find_largest_line(map_uncompleted);
         printf("largeur de la map = %d\n", largest_line);
@@ -149,6 +189,9 @@ int main(int argc, char const *argv[])
         char **matrix;
         matrix = matrix_creator(map_uncompleted, h_map, largest_line);
 
+        //print_tab(matrix);
+
+        
         int check_line0;
         check_line0 = parse_first_wall(matrix[0]);
         printf("first line OK = %d\n", check_line0);
@@ -172,6 +215,7 @@ int main(int argc, char const *argv[])
         printf("Wall inspection = %d\n", wall_inspect);
 
         print_tab(matrix);
+        
     }
 
     return 0;
