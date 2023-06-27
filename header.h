@@ -24,7 +24,7 @@ typedef struct	s_utils
 typedef struct	s_data 
 {
 	void	*img;
-	char	*addr;
+	unsigned char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -42,6 +42,12 @@ typedef struct s_vec
 	float y;
 	float z;
 } t_vec;
+
+typedef struct s_coord 
+{
+	int	x;
+	int	y;
+} t_coord;
 
 typedef struct s_player 
 {
@@ -94,6 +100,7 @@ void render(t_scene *scene, t_mlib *mlib);
 int		is_space(char c);
 int		size_tab(char **tab);
 void	print_tab(char **tab);
+int		string_is_only_space(char *str);
 
 
 /* parsing.c */
@@ -113,5 +120,10 @@ char	**map_creator(char **copy_file, int h_map, int ind_map);
 void	display_map(t_scene *scene);
 int		check_caract_line(char *line);
 int		check_caract_map(char **map_unc);
+char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
+int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
+int		check_player(char **matrix);
+int		check_EOF(char **copy_file, int ind_map, int h_map);
+
 
 #endif

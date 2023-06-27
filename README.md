@@ -12,7 +12,7 @@ To compile and run this project, you will need:
 To compile the project, clone the repository and run make:
 
 ```bash
-git clone https://github.com/<your_username>/Cube3D.git
+git clone https://github.com/IAmVictorG/42_Cube3D.git
 cd Cube3D
 make
 ```
