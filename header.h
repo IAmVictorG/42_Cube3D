@@ -23,8 +23,8 @@ typedef struct	s_utils
 
 typedef struct	s_data 
 {
-	void	*img;
-	unsigned char	*addr;
+	void	*img_ptr;
+	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;

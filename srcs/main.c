@@ -76,7 +76,7 @@ int main(int argc, char const *argv[])
 
     /* SCOPE TESTS VICTOR */
 
-    /*{
+    {
         char **copy;
         t_scene *scene;
         char const *filename;
@@ -100,13 +100,13 @@ int main(int argc, char const *argv[])
         printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
 
         init_window(mlib, scene);
-    }*/
+    }
 
     
 
 
     /* SCOPE TESTS FX */
-    {
+    /*{
         char const *filename;
         filename = "map2.cub";
 
@@ -172,7 +172,7 @@ int main(int argc, char const *argv[])
         printf("Wall inspection = %d\n", wall_inspect);
 
         print_tab(matrix);
-    }
+    }*/
 
     return 0;
 }
