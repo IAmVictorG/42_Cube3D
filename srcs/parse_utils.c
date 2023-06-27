@@ -37,7 +37,7 @@ void print_tab(char **tab)
     i = 0;
     while (tab[i] != NULL)
     {
-        printf("%d : %s",i, tab[i]);
+        printf("[%s] (%d)\n", tab[i],i);
         i++;
     }
 	printf("\n--------------------------------- END\n");

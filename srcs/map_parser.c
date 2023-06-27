@@ -1,5 +1,41 @@
 #include "../header.h"
 
+int parse_first_wall(char *line)
+{
+	int i;
+	int	is_valid;
+
+	i = 0;
+	is_valid = 0;
+	while (line[i] != '\n' && line[i] != '\0')
+	{
+		if (is_space(line[i]) == 1 || line[i] == '1')
+		{
+			is_valid = 1;
+		}
+		else
+		{
+			return (0);
+		}
+		++i;
+	}
+	return is_valid;
+}
+
+int	find_map(char **copy_file)
+{
+	int		i;
+
+	i = 0;
+    while (copy_file[i] != NULL)
+    {
+		if (parse_first_wall(copy_file[i]) == 1)
+			return (i);
+		i++;
+    }
+    return (-1);
+}
+
 /* Renvoie le nombre de ligne que fait la map */
 /* Renvoie le nombre de ligne depuis ind_map jusqu'a la premiere ligne vide rencontrée */
 int height_map(char **copy_file, int ind_map)
@@ -41,144 +77,6 @@ char **map_creator(char **copy_file, int h_map, int ind_map)
 	return (map);
 }
 
-int	check_first_one(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (is_space(line[i]) == 1 && line[i] != '\0')
-		i++;
-	if (line[i] == '1')
-		return (1);
-	return (0);
-}
-
-int check_last_one(char *line)
-{
-	int	i;
-
-	i = ft_strlen(line);
-	while (is_space(line[i]) == 1 && i > 0)
-		i--;
-	i-=2;
-	//printf("c = [%c]\n", line[i]);
-	if (line[i] == '1')
-		return (1);
-	return (0);
-}
-
-int	check_last_first_one(char **map)
-{
-	int	i;
-
-	i = 0;
-	while(map[i] != NULL)
-	{
-		//printf("map[%d] = (%s)\n", i, map[i]);
-		if (check_first_one(map[i]) == 0 || check_last_one(map[i]) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	find_largest_line(char **map)
-{
-	int	size_current_line;
-	int	max_size;
-	int	i;
-
-	i = 0;
-	max_size = 0;
-	while (map[i] != NULL)
-	{
-		size_current_line = ft_strlen(map[i]);
-		if (size_current_line > max_size)
-			max_size = size_current_line;
-		i++;
-	}
-
-	return (max_size);
-}
-
-int	find_map(char **copy_file)
-{
-	int		i;
-
-	i = 0;
-    while (copy_file[i] != NULL)
-    {
-		if (parse_first_wall(copy_file[i]) == 1)
-			return (i);
-		i++;
-    }
-    return (-1);
-}
-
-int parse_first_wall(char *line)
-{
-	int i;
-	int	is_valid;
-
-	i = 0;
-	is_valid = 0;
-	while (line[i] != '\n' && line[i] != '\0')
-	{
-		if (is_space(line[i]) == 1 || line[i] == '1')
-		{
-			is_valid = 1;
-		}
-		else
-		{
-			return (0);
-		}
-		++i;
-	}
-	return is_valid;
-}
-
-void	display_map(t_scene *scene)
-{
-	int	i;
-
-	printf("---MAP--\n");
-	printf("Hauteur = %d\n", scene->map.height_map);
-	printf("\n");
-
-	i = 0;
-	while ((scene->map.map)[i] != NULL)
-	{
-		printf("%s", (scene->map.map)[i]);
-		i++;
-	}
-	printf("\n");
-	printf("\n");
-}
-
-char *line_matrix_creator(char *line, int w_matrix)
-{
-	char 	*copy_line;
-	int		i;
-
-	copy_line = (char *) malloc(sizeof(char) * (w_matrix + 1));
-	i = 0;
-
-	while (line[i] != '\0')
-	{	
-		copy_line[i] = line[i];
-		i++;
-	}
-
-	while (i < w_matrix)
-	{
-		copy_line[i] = '.';
-		i++;
-	}
-	line[i] = '\0';
-	printf("line_matrix_creator = %s\n", copy_line);
-	return (line);
-
-}
 
 int	check_caract_line(char *line)
 {
@@ -220,11 +118,60 @@ int	check_caract_map(char **map_unc)
 	return (1);
 }
 
+int	find_largest_line(char **map)
+{
+	int	size_current_line;
+	int	max_size;
+	int	i;
+
+	i = 0;
+	max_size = 0;
+	while (map[i] != NULL)
+	{
+		size_current_line = ft_strlen(map[i]);
+		if (size_current_line > max_size)
+			max_size = size_current_line;
+		i++;
+	}
+
+	return (max_size);
+}
+
+char *line_matrix_creator(char *line, int w_matrix)
+{
+	char 	*copy_line;
+	int		i;
+	//printf("avan_matrix_creator = [%s]\n", line);
+
+	copy_line = (char *) malloc(sizeof(char) * (w_matrix));
+	if (copy_line == NULL)
+		return (NULL);
+
+	i = 0;
+	while (line[i] != '\n')
+	{	
+		copy_line[i] = line[i];
+		i++;
+	}
+
+	while (i < (w_matrix - 1))
+	{
+		copy_line[i] = ' ';
+		i++;
+	}
+	copy_line[i] = '\0';
+	//printf("line_matrix_creator = [%s]\n\n", copy_line);
+	return (copy_line);
+
+}
 
 char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
 {
 	int		i;
 	char	**matrix;
+
+	// printf("AVANT\n");
+	// print_tab(map_unc);
 
 	matrix = (char **) malloc(sizeof(char *) * (h_matrix + 1));
 	if (matrix == NULL)
@@ -233,26 +180,114 @@ char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
 	i = 0;
 	while (map_unc[i] != NULL)
 	{
+		matrix[i] = line_matrix_creator(map_unc[i], w_matrix);
+		i++;
+	}
+	matrix[i] = NULL;
+
+	return (matrix);
+}
+
+int	check_first_one(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(line[i]) == 1 && line[i] != '\0')
+		i++;
+	if (line[i] == '1')
+		return (1);
+	return (0);
+}
+
+int check_last_one(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line);
+	//printf("i = %d\n", i);
+	//printf("c = [%c]\n", line[i-1]);
+	i--;
+	while (is_space(line[i]) == 1 && i >= 0)
+	{
+		i--;
+	}
+	//i--;
+	//printf("c = [%c]\n", line[i]);
+
+	if (line[i] == '1')
+		return (1);
+	return (0);
+}
+
+int	check_last_first_one(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while(matrix[i] != NULL)
+	{
+		if (check_first_one(matrix[i]) == 0 || check_last_one(matrix[i]) == 0)
+		{
+			printf("first : %d\n", check_first_one(matrix[i]));
+			printf("last : %d\n", check_last_one(matrix[i]));
+			printf("error : [%s]\n", matrix[i]);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+
+int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
+{
+	int i;
+	int j;
+
+	//(void) w_matrix;
+
+	i = 1;
+	while (i < h_matrix - 1)
+	{
+		j = 0;
+		while (j < w_matrix)
+		{
+			printf("%c", matrix[i][j]);
+			j++;
+		}
+		printf("\n");
 
 		i++;
 	}
 	
+	return (-1000);
 
 
 
 }
 
 
-// int parse_map(char **map)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (map[i] != NULL)
-// 	{
 
 
-// 	}
 
-// 	return 0;
-// }
+
+void	display_map(t_scene *scene)
+{
+	int	i;
+
+	printf("---MAP--\n");
+	printf("Hauteur = %d\n", scene->map.height_map);
+	printf("\n");
+
+	i = 0;
+	while ((scene->map.map)[i] != NULL)
+	{
+		printf("%s", (scene->map.map)[i]);
+		i++;
+	}
+	printf("\n");
+	printf("\n");
+}
+
+

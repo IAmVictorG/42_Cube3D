@@ -75,99 +75,92 @@ int main(int argc, char const *argv[])
     (void) argv;
 
     /* SCOPE TESTS VICTOR */
-    {
-        char **copy;
-        t_scene *scene;
-        char const *filename;
-        int end;
+    // {
+    //     char **copy;
+    //     t_scene *scene;
+    //     char const *filename;
+    //     int end;
 
-        filename = "map1.cub";
-        int size_file;
-        size_file = get_size_file(filename);       
-        scene = malloc(sizeof(t_scene));
-        copy = copy_file (filename, size_file);
+    //     filename = "map1.cub";
+    //     int size_file;
+    //     size_file = get_size_file(filename);       
+    //     scene = malloc(sizeof(t_scene));
+    //     copy = copy_file (filename, size_file);
         
-        int i = 0;
+    //     int i = 0;
 
-        while (copy[i])
-        {
-            if (parse_line(scene, copy[i++]))
-                end = i;  
-        }
+    //     while (copy[i])
+    //     {
+    //         if (parse_line(scene, copy[i++]))
+    //             end = i;  
+    //     }
         
-        printf("%s\n", scene->sprite.north);
-        printf("%s\n", scene->sprite.south);
-        printf("%s\n", scene->sprite.west);
-        printf("%s\n", scene->sprite.east);
-        printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
-        printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
-    }
+    //     printf("%s\n", scene->sprite.north);
+    //     printf("%s\n", scene->sprite.south);
+    //     printf("%s\n", scene->sprite.west);
+    //     printf("%s\n", scene->sprite.east);
+    //     printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
+    //     printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
+    // }
 
 
     /* SCOPE TESTS FX */
-    /*{
+    {
         char const *filename;
         filename = "map1.cub";
 
         int size_file;
         size_file = get_size_file(filename);
-        printf("size_file : %d\n", size_file);
+        //printf("size_file : %d\n", size_file);
 
         char **copy;
         copy = copy_file (filename, size_file);
 
-        print_tab(copy);
+        //print_tab(copy);
 
         int ind_map;
         ind_map = find_map(copy);
-        printf("ind_map = %d\n", ind_map);
+        //printf("ind_map = %d\n", ind_map);
 
-        ind_map = 10;
+        ind_map = 9;
 
         int h_map;
         h_map = height_map(copy, ind_map);
-        printf("Size of map : %d\n", h_map);
+        printf("hauteur de la map : %d\n", h_map);
 
         char **map_uncompleted;
         map_uncompleted = map_creator(copy, h_map, ind_map);
 
-        print_tab(map_uncompleted);
-
-        int largest_line;
-        largest_line = find_largest_line(map_uncompleted);
-        printf("largest line = %d\n", largest_line);
-
+        //print_tab(map_uncompleted);
 
         int caract_ok;
         caract_ok = check_caract_map(map_uncompleted);
         printf("caract_ok = %d\n", caract_ok);
 
+        int largest_line;
+        largest_line = find_largest_line(map_uncompleted);
+        printf("largeur de la map = %d\n", largest_line);
 
-        //line_matrix_creator(map_uncompleted[0], largest_line);
+        char **matrix;
+        matrix = matrix_creator(map_uncompleted, h_map, largest_line);
 
+        int check_line0;
+        check_line0 = parse_first_wall(matrix[0]);
+        printf("first line OK = %d\n", check_line0);
 
+        int chk_l_f_one;
+        chk_l_f_one = check_last_first_one(matrix);
+        printf("Walls OK = %d\n", chk_l_f_one);
 
+        int check_lineL;
+        check_lineL = parse_first_wall(matrix[h_map - 1]);
+        printf("last line OK = %d\n", check_lineL);
 
-        
+        //print_tab(matrix);
 
-        
-        printf("-----------------------------\n");
+        wall_inspector(matrix, h_map, largest_line);
 
-
-        (void) map_uncompleted;
-        
-        
-        t_scene *scene;
-        scene = malloc(sizeof(t_scene));
-        scene->map.map = map_uncompleted;
-
-        display_map(scene);
-
-        printf("check first last one = %d\n", check_last_first_one(map_uncompleted));
-        
-        
-
-    }*/
+    }
 
     return 0;
 }

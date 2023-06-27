@@ -37,6 +37,12 @@ typedef struct s_vec
 	float z;
 } t_vec;
 
+typedef struct s_coord 
+{
+	int	x;
+	int	y;
+} t_coord;
+
 typedef struct s_player 
 {
 	t_vec	pos;
@@ -96,5 +102,8 @@ char	**map_creator(char **copy_file, int h_map, int ind_map);
 void	display_map(t_scene *scene);
 int		check_caract_line(char *line);
 int		check_caract_map(char **map_unc);
+char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
+int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
+
 
 #endif
