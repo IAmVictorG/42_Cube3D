@@ -36,11 +36,12 @@ int	find_map(char **copy_file)
     return (-1);
 }
 
+
 /* Renvoie le nombre de ligne que fait la map */
 /* Renvoie le nombre de ligne depuis ind_map jusqu'a la premiere ligne vide rencontrée */
 int height_map(char **copy_file, int ind_map)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (copy_file[ind_map + i] != NULL && copy_file[ind_map + i][0] != '\n')
@@ -49,6 +50,22 @@ int height_map(char **copy_file, int ind_map)
 	}
 	return (i);
 }
+
+int check_EOF(char **copy_file, int ind_map, int h_map)
+{
+	int i;
+
+	i = ind_map + h_map;
+	while (copy_file[i] != NULL)
+	{
+		if (string_is_only_space(copy_file[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
 
 /* Parcours les lignes du fichier depuis ind_map jusqu a ind_map + h_map */
 /* Renvoie un tableau 2D de char contenant toutes les lignes lues entre ind_map et ind_map + h_map*/
@@ -76,7 +93,6 @@ char **map_creator(char **copy_file, int h_map, int ind_map)
 	map[i] = NULL;
 	return (map);
 }
-
 
 int	check_caract_line(char *line)
 {
@@ -367,10 +383,31 @@ int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
 
 }
 
+int	check_player(char **matrix)
+{
+	int	lin;
+	int	col;
+	int	count;
 
-
-
-
+	count = 0;
+	lin = 0;
+	while (matrix[lin] != NULL)
+	{
+		col = 0;
+		while (matrix[lin][col] != '\0')
+		{
+			if (matrix[lin][col] == 'N' || matrix[lin][col] == 'S' || matrix[lin][col] == 'E' || matrix[lin][col] == 'W')
+			{
+				count++;
+			}
+			col++;
+		}
+		lin++;
+	}
+	if (count == 1)
+		return (1);
+	return (0);
+}
 
 void	display_map(t_scene *scene)
 {

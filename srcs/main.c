@@ -128,6 +128,10 @@ int main(int argc, char const *argv[])
         h_map = height_map(copy, ind_map);
         printf("hauteur de la map : %d\n", h_map);
 
+        int chk_EOF;
+        chk_EOF = check_EOF(copy, ind_map, h_map);
+        printf("Fin du fichier : %d\n", chk_EOF);
+
         char **map_uncompleted;
         map_uncompleted = map_creator(copy, h_map, ind_map);
 
@@ -156,11 +160,17 @@ int main(int argc, char const *argv[])
         check_lineL = parse_first_wall(matrix[h_map - 1]);
         printf("last line OK = %d\n", check_lineL);
 
-        //print_tab(matrix);
+
+        int chk_player;
+        chk_player = check_player(matrix);
+        printf("check_player = %d\n", chk_player);
+
+        
         int wall_inspect;
         wall_inspect = wall_inspector(matrix, h_map, largest_line);
         printf("Wall inspection = %d\n", wall_inspect);
 
+        print_tab(matrix);
     }
 
     return 0;

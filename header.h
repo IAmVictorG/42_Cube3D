@@ -83,6 +83,7 @@ typedef struct s_scene
 int		is_space(char c);
 int		size_tab(char **tab);
 void	print_tab(char **tab);
+int		string_is_only_space(char *str);
 
 
 /* parsing.c */
@@ -104,6 +105,8 @@ int		check_caract_line(char *line);
 int		check_caract_map(char **map_unc);
 char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
 int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
+int		check_player(char **matrix);
+int		check_EOF(char **copy_file, int ind_map, int h_map);
 
 
 #endif
