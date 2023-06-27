@@ -4,10 +4,8 @@ static void parse_floor(t_scene *scene, char *line)
 {
     char *r;
 
-    (void) scene;
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &scene->floor_color);
-   // printf("%s", r);
 }
 
 static void parse_ceiling(t_scene *scene, char *line)
@@ -17,7 +15,6 @@ static void parse_ceiling(t_scene *scene, char *line)
     (void) scene;
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &scene->sky_color);
-
 }
 
 static void parse_wall(t_scene *scene, char *line)
@@ -51,7 +48,7 @@ static void parse_wall(t_scene *scene, char *line)
     if (ft_strlen(r) != 0 && string_is_only_space(r) == 0)
     {
         printf("R = %s\n", r);
-        printf("[Error] Too many arguments on line\n");
+        printf("Error\n Too many arguments on line\n");
     }
 }
 
@@ -76,6 +73,22 @@ static int check_if_is_wall(char *line)
     return (0);
 }
 
+static int check_for_1_or_0(char *line)
+{
+    int i;
+
+    i = 0;
+    while (is_space(line[i]))
+    {
+        i++;
+    }
+    if (line[i] == '1' || line[i] == '0')
+    {
+        return (1);
+    }
+    return (0);
+}
+
 static int parse_line(t_scene *scene, char *line)
 {
     if (check_if_is_wall(line))
@@ -90,6 +103,10 @@ static int parse_line(t_scene *scene, char *line)
     {
         parse_ceiling(scene, line);
     }
+    else if (check_for_1_or_0(line))
+    {
+        return (-1);
+    }
     else
         return (0);
     return (1);
@@ -97,13 +114,26 @@ static int parse_line(t_scene *scene, char *line)
 
 int parser(t_scene *scene, char **copy)
 {
-    int i = 0;
+    int i;
+    int found;
     int end;
+
+    i = 0;
+    found = 0;
 
     while (copy[i])
     {
-        if (parse_line(scene, copy[i++]))
-            end = i;  
+        if (parse_line(scene, copy[i]) == 1)
+        {
+            found ++;
+            end = i;
+        }
+        else if (parse_line(scene, copy[i]) == -1 && found != 6)
+        {
+            printf("Error\n You didn't initialise all the stuff needed before the map\n");
+            exit(EXIT_FAILURE);
+        }
+        i++;
     }
     return (end);
 }

@@ -7,6 +7,7 @@ LINUX_FLAGS = -lm -lX11 -lXext -lpthread
 MAC_FLAGS = -framework OpenGL -framework AppKit
 
 SRCS =  $(addprefix srcs/, main.c parsing.c parse_utils.c) \
+		$(addprefix srcs/render/, init_window.c ray_caster.c utils.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
 		srcs/map_parser.c
 
@@ -22,7 +23,7 @@ RM		= rm -f
 $(NAME): $(OBJS)
 	make -C includes/libft
 	make -C includes/mlx_opengl
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a $(MAC_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a -lz $(MAC_FLAGS) -o $(NAME)
 
 
 all:		$(NAME)

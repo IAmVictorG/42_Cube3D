@@ -79,7 +79,9 @@ int main(int argc, char const *argv[])
         char **copy;
         t_scene *scene;
         char const *filename;
-        
+        t_mlib *mlib;
+
+        mlib = malloc(sizeof(t_mlib));
 
         filename = "map1.cub";
         int size_file;
@@ -89,13 +91,14 @@ int main(int argc, char const *argv[])
         
         parser(scene, copy);
 
-        
         printf("%s\n", scene->sprite.north);
         printf("%s\n", scene->sprite.south);
         printf("%s\n", scene->sprite.west);
         printf("%s\n", scene->sprite.east);
         printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
         printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
+
+        init_window(mlib, scene);
     }
 
 
@@ -117,6 +120,8 @@ int main(int argc, char const *argv[])
         ind_map = find_map(copy);
         printf("ind_map = %d\n", ind_map);
 
+        ind_map = 10;
+
         int h_map;
         h_map = height_map(copy, ind_map);
         printf("Size of map : %d\n", h_map);
@@ -131,8 +136,12 @@ int main(int argc, char const *argv[])
         printf("largest line = %d\n", largest_line);
 
 
+        int caract_ok;
+        caract_ok = check_caract_map(map_uncompleted);
+        printf("caract_ok = %d\n", caract_ok);
 
-        line_matrix_creator(map_uncompleted[0], largest_line);
+
+        //line_matrix_creator(map_uncompleted[0], largest_line);
 
 
 

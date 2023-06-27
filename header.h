@@ -6,7 +6,13 @@
 #include <math.h>
 #include "includes/get_next_line/get_next_line.h"
 #include "includes/libft/libft.h"
+#include "includes/mlx_opengl/mlx.h"
 #include <fcntl.h>
+
+#define WIDTH 300
+#define HEIGHT 300
+#define FOV 60
+#define MAX_DISTANCE 20 // BLOCK_LENGTH
 
 
 typedef struct	s_utils 
@@ -73,6 +79,17 @@ typedef struct s_scene
 } t_scene;
 
 
+/* init_window.c*/
+void init_window(t_mlib *mlib, t_scene *scene);
+
+/* utils.c*/
+void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
+int	create_trgb(int t, int r, int g, int b);
+t_vec vec_normalize(t_vec v);
+
+/* ray_caster.c*/
+void render(t_scene *scene, t_mlib *mlib);
+
 /* parse_utils.c */
 int		is_space(char c);
 int		size_tab(char **tab);
@@ -94,6 +111,7 @@ int		parse_map(char **map);
 int		height_map(char **copy_file, int ind_map);
 char	**map_creator(char **copy_file, int h_map, int ind_map);
 void	display_map(t_scene *scene);
-
+int		check_caract_line(char *line);
+int		check_caract_map(char **map_unc);
 
 #endif
