@@ -5,6 +5,20 @@ int is_space(char c)
     return (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\f');
 }
 
+int string_is_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!is_space(str[i]) && str[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	size_tab(char **tab)
 {
 	int	count;

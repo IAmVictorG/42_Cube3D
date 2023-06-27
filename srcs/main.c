@@ -75,17 +75,37 @@ int main(int argc, char const *argv[])
     (void) argv;
 
     /* SCOPE TESTS VICTOR */
-    /*{
+    {
+        char **copy;
         t_scene *scene;
-        scene = malloc(sizeof(t_scene));
+        char const *filename;
+        int end;
 
-        read_rt_file("map1.cub", scene);
+        filename = "map1.cub";
+        int size_file;
+        size_file = get_size_file(filename);       
+        scene = malloc(sizeof(t_scene));
+        copy = copy_file (filename, size_file);
+        
+        int i = 0;
+
+        while (copy[i])
+        {
+            if (parse_line(scene, copy[i++]))
+                end = i;  
+        }
+        
         printf("%s\n", scene->sprite.north);
-    }*/
+        printf("%s\n", scene->sprite.south);
+        printf("%s\n", scene->sprite.west);
+        printf("%s\n", scene->sprite.east);
+        printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
+        printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
+    }
 
 
     /* SCOPE TESTS FX */
-    {
+    /*{
         char const *filename;
         filename = "map1.cub";
 
@@ -128,15 +148,15 @@ int main(int argc, char const *argv[])
 
 
 
-        /*
+        
 
         
         printf("-----------------------------\n");
 
 
         (void) map_uncompleted;
-        */
-        /*
+        
+        
         t_scene *scene;
         scene = malloc(sizeof(t_scene));
         scene->map.map = map_uncompleted;
@@ -145,9 +165,9 @@ int main(int argc, char const *argv[])
 
         printf("check first last one = %d\n", check_last_first_one(map_uncompleted));
         
-        */
+        
 
-    }
+    }*/
 
     return 0;
 }
