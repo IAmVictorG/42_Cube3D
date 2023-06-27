@@ -107,7 +107,7 @@ int main(int argc, char const *argv[])
     /* SCOPE TESTS FX */
     {
         char const *filename;
-        filename = "map1.cub";
+        filename = "map2.cub";
 
         int size_file;
         size_file = get_size_file(filename);
@@ -157,8 +157,9 @@ int main(int argc, char const *argv[])
         printf("last line OK = %d\n", check_lineL);
 
         //print_tab(matrix);
-
-        wall_inspector(matrix, h_map, largest_line);
+        int wall_inspect;
+        wall_inspect = wall_inspector(matrix, h_map, largest_line);
+        printf("Wall inspection = %d\n", wall_inspect);
 
     }
 
