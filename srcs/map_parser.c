@@ -240,30 +240,122 @@ int	check_last_first_one(char **matrix)
 }
 
 
-int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
+int check_right(char **matrix, int lin, int col, t_coord size_matrix)
 {
 	int i;
-	int j;
+	(void) size_matrix;
 
-	//(void) w_matrix;
-
-	i = 1;
-	while (i < h_matrix - 1)
+	i = 0;
+	while (matrix[lin][col + i] != '\0')
 	{
-		j = 0;
-		while (j < w_matrix)
+		if (matrix[lin][col + i] == '1')
 		{
-			printf("%c", matrix[i][j]);
-			j++;
+			return (1);
 		}
-		printf("\n");
-
+		if (matrix[lin][col + i] == ' ')
+		{
+			return (0);
+		}
 		i++;
+	}
+	return (0);
+}
+
+int	check_top(char **matrix, int lin, int col, t_coord size_matrix)
+{
+	(void) size_matrix;
+
+	while (lin >= 0)
+	{
+		if (matrix[lin][col] == '1')
+		{
+			return (1);
+		}
+		lin--;
+	}
+	return (0);
+}
+
+int	check_bottom(char **matrix, int lin, int col, t_coord size_matrix)
+{
+	//(void) size_matrix;
+
+	while (lin < size_matrix.y)
+	{
+		if (matrix[lin][col] == '1')
+		{
+			return (1);
+		}
+		lin++;
+	}
+	return (0);
+}
+
+int	check_left(char **matrix, int lin, int col, t_coord size_matrix)
+{
+	(void) size_matrix;
+
+	while (col >= 0)
+	{
+		if (matrix[lin][col] == '1')
+		{
+			return (1);
+		}
+		if (matrix[lin][col] == ' ')
+		{
+			return (0);
+		}
+		col--;
+	}
+	return (0);
+}
+
+
+int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
+{
+	int lin;
+	int col;
+
+	t_coord size_matrix;
+	size_matrix.x = w_matrix;
+	size_matrix.y = h_matrix;
+
+	lin = 1;
+	while (lin < h_matrix - 1)
+	{
+		col = 0;
+		while (col < w_matrix)
+		{
+			if (matrix[lin][col] == '0')
+			{
+				if (check_right(matrix, lin, col, size_matrix) == 0)
+				{
+					return (0);
+					//printf("Le point (x = %d, y = %d) : Droite\n", lin, col);
+				}
+				if (check_top(matrix, lin, col, size_matrix) == 0)
+				{
+					return (0);
+					//printf("Le point (x = %d, y = %d) : Haut  \n", lin, col);
+				}
+				if (check_bottom(matrix, lin, col, size_matrix) == 0)
+				{
+					return (0);
+					//printf("Le point (x = %d, y = %d) : Bas   \n", lin, col);
+				}
+				if (check_left(matrix, lin, col, size_matrix) == 0)
+				{
+					return (0);
+					//printf("Le point (x = %d, y = %d) : Gauche\n", lin, col);
+				}
+			}
+
+			col++;
+		}
+		lin++;
 	}
 	
 	return (-1000);
-
-
 
 }
 
