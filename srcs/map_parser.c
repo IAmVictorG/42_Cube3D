@@ -179,7 +179,32 @@ char *line_matrix_creator(char *line, int w_matrix)
 	return (line);
 
 }
-/*
+
+int	check_caract_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != '1'
+			&& line[i] != '0'
+			&& line[i] != 'N'
+			&& line[i] != 'W'
+			&& line[i] != 'E'
+			&& line[i] != 'S'
+			&& line[i] != ' '
+			&& line[i] != '\n')
+		{
+			//printf("line %s : 0\n", line);
+			return (0);
+		}
+		i++;
+	}
+	//printf("line %s : 1\n", line);
+	return (1);
+}
+
 int	check_caract_map(char **map_unc)
 {
 	int	i;
@@ -187,36 +212,35 @@ int	check_caract_map(char **map_unc)
 	i = 0;
 	while (map_unc[i] != NULL)
 	{
+		//printf("lien = %s :", map_unc[i]);
+		if (check_caract_line(map_unc[i]) == 0)
+			return (0);	
+		i++;
+	}
+	return (1);
+}
 
+
+char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
+{
+	int		i;
+	char	**matrix;
+
+	matrix = (char **) malloc(sizeof(char *) * (h_matrix + 1));
+	if (matrix == NULL)
+		return (NULL);
+
+	i = 0;
+	while (map_unc[i] != NULL)
+	{
 
 		i++;
 	}
-
-
-
-
-
-}*/
-// char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
-// {
-// 	int		i;
-// 	char	**matrix;
-
-// 	matrix = (char **) malloc(sizeof(char *) * (h_matrix + 1));
-// 	if (matrix == NULL)
-// 		return (NULL);
-
-// 	i = 0;
-// 	while (map_unc[i] != NULL)
-// 	{
-
-// 		i++;
-// 	}
 	
 
 
 
-// }
+}
 
 
 // int parse_map(char **map)

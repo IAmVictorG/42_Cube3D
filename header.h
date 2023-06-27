@@ -94,6 +94,7 @@ int		parse_map(char **map);
 int		height_map(char **copy_file, int ind_map);
 char	**map_creator(char **copy_file, int h_map, int ind_map);
 void	display_map(t_scene *scene);
-
+int		check_caract_line(char *line);
+int		check_caract_map(char **map_unc);
 
 #endif

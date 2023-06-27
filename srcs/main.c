@@ -102,6 +102,8 @@ int main(int argc, char const *argv[])
         ind_map = find_map(copy);
         printf("ind_map = %d\n", ind_map);
 
+        ind_map = 10;
+
         int h_map;
         h_map = height_map(copy, ind_map);
         printf("Size of map : %d\n", h_map);
@@ -116,8 +118,12 @@ int main(int argc, char const *argv[])
         printf("largest line = %d\n", largest_line);
 
 
+        int caract_ok;
+        caract_ok = check_caract_map(map_uncompleted);
+        printf("caract_ok = %d\n", caract_ok);
 
-        line_matrix_creator(map_uncompleted[0], largest_line);
+
+        //line_matrix_creator(map_uncompleted[0], largest_line);
 
 
 
