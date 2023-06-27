@@ -23,7 +23,7 @@ RM		= rm -f
 $(NAME): $(OBJS)
 	make -C includes/libft
 	make -C includes/mlx_opengl
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a -lz $(MAC_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a -lz $(MAC_FLAGS) -o $(NAME) -fsanitize=address
 
 
 all:		$(NAME)

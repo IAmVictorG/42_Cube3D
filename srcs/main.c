@@ -98,38 +98,37 @@ int main(int argc, char const *argv[])
 
     /* SCOPE TESTS VICTOR */
 
-    /*{
-        char **copy;
-        t_scene *scene;
-        char const *filename;
-        t_mlib *mlib;
+    {
+        // char **copy;
+        // t_scene *scene;
+        // char const *filename;
+        // t_mlib *mlib;
 
-        mlib = malloc(sizeof(t_mlib));
+        // mlib = malloc(sizeof(t_mlib));
 
-        filename = "map1.cub";
-        int size_file;
-        size_file = get_size_file(filename);       
-        scene = malloc(sizeof(t_scene));
-        copy = copy_file (filename, size_file);
+        // filename = "map1.cub";
+        // int size_file;
+        // size_file = get_size_file(filename);       
+        // scene = malloc(sizeof(t_scene));
+        // copy = copy_file (filename, size_file);
         
-        parser(scene, copy);
+        // parser(scene, copy);
 
-        printf("%s\n", scene->sprite.north);
-        printf("%s\n", scene->sprite.south);
-        printf("%s\n", scene->sprite.west);
-        printf("%s\n", scene->sprite.east);
-        printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
-        printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
+        // printf("%s\n", scene->sprite.north);
+        // printf("%s\n", scene->sprite.south);
+        // printf("%s\n", scene->sprite.west);
+        // printf("%s\n", scene->sprite.east);
+        // printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
+        // printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
 
-        init_window(mlib, scene);
-    }*/
+        // init_window(mlib, scene);
+    }
 
     
 
 
     /* SCOPE TESTS FX */
     {
-
         t_scene *scene;
 
         char const *filename;
@@ -215,8 +214,10 @@ int main(int argc, char const *argv[])
         printf("Wall inspection = %d\n", wall_inspect);
 
         print_tab(matrix);
-        
+
+
     }
+
 
     return 0;
 }

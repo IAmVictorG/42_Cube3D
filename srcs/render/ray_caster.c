@@ -1,6 +1,6 @@
 #include "../../header.h"
 
-static t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
+ t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
 {
     (void) scene;
     float aspect_ratio;
@@ -23,21 +23,32 @@ static t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
     return (dir);
 }
 
-/*static int check_intesection(t_scene *scene, t_vec player_pos, t_vec dir)
+ int check_intesection(t_scene *scene, t_vec player_pos, t_vec dir)
 {
-
+    (void) scene;
     int hit;
     int i;
+    int ngx; //next goal x
+    int ngy; //next goal y
 
+    if (dir.x > 0)
+        ngx = (int) player_pos.x + 1;
+    else
+        ngx = (int) player_pos.x;
+    if (dir.y > 0)
+        ngy = (int) player_pos.y + 1;
+    else
+        ngy = (int) player_pos.y;
     hit = 0;
     i = 0;
-    while (!hit && i < MAX_DISTANCE)
+    /*while (!hit && i < MAX_DISTANCE)
     {
-        
-    }
-}*/
 
-void draw_line(t_mlib *mlib, int x0, int y0, int x1, int y1, int color)
+    }*/
+    return (0);
+}
+
+/*void draw_line(t_mlib *mlib, int x0, int y0, int x1, int y1, int color)
 {
     // Bresenham's line algorithm
     int dx = abs(x1 - x0);
@@ -47,7 +58,7 @@ void draw_line(t_mlib *mlib, int x0, int y0, int x1, int y1, int color)
     int err = dx - dy;
 
     while (1) {
-        mlx_pixel_put(mlib->utils.mlx, mlib->utils.win, x0, y0, color);
+        my_mlx_pixel_put(mlib->data.img_ptr, x0, y0, color);
         if (x0 == x1 && y0 == y1)
             break;
         int e2 = 2 * err;
@@ -60,24 +71,21 @@ void draw_line(t_mlib *mlib, int x0, int y0, int x1, int y1, int color)
             y0 += sy;
         }
     }
-}
+    my_mlx_pixel_put(mlib->data.img_ptr, 20, 20, 0x00FFFFFF);
+}*/
 
 void render(t_scene *scene, t_mlib *mlib)
 {
     (void) scene;
-    int centerX = WIDTH / 2;
-    int centerY = HEIGHT / 2;
+    mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
+    mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
     for (int i = 0; i < WIDTH; i++) {
         for (int j = 0; j < HEIGHT; j++) {
             t_vec dir = create_ray(scene, i, j);
-            
-            // Translate the direction vector into screen space
-            int endX = centerX + (int)(dir.x * 10);
-            int endY = centerY + (int)(dir.y * 10);
-            
-            // Draw a line representing the ray
-            draw_line(mlib, centerX, centerY, endX, endY, 0x00FFFFFF);  // White color
+            my_mlx_pixel_put(&mlib->data, 200, 200, 0xFF00FF);
+            (void) dir;
         }
     }
+    printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));
 }
