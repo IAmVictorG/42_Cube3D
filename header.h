@@ -80,7 +80,7 @@ void	print_tab(char **tab);
 
 
 /* parsing.c */
-int		parse_line(t_scene *scene, char *line);
+int parser(t_scene *scene, char **copy);
 
 /* map_parser.c */
 char	*line_matrix_creator(char *line, int w_matrix);

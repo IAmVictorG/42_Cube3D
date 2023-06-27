@@ -57,26 +57,26 @@ static void parse_wall(t_scene *scene, char *line)
 
 static int check_if_is_wall(char *line)
 {
-    if (line[0] == 'N' && line[1] == 'O' && is_space(line[2])) // Sphere
+    if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
     {
         return (1);
     }
-    else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2])) // Plane
+    else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2]))
     {
         return (1);
     }
-    else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2])) // Cylinder
+    else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2]))
     {
         return (1);
     }
-    else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2])) // Cylinder
+    else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2]))
     {
         return (1);
     }
     return (0);
 }
 
-int parse_line(t_scene *scene, char *line)
+static int parse_line(t_scene *scene, char *line)
 {
     if (check_if_is_wall(line))
     {
@@ -94,3 +94,17 @@ int parse_line(t_scene *scene, char *line)
         return (0);
     return (1);
 }
+
+int parser(t_scene *scene, char **copy)
+{
+    int i = 0;
+    int end;
+
+    while (copy[i])
+    {
+        if (parse_line(scene, copy[i++]))
+            end = i;  
+    }
+    return (end);
+}
+

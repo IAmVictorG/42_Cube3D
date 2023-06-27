@@ -1,7 +1,7 @@
 
 #include "../header.h"
 
-int read_rt_file(const char *filename, t_scene *scene)
+/*int read_rt_file(const char *filename, t_scene *scene)
 {
     int fd;
     char *line = NULL;
@@ -17,7 +17,7 @@ int read_rt_file(const char *filename, t_scene *scene)
     if (line)
         free(line);
     return 0;
-}
+}*/
 
 /* Renvoie le nombre de ligne du fichier a parser */
 int get_size_file(const char *filename)
@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
         char **copy;
         t_scene *scene;
         char const *filename;
-        int end;
+        
 
         filename = "map1.cub";
         int size_file;
@@ -87,13 +87,8 @@ int main(int argc, char const *argv[])
         scene = malloc(sizeof(t_scene));
         copy = copy_file (filename, size_file);
         
-        int i = 0;
+        parser(scene, copy);
 
-        while (copy[i])
-        {
-            if (parse_line(scene, copy[i++]))
-                end = i;  
-        }
         
         printf("%s\n", scene->sprite.north);
         printf("%s\n", scene->sprite.south);
