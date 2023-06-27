@@ -83,15 +83,17 @@ void	print_tab(char **tab);
 void	parse_line(t_scene *scene, char *line);
 
 /* map_parser.c */
+char	*line_matrix_creator(char *line, int w_matrix);
 int		check_first_one(char *line);
 int		check_last_one(char *line);
 int		check_last_first_one(char **map);
 int		find_largest_line(char **map);
-int		find_map(const char *filename);
+int		find_map(char **copy_file);
 int		parse_first_wall(char *line);
 int		parse_map(char **map);
-int		height_map(const char *filename, int ind_map);
-char	**map_creator(const char *filename, int h_map, int ind_map);
+int		height_map(char **copy_file, int ind_map);
+char	**map_creator(char **copy_file, int h_map, int ind_map);
 void	display_map(t_scene *scene);
+
 
 #endif

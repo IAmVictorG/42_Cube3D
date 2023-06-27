@@ -1,82 +1,43 @@
 #include "../header.h"
 
 /* Renvoie le nombre de ligne que fait la map */
-/* Renvoie le nombre de ligne depuis ind_map jusqu'a EOF */
-int height_map(const char *filename, int ind_map)
+/* Renvoie le nombre de ligne depuis ind_map jusqu'a la premiere ligne vide rencontrée */
+int height_map(char **copy_file, int ind_map)
 {
-	char	*line;
-	int		size;
-    int		fd;
+	int		i;
 
-    fd = open(filename, O_RDONLY);
-    if (fd == -1)
-        return -1;
-	line = NULL;
-	while (ind_map > 1)
+	i = 0;
+	while (copy_file[ind_map + i] != NULL && copy_file[ind_map + i][0] != '\n')
 	{
-		line = get_next_line(fd);
-		free(line);
-		ind_map--;
+		i++;
 	}
-	size = 0;
-	while (42)
-	{
-		line = get_next_line(fd);
-		size++;
-		printf("line = %s\n", line);
-		if (line == NULL || line[0] == '\n')
-		{
-			printf("fd = %d, close 1 = %d\n", fd, close(fd));
-			if (line)
-				free(line);
-			return (size);
-		}
-	}
-	printf("close 2 = %d\n", close(fd));
-	//close(fd);
-    if (line)
-        free(line);
-	return(-1);
+	return (i);
 }
 
 /* Parcours les lignes du fichier depuis ind_map jusqu a ind_map + h_map */
-/* Renvoie un tableau 2D de char contenant toutes les lignes lues */
-char **map_creator(const char *file_name, int h_map, int ind_map)
+/* Renvoie un tableau 2D de char contenant toutes les lignes lues entre ind_map et ind_map + h_map*/
+char **map_creator(char **copy_file, int h_map, int ind_map)
 {
-	int 	fd;
 	char	**map;
 	int		i;
 	char	*line;
 
-	map = malloc(sizeof(char *) * (h_map + 1));
+	map = (char **) malloc(sizeof(char *) * (h_map + 1));
 	if (map == NULL)
 		return (NULL);
 
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-
-	printf("fd = %d\n", fd);
 	i = 0;
 	line = NULL;
-	while (i < ind_map - 1)
-	{
-		line = get_next_line(fd);
-		printf("i = %d : [%s]\n", i, line);
 
-		free(line);
-		i++;
-	}
 	//printf("i = %d\n", i);
-	i = 0;
+
 	while (i < h_map)
 	{
-		map[i] = get_next_line(fd);
+		map[i] = ft_strdup(copy_file[ind_map + i]);
 		//printf("i = %d : %s\n", i, map[i]);
 		i++;
 	}
 	map[i] = NULL;
-	close(fd);
 	return (map);
 }
 
@@ -140,31 +101,18 @@ int	find_largest_line(char **map)
 	return (max_size);
 }
 
-int	find_map(const char *filename)
+int	find_map(char **copy_file)
 {
-    int		fd;
-    char	*line = NULL;
 	int		i;
 
-	i = 1;
-    fd = open(filename, O_RDONLY);
-    if (fd == -1)
-        return -1;
-    while ((line = get_next_line(fd)) != NULL)
+	i = 0;
+    while (copy_file[i] != NULL)
     {
-		if (parse_first_wall(line) == 1)
-		{
-			close(fd);
-			if (line)
-				free(line);			
+		if (parse_first_wall(copy_file[i]) == 1)
 			return (i);
-		}
 		i++;
     }
-    close(fd);
-    if (line)
-        free(line);
-    return (0);
+    return (-1);
 }
 
 int parse_first_wall(char *line)
@@ -206,6 +154,69 @@ void	display_map(t_scene *scene)
 	printf("\n");
 	printf("\n");
 }
+
+char *line_matrix_creator(char *line, int w_matrix)
+{
+	char 	*copy_line;
+	int		i;
+
+	copy_line = (char *) malloc(sizeof(char) * (w_matrix + 1));
+	i = 0;
+
+	while (line[i] != '\0')
+	{	
+		copy_line[i] = line[i];
+		i++;
+	}
+
+	while (i < w_matrix)
+	{
+		copy_line[i] = '.';
+		i++;
+	}
+	line[i] = '\0';
+	printf("line_matrix_creator = %s\n", copy_line);
+	return (line);
+
+}
+/*
+int	check_caract_map(char **map_unc)
+{
+	int	i;
+
+	i = 0;
+	while (map_unc[i] != NULL)
+	{
+
+
+		i++;
+	}
+
+
+
+
+
+}*/
+// char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
+// {
+// 	int		i;
+// 	char	**matrix;
+
+// 	matrix = (char **) malloc(sizeof(char *) * (h_matrix + 1));
+// 	if (matrix == NULL)
+// 		return (NULL);
+
+// 	i = 0;
+// 	while (map_unc[i] != NULL)
+// 	{
+
+// 		i++;
+// 	}
+	
+
+
+
+// }
 
 
 // int parse_map(char **map)

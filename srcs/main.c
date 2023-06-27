@@ -98,20 +98,35 @@ int main(int argc, char const *argv[])
 
         print_tab(copy);
 
-        /*
-
         int ind_map;
-        ind_map = find_map(filename);
-        printf("Ind of map : %d\n", ind_map);
+        ind_map = find_map(copy);
+        printf("ind_map = %d\n", ind_map);
 
         int h_map;
-        h_map = height_map(filename, ind_map);
+        h_map = height_map(copy, ind_map);
         printf("Size of map : %d\n", h_map);
+
+        char **map_uncompleted;
+        map_uncompleted = map_creator(copy, h_map, ind_map);
+
+        print_tab(map_uncompleted);
+
+        int largest_line;
+        largest_line = find_largest_line(map_uncompleted);
+        printf("largest line = %d\n", largest_line);
+
+
+
+        line_matrix_creator(map_uncompleted[0], largest_line);
+
+
+
+
+        /*
+
         
         printf("-----------------------------\n");
 
-        char **map_uncompleted;
-        map_uncompleted = map_creator(filename, h_map, ind_map);
 
         (void) map_uncompleted;
         */
@@ -124,9 +139,6 @@ int main(int argc, char const *argv[])
 
         printf("check first last one = %d\n", check_last_first_one(map_uncompleted));
         
-        int largest_line;
-        largest_line = find_largest_line(map_uncompleted);
-        printf("largest line = %d\n", largest_line);
         */
 
     }

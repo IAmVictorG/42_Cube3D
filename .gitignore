@@ -1,1 +1,2 @@
-*.o
+srcs/*.o
+cub3D

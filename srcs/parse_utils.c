@@ -19,12 +19,14 @@ void print_tab(char **tab)
 {
     int i;
     
+	printf("-------------------------------- START\n\n");
     i = 0;
     while (tab[i] != NULL)
     {
         printf("%d : %s",i, tab[i]);
         i++;
     }
+	printf("\n--------------------------------- END\n");
 }
 
 void	set_vector(char *str, t_vec *vec)
