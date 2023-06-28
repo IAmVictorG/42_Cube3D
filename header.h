@@ -68,7 +68,7 @@ typedef struct s_sprite
 
 typedef struct s_map
 {
-	char	**map;
+	char	**matrix;
 	int		height_map;
 	int		width_map;
 } t_map;

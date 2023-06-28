@@ -407,22 +407,22 @@ int	check_player(char **matrix)
 	return (0);
 }
 
-void	display_map(t_scene *scene)
-{
-	int	i;
+// void	display_map(t_scene *scene)
+// {
+// 	int	i;
 
-	printf("---MAP--\n");
-	printf("Hauteur = %d\n", scene->map.height_map);
-	printf("\n");
+// 	printf("---MAP--\n");
+// 	printf("Hauteur = %d\n", scene->map.height_map);
+// 	printf("\n");
 
-	i = 0;
-	while ((scene->map.map)[i] != NULL)
-	{
-		printf("%s", (scene->map.map)[i]);
-		i++;
-	}
-	printf("\n");
-	printf("\n");
-}
+// 	i = 0;
+// 	while ((scene->map.map)[i] != NULL)
+// 	{
+// 		printf("%s", (scene->map.map)[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// 	printf("\n");
+// }
 
 

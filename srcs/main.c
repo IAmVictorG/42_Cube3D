@@ -71,42 +71,135 @@ char **copy_file(const char *filename, int size_file)
 
 int map_parser(t_scene *scene, char **copy, int end_parse_1)
 {
-    int ind_map;
-    int h_map;
-    int chk_EOF;
+    int     ind_map;
+    int     h_map;
+    int     chk_EOF;
     char    **map_uncompleted;
+    int     caract_ok;
+    int     w_map;
+    char    **matrix;
+    int     chk_walls;
+    int     chk_player;
+
 
     (void) scene;
-    (void) h_map;
+    //(void) h_map;
 
     ind_map = find_map(copy, end_parse_1);
-    //printf("ind_map = %d\n", ind_map);
     if (ind_map == -1)
     {
         printf("ERROR 1 : Inconsistant map.\n");
         return (0);
     }
+
     h_map = height_map(copy, ind_map);
-    printf("hauteur de la map : %d\n", h_map);
     if (h_map <= 2)
     {
-        printf("ERROR 2 : Inconsistant map.\n");
+        printf("ERROR 2 : Heigth map deficient.\n");
         return (0);
     }
+    scene->map.height_map = h_map;
+
     chk_EOF = check_EOF(copy, ind_map, h_map);
     if (chk_EOF == 0)
     {
         printf("ERROR 3 : Inconsistant map.\n");
         return (0);
     }
+
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
     {
         printf("ERROR 4 : Impossible to create map.\n");
         return (0);
     }
-    print_tab(map_uncompleted);
+
+    caract_ok = check_caract_map(map_uncompleted);
+    if (caract_ok == 0)
+    {
+        printf("ERROR 5 : Prohibited character in map.\n");
+        return (0);
+    }
+
+    w_map = find_largest_line(map_uncompleted);
+    if (w_map < 3)
+    {
+        printf("ERROR 6 : Width map deficient.\n");
+        return (0);
+    }
+    scene->map.width_map = w_map;
+
+    matrix = matrix_creator(map_uncompleted, h_map, w_map);
+    if (matrix == NULL)
+    {
+        printf("ERROR 7 : Impossible to create matrix.\n");
+        return (0);
+    }
+    scene->map.matrix = matrix;
+
+    chk_walls = parse_first_wall(matrix[0]);
+    if (chk_walls == 0)
+    {
+        printf("ERROR 8 : Inconsistent first wall.\n");
+        return (0);
+    }
+
+    chk_walls = check_last_first_one(matrix);
+    if (chk_walls == 0)
+    {
+        printf("ERROR 9 : Inconsistent middle wall.\n");
+        return (0);
+    }
+
+    chk_walls = parse_first_wall(matrix[h_map - 1]);
+    if (chk_walls == 0)
+    {
+        printf("ERROR 10 : Inconsistent last wall.\n");
+        return (0);
+    }
+
+    chk_player = check_player(matrix);
+    if (chk_player == 0)
+    {
+        printf("ERROR 11 : Inconsistent player.\n");
+        return (0);
+    }
+
+    chk_walls = wall_inspector(matrix, h_map, w_map);
+    if (chk_walls == 0)
+    {
+        printf("ERROR 12 : Leaks in wall.\n");
+        return (0);
+    }
+
     return (-1561);
+
+}
+
+void    printVec(t_vec vector)
+{
+    printf("x = %f, ", vector.x);
+    printf("y = %f, ", vector.y);
+    printf("z = %f", vector.z);
+}
+
+
+void    print_scene(t_scene *scene)
+{
+    printf("  sky_color : ");
+    printVec(scene->sky_color);
+    printf("\n");
+
+    printf("floor_color : ");
+    printVec(scene->sky_color);
+    printf("\n");
+    
+    printf("----MAP----\n");
+    printf("height map = %d\n", scene->map.height_map);
+    printf(" width map = %d\n", scene->map.width_map);
+    print_tab(scene->map.matrix);
+    
+
 
 }
 
@@ -175,6 +268,7 @@ int main(int argc, char const *argv[])
         
         map_parser(scene, copy, end_part_1);
 
+        print_scene(scene);
         /*
         int h_map;
         h_map = height_map(copy, ind_map);
