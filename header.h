@@ -103,7 +103,8 @@ int	create_trgb(int t, int r, int g, int b);
 t_vec vec_normalize(t_vec v);
 
 /* ray_caster.c*/
-int		render(t_general *general);
+//int		render(t_general *general);
+int		render(t_mlib *mlib, t_scene *scene);
 
 /* parse_utils.c */
 int		is_space(char c);

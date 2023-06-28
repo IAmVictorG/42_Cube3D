@@ -107,7 +107,7 @@ void    draw_wall(int pixel_x, int pixel_y, int size_wall, t_mlib *mlib)
 }
 
 
-int render(t_general *general)
+int render(t_mlib *mlib, t_scene *scene)
 {
     printf("RENDER\n");
     //(void) general;
@@ -117,7 +117,7 @@ int render(t_general *general)
     //(void) scene;
     //(void) mlib;
 
-    /*
+    
     int size_wall;
 
     if (scene->map.height_map > scene->map.width_map)
@@ -174,7 +174,7 @@ int render(t_general *general)
     //         (void) dir;
     //     }
     // }
-    printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));*/
+    printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));
     
     return (1);
 }

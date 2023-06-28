@@ -65,7 +65,8 @@ void init_window(t_mlib *mlib, t_scene *scene)
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
    // img_ptr = mlx_png_file_to_image(mlib->utils.mlx, "sprites/Wall_North.png", &img_width, &img_height);
     printf("LET\n");
-    mlx_loop_hook(mlib->utils.win, render, general);
+    render(mlib, scene);
+    //mlx_loop_hook(mlib->utils.win, render, general);
     //mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, img_ptr, 0, 0);
 
     //mlx_hook(mlib->utils.win, 2, 1L<<0, key_press, general);  // Hook pour les touches pressées
