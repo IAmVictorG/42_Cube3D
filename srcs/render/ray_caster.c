@@ -56,35 +56,32 @@
     return (0);
 }
 
-void draw_player(int x0, int y0, int x1, int y1, int color, int size_wall, t_mlib *mlib)
+void draw_player(float x0, float y0, float x1, float y1, int color, int size_wall, t_mlib *mlib)
 {
-    (void) x1;
-    (void) y1;
+    int int_x0 = roundf(x0);
+    int int_y0 = roundf(y0);
+    int int_x1 = roundf(x1);
+    int int_y1 = roundf(y1);
 
-    my_mlx_pixel_put(&mlib->data, x0, y0, color);
-    my_mlx_pixel_put(&mlib->data, x0 + 1, y0, color);
-    my_mlx_pixel_put(&mlib->data, x0, y0 + 1, color);
-    my_mlx_pixel_put(&mlib->data, x0, y0 - 1, color);
-    my_mlx_pixel_put(&mlib->data, x0 - 1, y0, color);
-    int i;
-    
-    i = 0;
+    my_mlx_pixel_put(&mlib->data, int_x0, int_y0, color);
+    my_mlx_pixel_put(&mlib->data, int_x0 + 1, int_y0, color);
+    my_mlx_pixel_put(&mlib->data, int_x0, int_y0 + 1, color);
+    my_mlx_pixel_put(&mlib->data, int_x0, int_y0 - 1, color);
+    my_mlx_pixel_put(&mlib->data, int_x0 - 1, int_y0, color);
+
+    int i = 0;
     while (i < size_wall / 2)
     {
-        if (y1 != 0)
-            my_mlx_pixel_put(&mlib->data, x0, y0 + i * y1, color);        
+        if (int_y1 != 0)
+            my_mlx_pixel_put(&mlib->data, int_x0, int_y0 + i * int_y1, color);        
         else
-            my_mlx_pixel_put(&mlib->data, x0 + i * x1, y0, color);        
+            my_mlx_pixel_put(&mlib->data, int_x0 + i * int_x1, int_y0, color);        
         i++;
     }
     
-    my_mlx_pixel_put(&mlib->data, x0 + x1, y0 + y1, 0xFF0000);
-
-
-
-    //my_mlx_pixel_put(&mlib->data, i * size_wall + (size_wall * 0.5), j * size_wall + (size_wall * 0.5), 0x00FF00);
-
+    my_mlx_pixel_put(&mlib->data, int_x0 + int_x1, int_y0 + int_y1, 0xFF0000);
 }
+
 
 void    draw_wall(int pixel_x, int pixel_y, int size_wall, t_mlib *mlib)
 {   
@@ -99,27 +96,24 @@ void    draw_wall(int pixel_x, int pixel_y, int size_wall, t_mlib *mlib)
         while (x < size_wall)
         {
             my_mlx_pixel_put(&mlib->data, pixel_x + x, pixel_y + y, 0xFF00FF);
+
             x++;
         }
         y++;
     }
+    // printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));
 
 }
 
 
-int render(t_mlib *mlib, t_scene *scene)
+int render(t_general *general)
 {
-    printf("RENDER\n");
-    //(void) general;
-    //t_scene *scene = general->scene;
-    //t_mlib  *mlib = general->mlib;
-
-    //(void) scene;
-    //(void) mlib;
-
-    
+    t_scene *scene = general->scene;
+    t_mlib  *mlib = general->mlib;
     int size_wall;
 
+    mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
+    mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
     if (scene->map.height_map > scene->map.width_map)
     {
         size_wall = HEIGHT / scene->map.height_map;
@@ -129,7 +123,9 @@ int render(t_mlib *mlib, t_scene *scene)
         size_wall = WIDTH / scene->map.width_map;
     }
 
-    printf("size_wall = %d\n", size_wall);
+    //printf("size_wall = %d\n", size_wall);
+
+
 
     int i;
     int j;
@@ -138,43 +134,27 @@ int render(t_mlib *mlib, t_scene *scene)
     j = 0;
     while (j < scene->map.height_map)
     {
-       // printf("%s", scene->map.matrix[j]);
         i = 0;
         while (i < scene->map.width_map)
         {
             if (scene->map.matrix[j][i] == '1')
             {
-                //printf("%c", scene->map.matrix[j][i]);
                 draw_wall(i * size_wall, j * size_wall, size_wall, mlib);
             }
             else if (scene->map.matrix[j][i] == 'N')
             {   
-                printf("NNNNNNNNNNNNNN\n");
-                //draw_wall(i * size_wall, j * size_wall, size_wall, mlib);
-                draw_player(scene->player.pos.x * size_wall + (size_wall * 0.5), scene->player.pos.y * size_wall + (size_wall * 0.5), 1, 0, 0x00FF00 , size_wall, mlib);
-               // my_mlx_pixel_put(&mlib->data, i * size_wall + (size_wall * 0.5), j * size_wall + (size_wall * 0.5), 0x00FF00);
+                draw_player(scene->player.pos.x * size_wall + (size_wall * 0.5), scene->player.pos.y * size_wall + (size_wall * 0.5), general->scene->player.dir.x, general->scene->player.dir.y, 0x00FF00 , size_wall, mlib);
             }
             i++;
         }
-        printf("\n");
         j++;
     }
 
-    printf("3");
 
 
-    // (void) scene;
-
-    // for (int i = 0; i < WIDTH; i++) 
-    // {
-    //     for (int j = 0; j < HEIGHT; j++) 
-    //     {
-    //         t_vec dir = create_ray(scene, i, j);
-    //         my_mlx_pixel_put(&mlib->data, i, j, 0xFF00FF);
-    //         (void) dir;
-    //     }
-    // }
-    printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));
-    
+    //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
+    mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
+    mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
+    //mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, mlib->data.img_ptr);
     return (1);
 }

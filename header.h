@@ -6,13 +6,28 @@
 #include <math.h>
 #include "includes/get_next_line/get_next_line.h"
 #include "includes/libft/libft.h"
-#include "includes/mlx_opengl/mlx.h"
+#include "includes/mlx/mlx.h"
 #include <fcntl.h>
+# include <pthread.h>
 
 #define WIDTH 300
 #define HEIGHT 300
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
+
+#define MLX_SYNC_IMAGE_WRITABLE		1
+#define MLX_SYNC_WIN_FLUSH_CMD		2
+#define MLX_SYNC_WIN_CMD_COMPLETED	3
+
+#define KEY_A 0
+#define KEY_S 1
+#define KEY_D 2
+#define KEY_Q 12
+#define KEY_W 13
+#define KEY_R 15
+#define KEY_ESC 53
+
+#define ROTATION_SPEED M_PI / 10
 
 
 typedef struct	s_utils 
@@ -84,10 +99,20 @@ typedef struct s_scene
 	
 } t_scene;
 
+typedef struct s_keys {
+    int w;
+    int a;
+    int s;
+    int d;
+    int q;
+	int r;
+} t_keys;
+
 typedef struct general
 {
 	t_scene *scene;
 	t_mlib	*mlib;
+	t_keys	*keys;
 } t_general;
 
 
@@ -104,7 +129,7 @@ t_vec vec_normalize(t_vec v);
 
 /* ray_caster.c*/
 //int		render(t_general *general);
-int		render(t_mlib *mlib, t_scene *scene);
+int		render(t_general *general);
 
 /* parse_utils.c */
 int		is_space(char c);

@@ -21,9 +21,11 @@ RM		= rm -f
 	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o ${<:.c=.o}
 
 $(NAME): $(OBJS)
+	make -C includes/mlx
 	make -C includes/libft
 	make -C includes/mlx_opengl
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) includes/mlx_opengl/libmlx.a -lz $(MAC_FLAGS) -o $(NAME) -fsanitize=address
+	cp includes/mlx/libmlx.dylib .
+	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -lz -L includes/mlx -lmlx $(MAC_FLAGS) -o $(NAME) -fsanitize=address
 
 
 all:		$(NAME)
