@@ -212,37 +212,13 @@ int main(int argc, char const *argv[])
     /* SCOPE TESTS VICTOR */
 
     {
-        // char **copy;
-        // t_scene *scene;
-        // char const *filename;
-        // t_mlib *mlib;
-
-        // mlib = malloc(sizeof(t_mlib));
-
-        // filename = "map1.cub";
-        // int size_file;
-        // size_file = get_size_file(filename);       
-        // scene = malloc(sizeof(t_scene));
-        // copy = copy_file (filename, size_file);
-        
-        // parser(scene, copy);
-
-        // printf("%s\n", scene->sprite.north);
-        // printf("%s\n", scene->sprite.south);
-        // printf("%s\n", scene->sprite.west);
-        // printf("%s\n", scene->sprite.east);
-        // printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
-        // printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
-
-        // init_window(mlib, scene);
-    }
-
-    
 
 
-    /* SCOPE TESTS FX */
-    {
+
+
+
         t_scene *scene;
+        t_mlib *mlib;
 
         char const *filename;
         filename = "map2.cub";
@@ -268,7 +244,67 @@ int main(int argc, char const *argv[])
         
         map_parser(scene, copy, end_part_1);
 
+        /*A CORRIGER !!!*/
+        scene->map.width_map = scene->map.width_map - 1;
+
+
+        scene->player.pos.x = 7.0f;
+        scene->player.pos.y = 3.0f;
+        scene->player.pos.z = 0;
+
         print_scene(scene);
+
+
+        mlib = malloc(sizeof(t_mlib));
+
+
+
+        
+        parser(scene, copy);
+
+        printf("%s\n", scene->sprite.north);
+        printf("%s\n", scene->sprite.south);
+        printf("%s\n", scene->sprite.west);
+        printf("%s\n", scene->sprite.east);
+        printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
+        printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
+
+
+        init_window(mlib, scene);
+    }
+
+    
+
+
+    /* SCOPE TESTS FX */
+    {
+        // t_scene *scene;
+
+        // char const *filename;
+        // filename = "map2.cub";
+
+        // scene = malloc(sizeof(t_scene));
+        // if (scene == NULL)
+        // {
+        //     return (0);
+        // }
+
+        // int size_file;
+        // size_file = get_size_file(filename);
+        // //printf("size_file : %d\n", size_file);
+
+        // char **copy;
+        // copy = copy_file (filename, size_file);
+
+
+        // //print_tab(copy);
+
+        // int end_part_1 = parser(scene, copy);
+        // printf("end = %d\n", end_part_1);
+        
+        // map_parser(scene, copy, end_part_1);
+
+        // print_scene(scene);
         /*
         int h_map;
         h_map = height_map(copy, ind_map);

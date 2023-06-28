@@ -84,6 +84,15 @@ typedef struct s_scene
 	
 } t_scene;
 
+typedef struct general
+{
+	t_scene *scene;
+	t_mlib	*mlib;
+} t_general;
+
+
+void    print_scene(t_scene *scene);
+
 
 /* init_window.c*/
 void init_window(t_mlib *mlib, t_scene *scene);
@@ -94,7 +103,7 @@ int	create_trgb(int t, int r, int g, int b);
 t_vec vec_normalize(t_vec v);
 
 /* ray_caster.c*/
-void render(t_scene *scene, t_mlib *mlib);
+int		render(t_general *general);
 
 /* parse_utils.c */
 int		is_space(char c);
