@@ -10,7 +10,9 @@ int string_is_only_space(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	if (str == NULL)
+		return (0);
+	while (str[i] != '\0')
 	{
 		if (!is_space(str[i]) && str[i] != '\n')
 			return (0);

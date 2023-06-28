@@ -31,6 +31,13 @@
     int ngx; //next goal x
     int ngy; //next goal y
 
+    (void) hit;
+    (void) i;
+    (void) ngx; //next goal x
+    (void) ngy;
+
+
+
     if (dir.x > 0)
         ngx = (int) player_pos.x + 1;
     else

@@ -25,14 +25,17 @@ int parse_first_wall(char *line)
 int	find_map(char **copy_file, int end_part_1)
 {
 	int	i;
-	//int	j;
 
 	i = end_part_1 + 1;
-    while (string_is_only_space(copy_file[i]) == 1 && copy_file[i] != NULL)
+    while (copy_file[i] != NULL)
+	{
+		if (string_is_only_space(copy_file[i]) == 0)
+		{
+			return (i);
+		}
 		i++;
-	if (copy_file[i] != NULL)
-		return (i);
-    return (-1);
+	}
+	return (-1);
 }
 
 
@@ -43,7 +46,8 @@ int height_map(char **copy_file, int ind_map)
 	int	i;
 
 	i = 0;
-	while (copy_file[ind_map + i] != NULL && copy_file[ind_map + i][0] != '\n')
+	while (copy_file[ind_map + i] != NULL
+		&& string_is_only_space(copy_file[ind_map + i]) == 0)
 	{
 		i++;
 	}
@@ -72,17 +76,13 @@ char **map_creator(char **copy_file, int h_map, int ind_map)
 {
 	char	**map;
 	int		i;
-	char	*line;
 
 	map = (char **) malloc(sizeof(char *) * (h_map + 1));
 	if (map == NULL)
 		return (NULL);
 
 	i = 0;
-	line = NULL;
-
 	//printf("i = %d\n", i);
-
 	while (i < h_map)
 	{
 		map[i] = ft_strdup(copy_file[ind_map + i]);

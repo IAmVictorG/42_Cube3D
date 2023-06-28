@@ -73,19 +73,39 @@ int map_parser(t_scene *scene, char **copy, int end_parse_1)
 {
     int ind_map;
     int h_map;
+    int chk_EOF;
+    char    **map_uncompleted;
+
     (void) scene;
+    (void) h_map;
 
     ind_map = find_map(copy, end_parse_1);
-    printf("ind_map = %s\n", copy[ind_map]);
+    //printf("ind_map = %d\n", ind_map);
     if (ind_map == -1)
     {
+        printf("ERROR 1 : Inconsistant map.\n");
         return (0);
     }
-
     h_map = height_map(copy, ind_map);
     printf("hauteur de la map : %d\n", h_map);
-
-
+    if (h_map <= 2)
+    {
+        printf("ERROR 2 : Inconsistant map.\n");
+        return (0);
+    }
+    chk_EOF = check_EOF(copy, ind_map, h_map);
+    if (chk_EOF == 0)
+    {
+        printf("ERROR 3 : Inconsistant map.\n");
+        return (0);
+    }
+    map_uncompleted = map_creator(copy, h_map, ind_map);
+    if (map_uncompleted == NULL)
+    {
+        printf("ERROR 4 : Impossible to create map.\n");
+        return (0);
+    }
+    print_tab(map_uncompleted);
     return (-1561);
 
 }
@@ -151,15 +171,11 @@ int main(int argc, char const *argv[])
         //print_tab(copy);
 
         int end_part_1 = parser(scene, copy);
-        //printf("end = [%s]\n", copy[end]);
-
-        int ind_map;
-        ind_map = find_map(copy, end_part_1);
-        printf("ind_map = %s\n", copy[ind_map]);
+        printf("end = %d\n", end_part_1);
         
         map_parser(scene, copy, end_part_1);
 
-
+        /*
         int h_map;
         h_map = height_map(copy, ind_map);
         printf("hauteur de la map : %d\n", h_map);
@@ -214,7 +230,7 @@ int main(int argc, char const *argv[])
         printf("Wall inspection = %d\n", wall_inspect);
 
         print_tab(matrix);
-
+        */
 
     }
 
