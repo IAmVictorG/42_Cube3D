@@ -202,6 +202,7 @@ void    print_player(t_player player)
     printVec(player.pos);
     printf("dir : ");
     printVec(player.dir);
+    printf("speed = %f\n", player.speed);
     printf("\n");
 
 }
@@ -227,6 +228,7 @@ void    print_scene(t_scene *scene)
     printf("\n");
     printf("dir : ");
     printVec(scene->player.dir);
+
 
     
 }
@@ -295,6 +297,8 @@ int main(int argc, char const *argv[])
         scene->map.size_wall = get_size_wall(scene->map.width_map, scene->map.height_map);
         
         scene->player.pos = get_player_position(scene->player.coord_ini, scene->map.size_wall);
+
+        scene->player.speed = scene->map.size_wall * 0.1f;
 
         print_player(scene->player);
 

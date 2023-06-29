@@ -56,12 +56,19 @@
     return (0);
 }
 
-void draw_player(float x0, float y0, float x1, float y1, int color, int size_wall, t_mlib *mlib)
+void draw_player(t_general *general)
 {
-    int int_x0 = roundf(x0);
-    int int_y0 = roundf(y0);
-    int int_x1 = roundf(x1);
-    int int_y1 = roundf(y1);
+    
+    int color;
+    t_mlib  *mlib;
+
+    mlib = general->mlib;
+    color = 0x00FF00;
+
+    int int_x0 = roundf(general->scene->player.pos.x);
+    int int_y0 = roundf(general->scene->player.pos.y);
+    //int int_x1 = roundf(x1);
+    //int int_y1 = roundf(y1);
 
     my_mlx_pixel_put(&mlib->data, int_x0, int_y0, color);
     my_mlx_pixel_put(&mlib->data, int_x0 + 1, int_y0, color);
@@ -69,17 +76,32 @@ void draw_player(float x0, float y0, float x1, float y1, int color, int size_wal
     my_mlx_pixel_put(&mlib->data, int_x0, int_y0 - 1, color);
     my_mlx_pixel_put(&mlib->data, int_x0 - 1, int_y0, color);
 
-    int i = 0;
-    while (i < size_wall / 2)
-    {
-        if (int_y1 != 0)
-            my_mlx_pixel_put(&mlib->data, int_x0, int_y0 + i * int_y1, color);        
-        else
-            my_mlx_pixel_put(&mlib->data, int_x0 + i * int_x1, int_y0, color);        
-        i++;
-    }
+
+    //int size_vec_dir;
+
+
+    t_coord coord_vector;
+
+    coord_vector.x = general->scene->player.pos.x + general->scene->player.dir.x * general->scene->map.size_wall;
+    coord_vector.y = general->scene->player.pos.y + general->scene->player.dir.y * general->scene->map.size_wall;
+
+    my_mlx_pixel_put(&mlib->data, coord_vector.x, coord_vector.y, color);        
+
+
+
+    //printVec(general->scene->player.dir);
+
+    // int i = 0;
+    // while (i < general->scene->map.size_wall / 2)
+    // {
+    //     if (int_y1 != 0)
+    //         my_mlx_pixel_put(&mlib->data, int_x0, int_y0 + i * int_y1, color);        
+    //     else
+    //         my_mlx_pixel_put(&mlib->data, int_x0 + i * int_x1, int_y0, color);        
+    //     i++;
+    // }
     
-    my_mlx_pixel_put(&mlib->data, int_x0 + int_x1, int_y0 + int_y1, 0xFF0000);
+    //my_mlx_pixel_put(&mlib->data, int_x0 + int_x1, int_y0 + int_y1, 0xFF0000);
 }
 
 
@@ -131,7 +153,7 @@ int render(t_general *general)
             else if (scene->map.matrix[j][i] == 'N')
             {   
                 //printf("x = %f | y = %f\n", scene->player.pos.x, scene->player.pos.y);
-                draw_player(scene->player.pos.x, scene->player.pos.y, general->scene->player.dir.y, general->scene->player.dir.x, 0x00FF00 , size_wall, mlib);
+                draw_player(general);
             }
             i++;
         }

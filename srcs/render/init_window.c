@@ -37,23 +37,23 @@ int key_press(int keycode, t_general *general)
     }
     if (general->keys->a == 1)
     {
-        general->scene->player.pos.y -= 0.1f * general->scene->player.dir.x;
-        general->scene->player.pos.x -= 0.1f * general->scene->player.dir.y;
+        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.y;
     }
     if (general->keys->s == 1)
     {
-        general->scene->player.pos.x -= 0.1f * general->scene->player.dir.x;
-        general->scene->player.pos.y -= 0.1f * general->scene->player.dir.y;
+        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.y;
     }
     if (general->keys->d == 1)
     {
-        general->scene->player.pos.y += 0.1f * general->scene->player.dir.x;
-        general->scene->player.pos.x += 0.1f * general->scene->player.dir.y;
+        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.y;
     }
     if (general->keys->w == 1)
     {
-        general->scene->player.pos.x += 0.1f * general->scene->player.dir.x;
-        general->scene->player.pos.y += 0.1f * general->scene->player.dir.y;
+        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.y;
     }
 
     //Changement de direction player
