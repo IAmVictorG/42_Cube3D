@@ -26,9 +26,9 @@ int key_press(int keycode, t_general *general)
     printf("s %d\n", general->keys->s);
     printf("d %d\n", general->keys->d);
 
-    printf("Player direction x: %f, y: %f\n", general->scene->player.dir.x, general->scene->player.dir.y);
-    printf("Player position : ");
-    printVec(general->scene->player.pos);
+    // printf("Player direction x: %f, y: %f\n", general->scene->player.dir.x, general->scene->player.dir.y);
+    // printf("Player position : ");
+    // printVec(general->scene->player.pos);
 
 
     if (keycode == 53)
@@ -39,21 +39,28 @@ int key_press(int keycode, t_general *general)
     {
         general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.x;
         general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.y;
+        print_player(general->scene->player);
     }
     if (general->keys->s == 1)
     {
         general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.x;
         general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.y;
+        print_player(general->scene->player);
+
     }
     if (general->keys->d == 1)
     {
         general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.x;
         general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.y;
+        print_player(general->scene->player);
+
     }
     if (general->keys->w == 1)
     {
         general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.x;
         general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.y;
+        print_player(general->scene->player);
+
     }
 
     //Changement de direction player
@@ -63,6 +70,8 @@ int key_press(int keycode, t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
+        print_player(general->scene->player);
+
     }
     if (general->keys->r == 1)
     {
@@ -70,6 +79,8 @@ int key_press(int keycode, t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
+        print_player(general->scene->player);
+
     }
     if (general->keys->arrow_l == 1)
     {
@@ -77,6 +88,8 @@ int key_press(int keycode, t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
+        print_player(general->scene->player);
+
     }
     if (general->keys->arrow_r == 1)
     {
@@ -84,6 +97,8 @@ int key_press(int keycode, t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
+        print_player(general->scene->player);
+
     }
 
     return (0);
@@ -144,7 +159,6 @@ void init_key(t_general *general)
 
 void init_window(t_mlib *mlib, t_scene *scene)
 {
-    printf("1\n");
     t_general *general;
  
     general = (t_general *) malloc (sizeof(t_general));
@@ -156,11 +170,9 @@ void init_window(t_mlib *mlib, t_scene *scene)
     
     init_key(general);
 
-    scene->player.dir.x = 1;
-    scene->player.dir.y = 0;
-
     general->mlib = mlib;
     general->scene = scene;
+
     //print_scene(general->scene);
 
     mlib->utils.mlx = mlx_init();

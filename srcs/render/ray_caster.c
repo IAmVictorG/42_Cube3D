@@ -58,17 +58,15 @@
 
 void draw_player(t_general *general)
 {
-    
     int color;
     t_mlib  *mlib;
+    t_coord coord_vector;
 
     mlib = general->mlib;
     color = 0x00FF00;
 
     int int_x0 = roundf(general->scene->player.pos.x);
     int int_y0 = roundf(general->scene->player.pos.y);
-    //int int_x1 = roundf(x1);
-    //int int_y1 = roundf(y1);
 
     my_mlx_pixel_put(&mlib->data, int_x0, int_y0, color);
     my_mlx_pixel_put(&mlib->data, int_x0 + 1, int_y0, color);
@@ -76,32 +74,11 @@ void draw_player(t_general *general)
     my_mlx_pixel_put(&mlib->data, int_x0, int_y0 - 1, color);
     my_mlx_pixel_put(&mlib->data, int_x0 - 1, int_y0, color);
 
-
-    //int size_vec_dir;
-
-
-    t_coord coord_vector;
-
     coord_vector.x = general->scene->player.pos.x + general->scene->player.dir.x * general->scene->map.size_wall;
     coord_vector.y = general->scene->player.pos.y + general->scene->player.dir.y * general->scene->map.size_wall;
 
-    my_mlx_pixel_put(&mlib->data, coord_vector.x, coord_vector.y, color);        
+    my_mlx_pixel_put(&mlib->data, coord_vector.x, coord_vector.y, 0xFF0000);        
 
-
-
-    //printVec(general->scene->player.dir);
-
-    // int i = 0;
-    // while (i < general->scene->map.size_wall / 2)
-    // {
-    //     if (int_y1 != 0)
-    //         my_mlx_pixel_put(&mlib->data, int_x0, int_y0 + i * int_y1, color);        
-    //     else
-    //         my_mlx_pixel_put(&mlib->data, int_x0 + i * int_x1, int_y0, color);        
-    //     i++;
-    // }
-    
-    //my_mlx_pixel_put(&mlib->data, int_x0 + int_x1, int_y0 + int_y1, 0xFF0000);
 }
 
 
@@ -138,7 +115,7 @@ int render(t_general *general)
 
     int i;
     int j;
-    (void) i;
+
 
     j = 0;
     while (j < scene->map.height_map)
@@ -150,16 +127,15 @@ int render(t_general *general)
             {
                 draw_wall(i * size_wall, j * size_wall, size_wall, mlib);
             }
-            else if (scene->map.matrix[j][i] == 'N')
-            {   
-                //printf("x = %f | y = %f\n", scene->player.pos.x, scene->player.pos.y);
-                draw_player(general);
-            }
             i++;
         }
         j++;
     }
 
+    draw_player(general);
+    
+    
+    
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
     mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);

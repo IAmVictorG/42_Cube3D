@@ -466,12 +466,12 @@ t_vec	get_player_orientation(char **matrix, t_coord coord_ini)
 	if (orientation == 'N')
 	{
 		orientation_ini.x = 0;
-		orientation_ini.y = 1;
+		orientation_ini.y = -1;
 	}
 	else if (orientation == 'S')
 	{
 		orientation_ini.x = 0;
-		orientation_ini.y = -1;
+		orientation_ini.y = 1;
 	}
 	else if (orientation == 'W')
 	{

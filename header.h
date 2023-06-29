@@ -126,6 +126,7 @@ typedef struct general
 void    printVec(t_vec vector);
 void    print_scene(t_scene *scene);
 t_coord	get_player_coord(char **matrix);
+void    print_player(t_player player);
 
 
 /* init_window.c*/
