@@ -10,7 +10,14 @@ int key_pression(int keycode, t_general *general)
         general->keys->s = 1;
     else if (keycode == KEY_D)
         general->keys->d = 1;
-    else if (keycode == KEY_Q)
+
+    
+    return (1);
+}
+
+int key_pression_dir(int keycode, t_general *general)
+{
+    if (keycode == KEY_Q)
         general->keys->q = 1;
     else if (keycode == KEY_R)
         general->keys->r = 1;
@@ -18,21 +25,34 @@ int key_pression(int keycode, t_general *general)
         general->keys->arrow_r = 1;
     else if (keycode == KEY_ARR_L)
         general->keys->arrow_l = 1;
-    
-    return (0);
+
+    return (1);
 }
 
-int key_pression_dir(int keycode, t_general *general)
+int position_is_valid(t_general *general, float pos_x, float pos_y)
 {
+    /* Test pour les bords de la map */
+    // if (pos_x < general->scene->map.size_wall || pos_y < general->scene->map.size_wall)
+    // {
+    //     return (0);
+    // }
 
-}
+    int x = (int) (pos_x / general->scene->map.size_wall);
+    int y = (int) (pos_y / general->scene->map.size_wall);
+    printf("pos_x = %d\n", (int) (pos_x / general->scene->map.size_wall));
+    printf("pos_y = %d\n", (int) (pos_y / general->scene->map.size_wall));
+    printf("c = %c \n", general->scene->map.matrix[y][x]);
 
-int forbidden_position(float pos_x, float pos_y)
-{
-    (void) pos_x;
-    (void) pos_y;
+    if (general->scene->map.matrix[y][x] == '1')
+    {
+        return (0);
+    }
 
-    return(-8787);
+
+
+
+
+    return(1);
 }
 
 
@@ -58,9 +78,13 @@ int key_press(int keycode, t_general *general)
     {
         pos_x = general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.x;
         pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.y;
+        
+        if (position_is_valid(general, pos_x, pos_y) == 1)
+        {
+            general->scene->player.pos.x = pos_x;
+            general->scene->player.pos.y = pos_y;
+        }
 
-        general->scene->player.pos.x = pos_x;
-        general->scene->player.pos.y = pos_y;
         print_player(general->scene->player);
     }
     if (general->keys->w == 1)
@@ -68,8 +92,11 @@ int key_press(int keycode, t_general *general)
         pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.x;
         pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.y;
 
-        general->scene->player.pos.x = pos_x;
-        general->scene->player.pos.y = pos_y;
+        if (position_is_valid(general,pos_x, pos_y) == 1)
+        {
+            general->scene->player.pos.x = pos_x;
+            general->scene->player.pos.y = pos_y;
+        }
         print_player(general->scene->player);
     }
     if (general->keys->a == 1)
@@ -78,8 +105,11 @@ int key_press(int keycode, t_general *general)
         pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.x;
 
 
-        general->scene->player.pos.x = pos_x;
-        general->scene->player.pos.y = pos_y;
+        if (position_is_valid(general,pos_x, pos_y) == 1)
+        {
+            general->scene->player.pos.x = pos_x;
+            general->scene->player.pos.y = pos_y;
+        }
 
         print_player(general->scene->player);
     }
@@ -88,8 +118,11 @@ int key_press(int keycode, t_general *general)
         pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.x;
         pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.y * -1;
 
-        general->scene->player.pos.x = pos_x;
-        general->scene->player.pos.y = pos_y;
+        if (position_is_valid(general, pos_x, pos_y) == 1)
+        {
+            general->scene->player.pos.x = pos_x;
+            general->scene->player.pos.y = pos_y;
+        }
 
         print_player(general->scene->player);
 
