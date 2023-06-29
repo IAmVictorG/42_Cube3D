@@ -22,9 +22,27 @@ int key_pression(int keycode, t_general *general)
     return (0);
 }
 
+int key_pression_dir(int keycode, t_general *general)
+{
+
+}
+
+int forbidden_position(float pos_x, float pos_y)
+{
+    (void) pos_x;
+    (void) pos_y;
+
+    return(-8787);
+}
+
+
 int key_press(int keycode, t_general *general)
 {
+    float pos_x;
+    float pos_y;
+
     key_pression(keycode, general);
+    key_pression_dir(keycode, general);
 
     printf("keycode = %d\n", keycode);
     printf("w %d\n", general->keys->w);
@@ -38,28 +56,41 @@ int key_press(int keycode, t_general *general)
     }
     if (general->keys->s == 1)
     {
-        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.y;
-        print_player(general->scene->player);
+        pos_x = general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.x;
+        pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.y;
 
+        general->scene->player.pos.x = pos_x;
+        general->scene->player.pos.y = pos_y;
+        print_player(general->scene->player);
     }
     if (general->keys->w == 1)
     {
-        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.y;
-        print_player(general->scene->player);
+        pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.x;
+        pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.y;
 
+        general->scene->player.pos.x = pos_x;
+        general->scene->player.pos.y = pos_y;
+        print_player(general->scene->player);
     }
     if (general->keys->a == 1)
     {
-        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.y * -1;
+        pos_x = general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.y * -1;
+        pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.x;
+
+
+        general->scene->player.pos.x = pos_x;
+        general->scene->player.pos.y = pos_y;
+
         print_player(general->scene->player);
     }
     if (general->keys->d == 1)
     {
-        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.y * -1;
+        pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.x;
+        pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.y * -1;
+
+        general->scene->player.pos.x = pos_x;
+        general->scene->player.pos.y = pos_y;
+
         print_player(general->scene->player);
 
     }
