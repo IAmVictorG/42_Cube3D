@@ -194,6 +194,17 @@ void    printCoord(t_coord coord)
 
 }
 
+void    print_player(t_player player)
+{
+    printf("----PLAYER----\n");
+    printCoord(player.coord_ini);
+    printf("pos : ");
+    printVec(player.pos);
+    printf("dir : ");
+    printVec(player.dir);
+    printf("\n");
+
+}
 
 void    print_scene(t_scene *scene)
 {
@@ -216,6 +227,7 @@ void    print_scene(t_scene *scene)
     printf("\n");
     printf("dir : ");
     printVec(scene->player.dir);
+
     
 }
 
@@ -282,15 +294,9 @@ int main(int argc, char const *argv[])
         
         scene->map.size_wall = get_size_wall(scene->map.width_map, scene->map.height_map);
         
+        scene->player.pos = get_player_position(scene->player.coord_ini, scene->map.size_wall);
 
-
-        //printf("size_wall = %d\n", scene->map.size_wall);
-
-        //scene->player.pos = get_player_position(scene->player.coord_ini, scene->map.size_wall);
-
-        printCoord(scene->player.coord_ini);
-        printf("size_wall = %d\n",scene->map.size_wall);
-        printVec(get_player_position(scene->player.coord_ini, scene->map.size_wall));
+        print_player(scene->player);
 
         printf("------------------------------------\n");
 

@@ -130,14 +130,13 @@ int render(t_general *general)
             }
             else if (scene->map.matrix[j][i] == 'N')
             {   
-                draw_player(scene->player.pos.x * size_wall + (size_wall * 0.5), scene->player.pos.y * size_wall + (size_wall * 0.5), general->scene->player.dir.y, general->scene->player.dir.x, 0x00FF00 , size_wall, mlib);
+                //printf("x = %f | y = %f\n", scene->player.pos.x, scene->player.pos.y);
+                draw_player(scene->player.pos.x, scene->player.pos.y, general->scene->player.dir.y, general->scene->player.dir.x, 0x00FF00 , size_wall, mlib);
             }
             i++;
         }
         j++;
     }
-
-
 
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
