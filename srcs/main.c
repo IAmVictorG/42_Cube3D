@@ -181,6 +181,17 @@ void    printVec(t_vec vector)
     printf("x = %f, ", vector.x);
     printf("y = %f, ", vector.y);
     printf("z = %f", vector.z);
+    printf("\n");
+
+}
+
+void    printCoord(t_coord coord)
+{
+    printf("Coord x = %d ", coord.x);
+    printf("Coord y = %d", coord.y);
+    printf("\n");
+
+
 }
 
 
@@ -198,9 +209,14 @@ void    print_scene(t_scene *scene)
     printf("height map = %d\n", scene->map.height_map);
     printf(" width map = %d\n", scene->map.width_map);
     print_tab(scene->map.matrix);
+
+    printf("---PLAYER---\n");
+    printf("pos : ");
+    printVec(scene->player.pos);
+    printf("\n");
+    printf("dir : ");
+    printVec(scene->player.dir);
     
-
-
 }
 
 
@@ -210,13 +226,7 @@ int main(int argc, char const *argv[])
     (void) argv;
 
     /* SCOPE TESTS VICTOR */
-
     {
-
-
-
-
-
         t_scene *scene;
         t_mlib *mlib;
 
@@ -256,9 +266,6 @@ int main(int argc, char const *argv[])
 
 
         mlib = malloc(sizeof(t_mlib));
-
-
-
         
         parser(scene, copy);
 
@@ -269,6 +276,23 @@ int main(int argc, char const *argv[])
         printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
         printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
 
+        scene->player.coord_ini = get_player_coord(scene->map.matrix);
+
+        scene->player.dir = get_player_orientation(scene->map.matrix, scene->player.coord_ini);
+        
+        scene->map.size_wall = get_size_wall(scene->map.width_map, scene->map.height_map);
+        
+
+
+        //printf("size_wall = %d\n", scene->map.size_wall);
+
+        //scene->player.pos = get_player_position(scene->player.coord_ini, scene->map.size_wall);
+
+        printCoord(scene->player.coord_ini);
+        printf("size_wall = %d\n",scene->map.size_wall);
+        printVec(get_player_position(scene->player.coord_ini, scene->map.size_wall));
+
+        printf("------------------------------------\n");
 
         init_window(mlib, scene);
     }

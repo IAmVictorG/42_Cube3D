@@ -407,6 +407,97 @@ int	check_player(char **matrix)
 	return (0);
 }
 
+t_coord	get_player_coord(char **matrix)
+{
+	int		lin;
+	int		col;
+	t_coord	coord_ini;
+
+	coord_ini.x = -1;
+	coord_ini.y = -1;
+	lin = 0;
+	while (matrix[lin] != NULL)
+	{
+		col = 0;
+		while (matrix[lin][col] != '\0')
+		{
+			if (matrix[lin][col] == 'N' || matrix[lin][col] == 'S' || matrix[lin][col] == 'E' || matrix[lin][col] == 'W')
+			{
+				coord_ini.y = lin;
+				coord_ini.x = col;
+
+				return(coord_ini);	
+			}
+			col++;
+		}
+		lin++;
+	}
+	return (coord_ini);
+}
+
+
+int get_size_wall (int map_w, int map_h)
+{
+    int size_wall;
+
+    if (map_h > map_w)
+    {
+        size_wall = HEIGHT / map_h;
+    }
+    else
+    {
+        size_wall = WIDTH / map_w;
+    }
+
+    //scene->map.size_wall = size_wall;    
+    return (size_wall);
+}
+
+t_vec	get_player_orientation(char **matrix, t_coord coord_ini)
+{
+	char	orientation;
+	t_vec	orientation_ini;
+
+	orientation_ini.x = -1;
+	orientation_ini.y = -1;
+	orientation_ini.z = 0;
+
+	orientation = matrix[coord_ini.y][coord_ini.x];
+	if (orientation == 'N')
+	{
+		orientation_ini.x = 0;
+		orientation_ini.y = 1;
+	}
+	else if (orientation == 'S')
+	{
+		orientation_ini.x = 0;
+		orientation_ini.y = -1;
+	}
+	else if (orientation == 'W')
+	{
+		orientation_ini.x = -1;
+		orientation_ini.y = 0;
+	}
+	else if (orientation == 'E')
+	{
+		orientation_ini.x = 1;
+		orientation_ini.y = 0;
+	}
+	return (orientation_ini);
+}
+
+t_vec	get_player_position(t_coord coord_ini, int size_wall)
+{
+	t_vec position;
+	float	size_wall_f = (float) size_wall;
+
+	position.y = .5f;
+	position.y = coord_ini.y * size_wall_f + size_wall_f * 0.5;
+	position.x = coord_ini.x * size_wall_f + size_wall_f * 0.5;
+
+	return (position);
+}
+
 // void	display_map(t_scene *scene)
 // {
 // 	int	i;

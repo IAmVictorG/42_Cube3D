@@ -26,6 +26,8 @@
 #define KEY_W 13
 #define KEY_R 15
 #define KEY_ESC 53
+#define	KEY_ARR_R 124
+#define	KEY_ARR_L 123
 
 #define ROTATION_SPEED M_PI / 10
 
@@ -66,6 +68,7 @@ typedef struct s_coord
 
 typedef struct s_player 
 {
+	t_coord	coord_ini;
 	t_vec	pos;
 	t_vec	dir;
 	float	speed;
@@ -86,6 +89,7 @@ typedef struct s_map
 	char	**matrix;
 	int		height_map;
 	int		width_map;
+	int		size_wall;
 } t_map;
 
 typedef struct s_scene 
@@ -104,8 +108,11 @@ typedef struct s_keys {
     int a;
     int s;
     int d;
+
     int q;
 	int r;
+	int	arrow_r;
+	int	arrow_l;
 } t_keys;
 
 typedef struct general
@@ -116,7 +123,9 @@ typedef struct general
 } t_general;
 
 
+void    printVec(t_vec vector);
 void    print_scene(t_scene *scene);
+t_coord	get_player_coord(char **matrix);
 
 
 /* init_window.c*/
@@ -159,6 +168,13 @@ char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
 int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
 int		check_player(char **matrix);
 int		check_EOF(char **copy_file, int ind_map, int h_map);
+
+int		get_size_wall (int map_w, int map_h);
+
+
+
+t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
+t_vec	get_player_position(t_coord coord_ini, int size_wall);
 
 
 #endif

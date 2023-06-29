@@ -96,13 +96,10 @@ void    draw_wall(int pixel_x, int pixel_y, int size_wall, t_mlib *mlib)
         while (x < size_wall)
         {
             my_mlx_pixel_put(&mlib->data, pixel_x + x, pixel_y + y, 0xFF00FF);
-
             x++;
         }
         y++;
     }
-    // printf("%d\n", mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0));
-
 }
 
 
@@ -114,18 +111,8 @@ int render(t_general *general)
 
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
-    if (scene->map.height_map > scene->map.width_map)
-    {
-        size_wall = HEIGHT / scene->map.height_map;
-    }
-    else
-    {
-        size_wall = WIDTH / scene->map.width_map;
-    }
 
-    //printf("size_wall = %d\n", size_wall);
-
-
+    size_wall = get_size_wall(scene->map.width_map, scene->map.height_map);
 
     int i;
     int j;
@@ -143,7 +130,7 @@ int render(t_general *general)
             }
             else if (scene->map.matrix[j][i] == 'N')
             {   
-                draw_player(scene->player.pos.x * size_wall + (size_wall * 0.5), scene->player.pos.y * size_wall + (size_wall * 0.5), general->scene->player.dir.x, general->scene->player.dir.y, 0x00FF00 , size_wall, mlib);
+                draw_player(scene->player.pos.x * size_wall + (size_wall * 0.5), scene->player.pos.y * size_wall + (size_wall * 0.5), general->scene->player.dir.y, general->scene->player.dir.x, 0x00FF00 , size_wall, mlib);
             }
             i++;
         }
