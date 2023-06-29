@@ -19,7 +19,6 @@
 
 
     dir = (t_vec) {dx * pixel_x, dy * pixel_y, 1.0f};
-    //dir = (t_vec) {d * (pixel_x / (float)WIDTH - 0.5f), d * (pixel_y / (float)HEIGHT - 0.5f) * aspect_ratio, 1.0f};
     dir = vec_normalize(dir);
     return (dir);
 }
@@ -49,10 +48,7 @@
         ngy = (int) player_pos.y;
     hit = 0;
     i = 0;
-    /*while (!hit && i < MAX_DISTANCE)
-    {
 
-    }*/
     return (0);
 }
 

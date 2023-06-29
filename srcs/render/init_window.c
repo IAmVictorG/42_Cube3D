@@ -1,8 +1,7 @@
 #include "../../header.h"
 
-int key_press(int keycode, t_general *general)
+int key_pression(int keycode, t_general *general)
 {
-
     if (keycode == KEY_W)
         general->keys->w = 1;
     else if (keycode == KEY_A)
@@ -19,6 +18,13 @@ int key_press(int keycode, t_general *general)
         general->keys->arrow_r = 1;
     else if (keycode == KEY_ARR_L)
         general->keys->arrow_l = 1;
+    
+    return (0);
+}
+
+int key_press(int keycode, t_general *general)
+{
+    key_pression(keycode, general);
 
     printf("keycode = %d\n", keycode);
     printf("w %d\n", general->keys->w);
@@ -26,20 +32,9 @@ int key_press(int keycode, t_general *general)
     printf("s %d\n", general->keys->s);
     printf("d %d\n", general->keys->d);
 
-    // printf("Player direction x: %f, y: %f\n", general->scene->player.dir.x, general->scene->player.dir.y);
-    // printf("Player position : ");
-    // printVec(general->scene->player.pos);
-
-
     if (keycode == 53)
     {
         exit(EXIT_FAILURE);
-    }
-    if (general->keys->a == 1)
-    {
-        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.y;
-        print_player(general->scene->player);
     }
     if (general->keys->s == 1)
     {
@@ -48,17 +43,23 @@ int key_press(int keycode, t_general *general)
         print_player(general->scene->player);
 
     }
-    if (general->keys->d == 1)
-    {
-        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.x;
-        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.y;
-        print_player(general->scene->player);
-
-    }
     if (general->keys->w == 1)
     {
         general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.x;
         general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.y;
+        print_player(general->scene->player);
+
+    }
+    if (general->keys->a == 1)
+    {
+        general->scene->player.pos.y -= general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.x -= general->scene->player.speed * general->scene->player.dir.y * -1;
+        print_player(general->scene->player);
+    }
+    if (general->keys->d == 1)
+    {
+        general->scene->player.pos.y += general->scene->player.speed * general->scene->player.dir.x;
+        general->scene->player.pos.x += general->scene->player.speed * general->scene->player.dir.y * -1;
         print_player(general->scene->player);
 
     }
@@ -98,7 +99,6 @@ int key_press(int keycode, t_general *general)
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
         print_player(general->scene->player);
-
     }
 
     return (0);
@@ -173,7 +173,6 @@ void init_window(t_mlib *mlib, t_scene *scene)
     general->mlib = mlib;
     general->scene = scene;
 
-    //print_scene(general->scene);
 
     mlib->utils.mlx = mlx_init();
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");

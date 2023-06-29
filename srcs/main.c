@@ -191,7 +191,6 @@ void    printCoord(t_coord coord)
     printf("Coord y = %d", coord.y);
     printf("\n");
 
-
 }
 
 void    print_player(t_player player)
@@ -209,10 +208,13 @@ void    print_player(t_player player)
 
 void    print_scene(t_scene *scene)
 {
+
+    printf("%s\n", scene->sprite.north);
+    printf("%s\n", scene->sprite.south);
+    printf("%s\n", scene->sprite.west);
+    printf("%s\n", scene->sprite.east);
     printf("  sky_color : ");
     printVec(scene->sky_color);
-    printf("\n");
-
     printf("floor_color : ");
     printVec(scene->sky_color);
     printf("\n");
@@ -222,15 +224,7 @@ void    print_scene(t_scene *scene)
     printf(" width map = %d\n", scene->map.width_map);
     print_tab(scene->map.matrix);
 
-    printf("---PLAYER---\n");
-    printf("pos : ");
-    printVec(scene->player.pos);
-    printf("\n");
-    printf("dir : ");
-    printVec(scene->player.dir);
-
-
-    
+    print_player(scene->player);
 }
 
 
@@ -241,54 +235,28 @@ int main(int argc, char const *argv[])
 
     /* SCOPE TESTS VICTOR */
     {
-        t_scene *scene;
-        t_mlib *mlib;
+        t_scene     *scene;
+        t_mlib      *mlib;
+        int         size_file;
+        char const  *filename;
+        char        **copy;
 
-        char const *filename;
         filename = "map2.cub";
-
         scene = malloc(sizeof(t_scene));
         if (scene == NULL)
-        {
             return (0);
-        }
 
-        int size_file;
         size_file = get_size_file(filename);
-        //printf("size_file : %d\n", size_file);
-
-        char **copy;
         copy = copy_file (filename, size_file);
 
-
-        //print_tab(copy);
-
-        int end_part_1 = parser(scene, copy);
-        printf("end = %d\n", end_part_1);
-        
+        int end_part_1 = parser(scene, copy);        
         map_parser(scene, copy, end_part_1);
 
-        /*A CORRIGER !!!*/
-        scene->map.width_map = scene->map.width_map - 1;
-
-
-        scene->player.pos.x = 7.0f;
-        scene->player.pos.y = 3.0f;
-        scene->player.pos.z = 0;
-
-        print_scene(scene);
-
-
         mlib = malloc(sizeof(t_mlib));
+        if (mlib == NULL)
+            return (0);
         
         parser(scene, copy);
-
-        printf("%s\n", scene->sprite.north);
-        printf("%s\n", scene->sprite.south);
-        printf("%s\n", scene->sprite.west);
-        printf("%s\n", scene->sprite.east);
-        printf("F %f,%f,%f\n", scene->floor_color.x, scene->floor_color.y, scene->floor_color.z);
-        printf("C %f,%f,%f\n", scene->sky_color.x, scene->sky_color.y, scene->sky_color.z);
 
         scene->player.coord_ini = get_player_coord(scene->map.matrix);
 
@@ -300,101 +268,15 @@ int main(int argc, char const *argv[])
 
         scene->player.speed = scene->map.size_wall * 0.1f;
 
-        print_player(scene->player);
+        print_scene(scene);
 
         printf("------------------------------------\n");
 
         init_window(mlib, scene);
     }
 
-    
-
-
-    /* SCOPE TESTS FX */
+    /*SCOPE FX*/
     {
-        // t_scene *scene;
-
-        // char const *filename;
-        // filename = "map2.cub";
-
-        // scene = malloc(sizeof(t_scene));
-        // if (scene == NULL)
-        // {
-        //     return (0);
-        // }
-
-        // int size_file;
-        // size_file = get_size_file(filename);
-        // //printf("size_file : %d\n", size_file);
-
-        // char **copy;
-        // copy = copy_file (filename, size_file);
-
-
-        // //print_tab(copy);
-
-        // int end_part_1 = parser(scene, copy);
-        // printf("end = %d\n", end_part_1);
-        
-        // map_parser(scene, copy, end_part_1);
-
-        // print_scene(scene);
-        /*
-        int h_map;
-        h_map = height_map(copy, ind_map);
-        printf("hauteur de la map : %d\n", h_map);
-
-
-        
-        int chk_EOF;
-        chk_EOF = check_EOF(copy, ind_map, h_map);
-        printf("Fin du fichier : %d\n", chk_EOF);
-
-        
-        char **map_uncompleted;
-        map_uncompleted = map_creator(copy, h_map, ind_map);
-        //print_tab(map_uncompleted);
-
-        
-        int caract_ok;
-        caract_ok = check_caract_map(map_uncompleted);
-        printf("caract_ok = %d\n", caract_ok);
-
-        
-        int largest_line;
-        largest_line = find_largest_line(map_uncompleted);
-        printf("largeur de la map = %d\n", largest_line);
-
-        char **matrix;
-        matrix = matrix_creator(map_uncompleted, h_map, largest_line);
-
-        //print_tab(matrix);
-
-        
-        int check_line0;
-        check_line0 = parse_first_wall(matrix[0]);
-        printf("first line OK = %d\n", check_line0);
-
-        int chk_l_f_one;
-        chk_l_f_one = check_last_first_one(matrix);
-        printf("Walls OK = %d\n", chk_l_f_one);
-
-        int check_lineL;
-        check_lineL = parse_first_wall(matrix[h_map - 1]);
-        printf("last line OK = %d\n", check_lineL);
-
-
-        int chk_player;
-        chk_player = check_player(matrix);
-        printf("check_player = %d\n", chk_player);
-
-        
-        int wall_inspect;
-        wall_inspect = wall_inspector(matrix, h_map, largest_line);
-        printf("Wall inspection = %d\n", wall_inspect);
-
-        print_tab(matrix);
-        */
 
     }
 

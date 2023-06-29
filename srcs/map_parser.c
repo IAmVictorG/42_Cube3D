@@ -47,7 +47,7 @@ int height_map(char **copy_file, int ind_map)
 
 	i = 0;
 	while (copy_file[ind_map + i] != NULL
-		&& string_is_only_space(copy_file[ind_map + i]) == 0)
+			&& string_is_only_space(copy_file[ind_map + i]) == 0)
 	{
 		i++;
 	}
@@ -149,7 +149,7 @@ int	find_largest_line(char **map)
 		i++;
 	}
 
-	return (max_size);
+	return (max_size -1 );
 }
 
 char *line_matrix_creator(char *line, int w_matrix)
@@ -158,7 +158,7 @@ char *line_matrix_creator(char *line, int w_matrix)
 	int		i;
 	//printf("avan_matrix_creator = [%s]\n", line);
 
-	copy_line = (char *) malloc(sizeof(char) * (w_matrix));
+	copy_line = (char *) malloc(sizeof(char) * (w_matrix + 1));
 	if (copy_line == NULL)
 		return (NULL);
 
@@ -220,15 +220,12 @@ int check_last_one(char *line)
 	int	i;
 
 	i = ft_strlen(line);
-	//printf("i = %d\n", i);
-	//printf("c = [%c]\n", line[i-1]);
+
 	i--;
 	while (is_space(line[i]) == 1 && i >= 0)
 	{
 		i--;
 	}
-	//i--;
-	//printf("c = [%c]\n", line[i]);
 
 	if (line[i] == '1')
 		return (1);
