@@ -29,7 +29,7 @@
 #define	KEY_ARR_R 124
 #define	KEY_ARR_L 123
 
-#define ROTATION_SPEED M_PI / 10
+#define ROTATION_SPEED M_PI / 30
 
 
 typedef struct	s_utils 
@@ -131,6 +131,7 @@ void    print_player(t_player player);
 
 /* init_window.c*/
 void init_window(t_mlib *mlib, t_scene *scene);
+int position_is_valid(t_general *general, float pos_x, float pos_y);
 
 /* utils.c*/
 void	my_mlx_pixel_put(t_data *img, int x, int y, int color);

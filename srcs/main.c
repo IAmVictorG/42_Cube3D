@@ -266,9 +266,9 @@ int main(int argc, char const *argv[])
         
         scene->player.pos = get_player_position(scene->player.coord_ini, scene->map.size_wall);
 
-        scene->player.speed = scene->map.size_wall * 0.1f;
+        scene->player.speed = scene->map.size_wall * 0.02f;
 
-        print_scene(scene);
+        //print_scene(scene);
 
         printf("------------------------------------\n");
 
