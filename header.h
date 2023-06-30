@@ -10,8 +10,8 @@
 #include <fcntl.h>
 # include <pthread.h>
 
-#define WIDTH 300
-#define HEIGHT 300
+#define WIDTH 1000
+#define HEIGHT 500
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
 
@@ -25,6 +25,7 @@
 #define KEY_Q 12
 #define KEY_W 13
 #define KEY_R 15
+#define KEY_M 46
 #define KEY_ESC 53
 #define	KEY_ARR_R 124
 #define	KEY_ARR_L 123
@@ -94,9 +95,9 @@ typedef struct s_map
 
 typedef struct s_scene 
 {
+	int			mini_map;
 	t_vec		sky_color;
 	t_vec		floor_color;
-
 	t_map		map;
 	t_sprite	sprite;
 	t_player	player;
@@ -123,6 +124,9 @@ typedef struct general
 } t_general;
 
 
+void render_wall2D(t_general *general);
+
+
 void    printVec(t_vec vector);
 void    print_scene(t_scene *scene);
 t_coord	get_player_coord(char **matrix);
@@ -133,14 +137,30 @@ void    print_player(t_player player);
 void init_window(t_mlib *mlib, t_scene *scene);
 int position_is_valid(t_general *general, float pos_x, float pos_y);
 
+/* hook.c */
+
+int mouse_press(int button, int x, int y, t_mlib *mlib);
+int key_release(int keycode, t_general *general);
+int key_pression(int keycode, t_general *general);
+int close_window(t_mlib *mlib);
+int key_press(int keycode, t_general *general);
+
 /* utils.c*/
 void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
 int	create_trgb(int t, int r, int g, int b);
 t_vec vec_normalize(t_vec v);
 
+
+/* render.c*/
+int render(t_general *general);
+
+/* mini_map.c */
+
 /* ray_caster.c*/
 //int		render(t_general *general);
-int		render(t_general *general);
+int 	render_game(t_general *general);
+int 	render_mini_map(t_general *general);
+void 	move(t_general *general);
 
 /* parse_utils.c */
 int		is_space(char c);
@@ -178,5 +198,7 @@ int		get_size_wall (int map_w, int map_h);
 t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
 t_vec	get_player_position(t_coord coord_ini, int size_wall);
 
+
+ t_vec	create_ray(t_scene *scene, int pixel_x, int pixel_y);
 
 #endif

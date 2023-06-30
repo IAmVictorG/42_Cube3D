@@ -7,7 +7,7 @@ LINUX_FLAGS = -lm -lX11 -lXext -lpthread
 MAC_FLAGS = -framework OpenGL -framework AppKit
 
 SRCS =  $(addprefix srcs/, main.c parsing.c parse_utils.c) \
-		$(addprefix srcs/render/, init_window.c ray_caster.c utils.c) \
+		$(addprefix srcs/render/, init_window.c ray_caster.c utils.c hook.c mini_map.c render.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
 		srcs/map_parser.c
 

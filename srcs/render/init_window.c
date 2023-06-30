@@ -1,109 +1,30 @@
 #include "../../header.h"
 
-int key_pression(int keycode, t_general *general)
-{
-    if (keycode == KEY_W)
-        general->keys->w = 1;
-    else if (keycode == KEY_A)
-        general->keys->a = 1;
-    else if (keycode == KEY_S)
-        general->keys->s = 1;
-    else if (keycode == KEY_D)
-        general->keys->d = 1;
-    else if (keycode == KEY_Q)
-        general->keys->q = 1;
-    else if (keycode == KEY_R)
-        general->keys->r = 1;
-    else if (keycode == KEY_ARR_R)
-        general->keys->arrow_r = 1;
-    else if (keycode == KEY_ARR_L)
-        general->keys->arrow_l = 1;
-
-    
-    return (1);
-}
-
 int position_is_valid(t_general *general, float pos_x, float pos_y)
 {
-    /* Test pour les bords de la map */
-    // if (pos_x < general->scene->map.size_wall || pos_y < general->scene->map.size_wall)
-    // {
-    //     return (0);
-    // }
+    int player_size;
+    int i;
+    
+    player_size = 1;
+    int corners[4][2] = {
+        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)}
+    };
 
-    int x = (int) (pos_x / general->scene->map.size_wall);
-    int y = (int) (pos_y / general->scene->map.size_wall);
-    //printf("pos_x = %d\n", (int) (pos_x / general->scene->map.size_wall));
-    //printf("pos_y = %d\n", (int) (pos_y / general->scene->map.size_wall));
-    //printf("c = %c \n", general->scene->map.matrix[y][x]);
-
-    if (general->scene->map.matrix[y][x] == '1')
+    i = 0;
+    while (i < 4)
     {
-        return (0);
+        //printf("Corner %d: x = %d, y = %d\n", i, corners[i][0], corners[i][1]);
+        if (general->scene->map.matrix[corners[i][1]][corners[i][0]] == '1')
+        {
+            printf("Position invalide %d\n", i);
+            return i;
+        }
+        i++;
     }
-
-
-
-
-
-    return(1);
-}
-
-
-int key_press(int keycode, t_general *general)
-{
-
-    key_pression(keycode, general);
-
-    printf("keycode = %d\n", keycode);
- 
-
-    if (keycode == 53)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-
-    return (0);
-}
-
-int key_release(int keycode, t_general *general)
-{
-    if (keycode == KEY_W)
-        general->keys->w = 0;
-    else if (keycode == KEY_A)
-        general->keys->a = 0;
-    else if (keycode == KEY_S)
-        general->keys->s = 0;
-    else if (keycode == KEY_D)
-        general->keys->d = 0;
-    else if (keycode == KEY_Q)
-        general->keys->q = 0;
-    else if (keycode == KEY_R)
-        general->keys->r = 0;
-    else if (keycode == KEY_ARR_R)
-        general->keys->arrow_r = 0;
-    else if (keycode == KEY_ARR_L)
-        general->keys->arrow_l = 0;
-
-    return (0);
-}
-
-// Fonction pour gérer les événements souris
-int mouse_press(int button, int x, int y, t_mlib *mlib)
-{
-    (void) button;
-    (void) x;
-    (void) y;
-    (void) mlib;
-    return (0);
-}
-
-
-int close_window(t_mlib *mlib)
-{
-    mlx_destroy_window(mlib->utils.mlx, mlib->utils.win);
-    exit(0);
+    return 1;
 }
 
 void init_key(t_general *general)
@@ -133,7 +54,7 @@ void init_window(t_mlib *mlib, t_scene *scene)
         printf("ERROR MALLOC FOR general\n");
 
     }
-    
+    scene->mini_map = 1;
     init_key(general);
 
     general->mlib = mlib;
@@ -143,10 +64,14 @@ void init_window(t_mlib *mlib, t_scene *scene)
     mlib->utils.mlx = mlx_init();
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 
+
+    printf("BOUCLE\n");
     mlx_hook(mlib->utils.win, 2, 0, key_press, general);  // Hook pour les touches pressées
     mlx_hook(mlib->utils.win, 3, 0, key_release, general);
     mlx_hook(mlib->utils.win, 4, 0, mouse_press, mlib);  // Hook pour les clics de souris
     mlx_hook(mlib->utils.win, 17, 0, close_window, mlib);  // Hook pour la fermeture de la fenêtre
+
     mlx_loop_hook(mlib->utils.mlx, render, general);
+        
     mlx_loop(mlib->utils.mlx);
 }

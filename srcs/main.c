@@ -272,6 +272,12 @@ int main(int argc, char const *argv[])
 
         printf("------------------------------------\n");
 
+        /*create_ray(scene, 0, 0);
+        create_ray(scene, 1920, 0);
+        create_ray(scene, 0, 1080);
+
+        create_ray(scene, 1920, 1080);*/
+
         init_window(mlib, scene);
     }
 
