@@ -31,6 +31,21 @@ int	size_tab(char **tab)
 	return (count);
 }
 
+void	ft_free_tabs(char **tab)
+{
+	int	i;
+	int	h;
+
+	h = size_tab(tab);
+	i = 0;
+	while (i <= h)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 void print_tab(char **tab)
 {
     int i;

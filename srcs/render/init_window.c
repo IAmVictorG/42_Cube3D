@@ -66,7 +66,7 @@ void init_window(t_mlib *mlib, t_scene *scene)
 
 
     printf("BOUCLE\n");
-    mlx_hook(mlib->utils.win, 2, 0, key_press, general);  // Hook pour les touches pressées
+    mlx_hook(mlib->utils.win, 2, 0, key_press_exit, general);  // Hook pour les touches pressées
     mlx_hook(mlib->utils.win, 3, 0, key_release, general);
     mlx_hook(mlib->utils.win, 4, 0, mouse_press, mlib);  // Hook pour les clics de souris
     mlx_hook(mlib->utils.win, 17, 0, close_window, mlib);  // Hook pour la fermeture de la fenêtre

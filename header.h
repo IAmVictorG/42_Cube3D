@@ -124,7 +124,20 @@ typedef struct general
 } t_general;
 
 
-void render_wall2D(t_general *general);
+/* display.c */
+void    printVec(t_vec vector);
+void    printCoord(t_coord coord);
+void    print_player(t_player player);
+void    print_scene(t_scene *scene);
+
+
+/* copy_files_utils */
+int		get_size_file(const char *filename);
+char	**copy_file(const char *filename, int size_file);
+
+
+
+void	render_wall2D(t_general *general);
 
 
 void    printVec(t_vec vector);
@@ -134,8 +147,8 @@ void    print_player(t_player player);
 
 
 /* init_window.c*/
-void init_window(t_mlib *mlib, t_scene *scene);
-int position_is_valid(t_general *general, float pos_x, float pos_y);
+void	init_window(t_mlib *mlib, t_scene *scene);
+int		position_is_valid(t_general *general, float pos_x, float pos_y);
 
 /* hook.c */
 
@@ -143,7 +156,8 @@ int mouse_press(int button, int x, int y, t_mlib *mlib);
 int key_release(int keycode, t_general *general);
 int key_pression(int keycode, t_general *general);
 int close_window(t_mlib *mlib);
-int key_press(int keycode, t_general *general);
+//int key_press(int keycode, t_general *general);
+int		key_press_exit(int keycode, t_general *general);
 
 /* utils.c*/
 void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
@@ -167,10 +181,14 @@ int		is_space(char c);
 int		size_tab(char **tab);
 void	print_tab(char **tab);
 int		string_is_only_space(char *str);
+void	ft_free_tabs(char **tab);
+
+
 
 
 /* parsing.c */
 int parser(t_scene *scene, char **copy);
+
 
 /* map_parser.c */
 char	*line_matrix_creator(char *line, int w_matrix);
@@ -190,8 +208,8 @@ char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
 int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
 int		check_player(char **matrix);
 int		check_EOF(char **copy_file, int ind_map, int h_map);
-
 int		get_size_wall (int map_w, int map_h);
+int		map_parser(t_scene *scene, char **copy, int end_parse_1);
 
 
 

@@ -32,8 +32,8 @@ void draw_line(t_general *general, int x0, int y0, int x1, int y1, int color) {
 }
 
 void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int color) {
-    t_mlib  *mlib;
-    mlib = general->mlib;
+    //t_mlib  *mlib;
+    //mlib = general->mlib;
 
     int x1 = x0 + dx;
     int y1 = y0 + dy;
