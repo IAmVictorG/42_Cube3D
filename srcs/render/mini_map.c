@@ -93,8 +93,8 @@ t_vec   absolute_to_relative(int x, int y, t_vec origin)
 {
     t_vec   result;
 
-    result.x = (float)(x) - origin.x;
-    result.y = (float)(y) - origin.y;
+    result.x = x - origin.x;
+    result.y = y - origin.y;
     result.z = 0.0f;
 
     return (result);
@@ -110,6 +110,11 @@ t_vec   relative_to_absolute(float x, float y, t_vec origin)
 
     return (result);
 
+}
+
+static  int is_in_definition_domain(t_vec pixel_relative, t_vec direction)
+{
+    return (pixel_relative.x * direction.x + pixel_relative.y * direction.y > 0);
 }
 
 void    launch_mid_ray(t_general *general)
@@ -134,66 +139,31 @@ void    launch_mid_ray(t_general *general)
     position = general->scene->player.pos;
     map_h = general->scene->map.height_map;
     map_w = general->scene->map.width_map;
-
-    //printVec(direction);
-    // printf("Position  : ");
-    // printVec(position);
-    // printf("Direction : ");
-    // printVec(direction);
-    // printf("Absolute direction : ");
-    // printVec(relative_to_absolute(direction.x * 10 , direction.y * 10, position));
-    // printf("\n");
-
-
-    // j = position.y;
-    // while (j < (map_h * size_wall + 1))
-    // {   
-    //     i = position.x;
-    //     while (i < (map_w * size_wall + 1))
-    //     {
-        
-    //         my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);   
-            
-
-
-    //         //printf("%d %f %f\n",i, direction.y, i * direction.y);
-    //         i++;
-    //     }
-    //     j++;
-    // }
-
     t_vec   pixel_relative;
 
-    //printVec(position);
-    
     j = 0;
     while (j < (map_h * size_wall + 1))
     {   
         i = 0;
         while (i < (map_w * size_wall + 1))
         {
-            //my_mlx_pixel_put(&mlib->data, i, i * direction.y, 0xFF0000);
-            // printf("i = %d j = %d : ", i, j);
-            
-            
             pixel_relative = absolute_to_relative(i,j,position);
-            // printf("one : ");
-            // printVec(pixel_relative);
-            // printf("r = ");
-            // printf("r = %d\n", (int) pixel_relative.x * direction.y);
 
-
-
-            if ((int)(pixel_relative.x * (direction.y / direction.x)) == (int) pixel_relative.y)
+            if ((int)(pixel_relative.x * (direction.y / direction.x)) == (int) pixel_relative.y
+                && is_in_definition_domain(pixel_relative, direction) == 1
+            )
             {
                 my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);   
-
             }
 
-            //printVec(pixel_relative);
-            //sleep(1);
-            
-            //printf("%d %f %f\n",i, direction.y, i * direction.y);
+            if ((int)(pixel_relative.y * (direction.x / direction.y)) == (int) pixel_relative.x
+                && is_in_definition_domain(pixel_relative, direction) == 1
+            )
+            {
+                my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+            }
+
+
             i++;
         }
         j++;
