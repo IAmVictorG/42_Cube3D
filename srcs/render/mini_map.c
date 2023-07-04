@@ -56,6 +56,50 @@ void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int colo
     draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x - arrow_perp_x), y1 - head_len * (arrow_dir_y - arrow_perp_y), color);
 }
 
+void    draw_grid(t_general *general)
+{
+    //char    **matrix;
+    int     size_wall;
+    t_mlib  *mlib;
+
+    int     map_h = general->scene->map.height_map;
+    int     map_w = general->scene->map.width_map;
+
+    int     i;
+    int j;
+
+    mlib = general->mlib;
+    //matrix = general->scene->map.matrix;
+    size_wall = general->scene->map.size_wall;
+
+    //printf("size_wall = %d\n", size_wall);
+
+    j = 0;
+    while (j < (map_h * size_wall + 1))
+    {   
+        i = 0;
+        while (i < (map_w * size_wall + 1))
+        {
+            if (j % size_wall == 0)
+            {
+                my_mlx_pixel_put(&mlib->data, i, j, 0x00AA00);
+            }
+            if (i % size_wall == 0)
+            {
+                my_mlx_pixel_put(&mlib->data, i, j, 0x00AA00);
+            }
+            i++;
+        }
+        j++;
+    }
+
+    my_mlx_pixel_put(&mlib->data, 18, 18, 0x0000AA);
+
+
+
+}
+
+
 void draw_player(t_general *general)
 {
     int color;
@@ -128,6 +172,9 @@ int render_mini_map(t_general *general)
 
     /* Creation de l image */
     render_wall2D(general);
+
+    /* Affichage de la grille */
+    draw_grid(general);
 
     move(general);
     // printf("w %d\n", general->keys->w);
