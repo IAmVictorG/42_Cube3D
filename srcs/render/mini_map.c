@@ -117,6 +117,20 @@ static  int is_in_definition_domain(t_vec pixel_relative, t_vec direction)
     return (pixel_relative.x * direction.x + pixel_relative.y * direction.y > 0);
 }
 
+int position_is_valid_pix(t_general *general, int i, int j)
+{
+
+    int     size_wall;
+    char    **matrix;
+
+    matrix = general->scene->map.matrix;
+    size_wall = general->scene->map.size_wall;
+
+    printf("c = %c ", matrix[j / size_wall][i / size_wall]);
+
+    return (!(matrix[j / size_wall][i / size_wall] == '1'));
+}
+
 void    launch_mid_ray(t_general *general)
 {
     t_vec   direction;
@@ -141,6 +155,8 @@ void    launch_mid_ray(t_general *general)
     map_w = general->scene->map.width_map;
     t_vec   pixel_relative;
 
+
+
     j = 0;
     while (j < (map_h * size_wall + 1))
     {   
@@ -153,14 +169,29 @@ void    launch_mid_ray(t_general *general)
                 && is_in_definition_domain(pixel_relative, direction) == 1
             )
             {
-                my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);   
+                if (i % size_wall == 0 || j % size_wall == 0)
+                {
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFFFF00);  
+                }
+                else
+                {
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+                }
             }
 
             if ((int)(pixel_relative.y * (direction.x / direction.y)) == (int) pixel_relative.x
                 && is_in_definition_domain(pixel_relative, direction) == 1
             )
             {
-                my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+                if (i % size_wall == 0 || j % size_wall == 0)
+                {
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFFFF00);  
+                }
+                else
+                {
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+                }
+
             }
 
 
@@ -235,6 +266,29 @@ void render_wall2D(t_general *general)
 
 }
 
+void test(t_general *general)
+{
+    //char **matrix = general->scene->map.matrix;
+    int size_wall = general->scene->map.size_wall;
+    int i =0;
+    int j =0;
+
+    while (j < HEIGHT)
+    {
+        i = 0;
+        while (i < WIDTH)
+        {
+            //position_is_valid_pix(general, i,j);
+            printf("j = %d i = %d", j / size_wall, i / size_wall);
+            i++;
+        }
+        printf("\n");
+        sleep(1);
+        j++;
+    }
+    sleep(1);
+}
+
 int render_mini_map(t_general *general)
 {
     t_mlib  *mlib = general->mlib;
@@ -243,21 +297,16 @@ int render_mini_map(t_general *general)
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
+    //test(general);
+
     /* Creation de l image */
     render_wall2D(general);
 
     /* Affichage de la grille */
     draw_grid(general);
 
+    /* Mouvement du joueur */
     move(general);
-    // printf("w %d\n", general->keys->w);
-    // printf("a %d\n", general->keys->a);
-    // printf("s %d\n", general->keys->s);
-    // printf("d %d\n", general->keys->d);
-    // printf("l %d\n", general->keys->arrow_l);
-    // printf("r %d\n", general->keys->arrow_r);
-
-
 
     draw_player(general);
 
