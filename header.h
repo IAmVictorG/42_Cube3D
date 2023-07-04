@@ -10,8 +10,8 @@
 #include <fcntl.h>
 # include <pthread.h>
 
-#define WIDTH 1000
-#define HEIGHT 500
+#define WIDTH 960
+#define HEIGHT 540
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
 

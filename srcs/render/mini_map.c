@@ -31,7 +31,9 @@ void draw_line(t_general *general, int x0, int y0, int x1, int y1, int color) {
     }
 }
 
-void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int color) {
+void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int color) 
+{
+
     //t_mlib  *mlib;
     //mlib = general->mlib;
 
@@ -58,22 +60,15 @@ void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int colo
 
 void    draw_grid(t_general *general)
 {
-    //char    **matrix;
     int     size_wall;
     t_mlib  *mlib;
-
     int     map_h = general->scene->map.height_map;
     int     map_w = general->scene->map.width_map;
-
     int     i;
-    int j;
+    int     j;
 
     mlib = general->mlib;
-    //matrix = general->scene->map.matrix;
     size_wall = general->scene->map.size_wall;
-
-    //printf("size_wall = %d\n", size_wall);
-
     j = 0;
     while (j < (map_h * size_wall + 1))
     {   
@@ -92,13 +87,122 @@ void    draw_grid(t_general *general)
         }
         j++;
     }
+}
 
-    my_mlx_pixel_put(&mlib->data, 18, 18, 0x0000AA);
+t_vec   absolute_to_relative(int x, int y, t_vec origin)
+{
+    t_vec   result;
+
+    result.x = (float)(x) - origin.x;
+    result.y = (float)(y) - origin.y;
+    result.z = 0.0f;
+
+    return (result);
+}
+
+t_vec   relative_to_absolute(float x, float y, t_vec origin)
+{
+    t_vec   result;
+
+    result.x = x + origin.x;
+    result.y = y + origin.y;
+    result.z = 0.0f;
+
+    return (result);
+
+}
+
+void    launch_mid_ray(t_general *general)
+{
+    t_vec   direction;
+    t_vec   position;
+
+    int     size_wall;
+    int     map_h;
+    int     map_w;
+
+    int     i;
+    int     j;
+
+    t_mlib  *mlib;
+
+    mlib = general->mlib;
+
+    size_wall = general->scene->map.size_wall;
+
+    direction = general->scene->player.dir;
+    position = general->scene->player.pos;
+    map_h = general->scene->map.height_map;
+    map_w = general->scene->map.width_map;
+
+    //printVec(direction);
+    // printf("Position  : ");
+    // printVec(position);
+    // printf("Direction : ");
+    // printVec(direction);
+    // printf("Absolute direction : ");
+    // printVec(relative_to_absolute(direction.x * 10 , direction.y * 10, position));
+    // printf("\n");
+
+
+    // j = position.y;
+    // while (j < (map_h * size_wall + 1))
+    // {   
+    //     i = position.x;
+    //     while (i < (map_w * size_wall + 1))
+    //     {
+        
+    //         my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);   
+            
+
+
+    //         //printf("%d %f %f\n",i, direction.y, i * direction.y);
+    //         i++;
+    //     }
+    //     j++;
+    // }
+
+    t_vec   pixel_relative;
+
+    //printVec(position);
+    
+    j = 0;
+    while (j < (map_h * size_wall + 1))
+    {   
+        i = 0;
+        while (i < (map_w * size_wall + 1))
+        {
+            //my_mlx_pixel_put(&mlib->data, i, i * direction.y, 0xFF0000);
+            // printf("i = %d j = %d : ", i, j);
+            
+            
+            pixel_relative = absolute_to_relative(i,j,position);
+            // printf("one : ");
+            // printVec(pixel_relative);
+            // printf("r = ");
+            // printf("r = %d\n", (int) pixel_relative.x * direction.y);
+
+
+
+            if ((int)(pixel_relative.x * (direction.y / direction.x)) == (int) pixel_relative.y)
+            {
+                my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);   
+
+            }
+
+            //printVec(pixel_relative);
+            //sleep(1);
+            
+            //printf("%d %f %f\n",i, direction.y, i * direction.y);
+            i++;
+        }
+        j++;
+    }
+
 
 
 
 }
-
 
 void draw_player(t_general *general)
 {
@@ -125,7 +229,6 @@ void    draw_wall(int pixel_x, int pixel_y, int size_wall, t_mlib *mlib)
 {   
     int x;
     int y;
-
 
     y = 0;
     while (y < size_wall)
@@ -187,6 +290,8 @@ int render_mini_map(t_general *general)
 
 
     draw_player(general);
+
+    launch_mid_ray(general);
     
     
     
