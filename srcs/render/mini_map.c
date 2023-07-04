@@ -126,6 +126,7 @@ int render_mini_map(t_general *general)
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
+    /* Creation de l image */
     render_wall2D(general);
 
     move(general);

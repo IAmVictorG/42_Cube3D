@@ -11,12 +11,13 @@ SRCS =  $(addprefix srcs/, main.c display.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
 		$(addprefix srcs/parsing/, copy_file_utils.c map_parser.c parse_utils.c parsing.c) \
 
-LIBS = $(addprefix includes/, libft/libft.a)
+LIBS 	= $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}
 CFLAGS	=  -Wall -Wextra -Werror
 CC		= gcc
 RM		= rm -f
 LEAKS   = leaks_cube3D
+PROD	= test
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o ${<:.c=.o}
@@ -30,6 +31,9 @@ $(NAME): $(OBJS)
 
 $(LEAKS): $(OBJS)
 	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -lz -L includes/mlx -lmlx $(MAC_FLAGS) -o $(LEAKS)
+
+$(PROD): $(OBJS)
+	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -L includes/mlx -lmlx $(MAC_FLAGS) -o $(NAME) -fsanitize=address
 
 
 all:		$(NAME)

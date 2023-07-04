@@ -24,15 +24,21 @@ t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
     return (dir_r);
 }
 
-
-
-
 int render_game(t_general *general)
 {
     t_mlib  *mlib = general->mlib;
 
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
+
+    printf("0,0\n");
+    create_ray(general->scene, 0, 0);
+    printf("%d,0\n", WIDTH);
+    create_ray(general->scene, WIDTH, 0);
+    printf("0,%d\n", HEIGHT);
+    create_ray(general->scene, 0, HEIGHT);
+    printf("%d,%d\n", WIDTH, HEIGHT);
+    create_ray(general->scene, WIDTH, HEIGHT);
 
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
     mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
