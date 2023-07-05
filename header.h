@@ -10,8 +10,8 @@
 #include <fcntl.h>
 # include <pthread.h>
 
-#define WIDTH 960
-#define HEIGHT 540
+#define WIDTH 500
+#define HEIGHT 300
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
 
@@ -136,7 +136,7 @@ int		get_size_file(const char *filename);
 char	**copy_file(const char *filename, int size_file);
 
 
-
+t_vec	draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height);
 void	render_wall2D(t_general *general);
 
 

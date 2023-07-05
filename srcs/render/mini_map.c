@@ -188,9 +188,10 @@ int hit_corner(t_general *general, int x, int y)
     return (0);
 }
 
-void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
+t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
 {
     t_mlib *mlib;
+    t_vec r;
 
     mlib = general->mlib;
 
@@ -214,7 +215,10 @@ void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall
             else
             {
                 if (hit_a_wall(general,x0, y0) == 0)
-                    my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
+                {
+
+                    //my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
+                }
                 else
                     break;
             }
@@ -237,6 +241,10 @@ void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall
             y0 += sy;
         }
     }
+    r.x = x0;
+    r.y = y0;
+    r.z = 0;
+    return (r);
 }
 
 
@@ -256,7 +264,7 @@ void launch_mid_ray(t_general *general) {
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
     float fov_end = player_angle + fov_rad / 2;
-    float angle_step = fov_rad / 4;
+    float angle_step = fov_rad / 400;
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {
