@@ -131,6 +131,24 @@ int position_is_valid_pix(t_general *general, int i, int j)
     return (!(matrix[j / size_wall][i / size_wall] == '1'));
 }
 
+int hit_a_wall(int i, int j, t_general *general)
+{
+
+    char **matrix = general->scene->map.matrix;
+    int  size_wall = general->scene->map.size_wall;
+    int map_h = general->scene->map.height_map;
+    int map_w = general->scene->map.width_map;
+
+    if (j / size_wall < map_h && i / size_wall < map_w)
+    {
+        return matrix[j / size_wall][i / size_wall] == '1';
+    }
+
+    return (0);
+
+
+}
+
 void    launch_mid_ray(t_general *general)
 {
     t_vec   direction;
@@ -139,10 +157,14 @@ void    launch_mid_ray(t_general *general)
     int     size_wall;
     int     map_h;
     int     map_w;
+    int     has_hitten_x;
+    int     has_hitten_y;
 
     int     i;
     int     j;
 
+
+    //char    **matrix = general->scene->map.matrix;
     t_mlib  *mlib;
 
     mlib = general->mlib;
@@ -155,13 +177,14 @@ void    launch_mid_ray(t_general *general)
     map_w = general->scene->map.width_map;
     t_vec   pixel_relative;
 
-
+    has_hitten_x = 0;
+    has_hitten_y = 0;
 
     j = 0;
-    while (j < (map_h * size_wall + 1))
+    while (j < (map_h * size_wall + 1) && has_hitten_x == 0 && has_hitten_y == 0)
     {   
         i = 0;
-        while (i < (map_w * size_wall + 1))
+        while (i < (map_w * size_wall + 1) && has_hitten_x == 0 && has_hitten_y == 0)
         {
             pixel_relative = absolute_to_relative(i,j,position);
 
@@ -169,27 +192,36 @@ void    launch_mid_ray(t_general *general)
                 && is_in_definition_domain(pixel_relative, direction) == 1
             )
             {
-                if (i % size_wall == 0 || j % size_wall == 0)
+                if (hit_a_wall(i,j,general) == 0)
                 {
-                    my_mlx_pixel_put(&mlib->data, i, j, 0xFFFF00);  
+
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);
+                    //printf("i = %d j = %d : hit a wall.\n", i,j);
                 }
                 else
                 {
-                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+                    has_hitten_x = 1; 
+                   // printf("h_s = %d\n", has_hitten);
+
                 }
+
             }
 
             if ((int)(pixel_relative.y * (direction.x / direction.y)) == (int) pixel_relative.x
                 && is_in_definition_domain(pixel_relative, direction) == 1
             )
             {
-                if (i % size_wall == 0 || j % size_wall == 0)
+
+                if (hit_a_wall(i,j,general) == 0)
                 {
-                    my_mlx_pixel_put(&mlib->data, i, j, 0xFFFF00);  
+                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000); 
+                    //printf("i = %d j = %d : hit a wall.\n", i,j);
                 }
                 else
                 {
-                    my_mlx_pixel_put(&mlib->data, i, j, 0xFF0000);  
+                    has_hitten_y = 1; 
+                    //printf("h_s y = %d\n", has_hitten);
+
                 }
 
             }
@@ -199,8 +231,6 @@ void    launch_mid_ray(t_general *general)
         }
         j++;
     }
-
-
 
 
 }
@@ -266,10 +296,16 @@ void render_wall2D(t_general *general)
 
 }
 
+
+
+
+
 void test(t_general *general)
 {
     char **matrix = general->scene->map.matrix;
     int size_wall = general->scene->map.size_wall;
+
+
     int i = 0;
     int j = 0;
 
@@ -286,6 +322,7 @@ void test(t_general *general)
             //position_is_valid_pix(general, i,j);
 
             printf("j = %d i = %d \n", j / size_wall, i / size_wall );
+
             printf("%c\n", matrix[j/size_wall][i/size_wall]);
             
 
