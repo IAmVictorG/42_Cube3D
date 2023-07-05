@@ -131,7 +131,70 @@ int position_is_valid_pix(t_general *general, int i, int j)
     return (!(matrix[j / size_wall][i / size_wall] == '1'));
 }
 
-void draw_rays(t_mlib *mlib, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) {
+
+int hit_a_wall(t_general *general, int x, int y)
+{
+    char **matrix = general->scene->map.matrix;
+    int size_wall = general->scene->map.size_wall;
+    int map_h = general->scene->map.height_map;
+    int map_w = general->scene->map.width_map;
+
+
+    //printf("y = %d x = %d\n", y / size_wall, x / size_wall);
+
+    if (y / size_wall >= map_h || x / size_wall >= map_w)
+    {
+        return (0);
+    }
+
+
+    return (matrix[y / size_wall][x / size_wall] == '1');
+
+}
+
+int hit_corner(t_general *general, int x, int y)
+{
+    char **matrix = general->scene->map.matrix;
+    int size_wall = general->scene->map.size_wall;
+    //int map_h = general->scene->map.height_map;
+    //int map_w = general->scene->map.width_map;
+
+    int y_mat = y / size_wall;
+    int x_mat = x / size_wall;
+
+    // if (y_mat >= map_h || x_mat >= map_w)
+    // {
+    //     return (0);
+    // }
+
+    // if (y_mat +1 >= map_h || x_mat+1 >= map_w)
+    // {
+    //     return (0);
+    // }
+
+    // if (y_mat -1 <= map_h || x_mat-1 <= map_w)
+    // {
+    //     return (0);
+    // }
+
+    //printf("sdsdfgdfsg\n");
+
+    if (matrix[y_mat][x_mat] == '1' && matrix[y_mat-1][x_mat-1] == '1')
+    {
+        printf("x = %d, y = %d\n",x_mat, y_mat);
+        return (1);
+    }
+
+    return (0);
+}
+
+void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
+{
+    t_mlib *mlib;
+
+    mlib = general->mlib;
+
+
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
     int sx = (x0 < x1) ? 1 : -1;
@@ -140,12 +203,27 @@ void draw_rays(t_mlib *mlib, int x0, int y0, int x1, int y1, int size_wall, int 
 
     while (42) {
         // Ensure the pixel coordinates are within window bounds
-        if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) {
-            int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
-            my_mlx_pixel_put(&mlib->data, x0, y0, color);
+        if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) 
+        {
+            if (x0 % size_wall == 0 && y0 % size_wall == 0)
+            {
+                if (hit_corner(general,x0, y0) == 1)
+                    break;
+
+            }
+            else
+            {
+                if (hit_a_wall(general,x0, y0) == 0)
+                    my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
+                else
+                    break;
+            }
+            //int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
+
         }
         else
             break;
+
 
         if (x0 == x1 && y0 == y1)   
             break;
@@ -162,7 +240,9 @@ void draw_rays(t_mlib *mlib, int x0, int y0, int x1, int y1, int size_wall, int 
 }
 
 
+
 void launch_mid_ray(t_general *general) {
+    //printf("RAY\n");
     t_vec position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
 
@@ -170,13 +250,13 @@ void launch_mid_ray(t_general *general) {
     int window_width = WIDTH;
     int window_height = HEIGHT;
 
-    t_mlib *mlib = general->mlib;
+    //t_mlib *mlib = general->mlib;
 
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
     float fov_end = player_angle + fov_rad / 2;
-    float angle_step = fov_rad / 500;
+    float angle_step = fov_rad / 4;
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {
@@ -184,15 +264,14 @@ void launch_mid_ray(t_general *general) {
         float sin_angle = sinf(angle);
         t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width ), 0.0f};
 
+
         //if (end_point.x >= window_width) end_point.x = window_width - 1;
         //if (end_point.y >= window_height) end_point.y = window_height - 1;
 
-        draw_rays(mlib, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
+        draw_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
 
     }
 }
-
-
 
 
 
@@ -256,10 +335,16 @@ void render_wall2D(t_general *general)
 
 }
 
+
+
+
+
 void test(t_general *general)
 {
     char **matrix = general->scene->map.matrix;
     int size_wall = general->scene->map.size_wall;
+
+
     int i = 0;
     int j = 0;
 
@@ -276,6 +361,7 @@ void test(t_general *general)
             //position_is_valid_pix(general, i,j);
 
             printf("j = %d i = %d \n", j / size_wall, i / size_wall );
+
             printf("%c\n", matrix[j/size_wall][i/size_wall]);
             
 
