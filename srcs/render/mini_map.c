@@ -145,6 +145,8 @@ void draw_rays(t_mlib *mlib, int x0, int y0, int x1, int y1, int size_wall, int 
             int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
             my_mlx_pixel_put(&mlib->data, x0, y0, color);
         }
+        else
+            break;
 
         if (x0 == x1 && y0 == y1)
             break;
