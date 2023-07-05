@@ -268,22 +268,35 @@ void render_wall2D(t_general *general)
 
 void test(t_general *general)
 {
-    //char **matrix = general->scene->map.matrix;
+    char **matrix = general->scene->map.matrix;
     int size_wall = general->scene->map.size_wall;
-    int i =0;
-    int j =0;
+    int i = 0;
+    int j = 0;
 
-    while (j < HEIGHT)
+
+    int map_h = general->scene->map.height_map;
+    int map_w = general->scene->map.width_map;
+    //(void) general;
+
+    while (j / size_wall < map_h)
     {
         i = 0;
-        while (i < WIDTH)
+        while (i / size_wall < map_w)
         {
             //position_is_valid_pix(general, i,j);
-            printf("j = %d i = %d", j / size_wall, i / size_wall);
+
+            printf("j = %d i = %d \n", j / size_wall, i / size_wall );
+            printf("%c\n", matrix[j/size_wall][i/size_wall]);
+            
+
+           
+
+            //sleep(1);
+
             i++;
         }
         printf("\n");
-        sleep(1);
+        //sleep(1);
         j++;
     }
     sleep(1);
@@ -298,7 +311,7 @@ int render_mini_map(t_general *general)
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
     //test(general);
-
+    //sleep(10);
     /* Creation de l image */
     render_wall2D(general);
 
