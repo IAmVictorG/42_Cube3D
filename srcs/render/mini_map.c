@@ -147,7 +147,7 @@ void draw_rays(t_mlib *mlib, int x0, int y0, int x1, int y1, int size_wall, int 
         else
             break;
 
-        if (x0 == x1 && y0 == y1)
+        if (x0 == x1 && y0 == y1)   
             break;
         int e2 = 2 * err;
         if (e2 > -dy) {
