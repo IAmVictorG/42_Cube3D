@@ -224,21 +224,8 @@ void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall
         else
             break;
 
-        // if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) {
-            
 
-
-
-        //     int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
-        //     if (hit_a_wall(general,x0, y0) == 0)
-        //         my_mlx_pixel_put(&mlib->data, x0, y0, color);
-        //     else
-        //         break;
-        // }
-        // else
-        //     break;
-
-        if (x0 == x1 && y0 == y1)
+        if (x0 == x1 && y0 == y1)   
             break;
         int e2 = 2 * err;
         if (e2 > -dy) {
