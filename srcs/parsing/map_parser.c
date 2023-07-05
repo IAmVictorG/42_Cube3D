@@ -437,16 +437,20 @@ int get_size_wall (int map_w, int map_h)
 {
     int size_wall;
 
-    if (map_h > map_w)
-    {
-        size_wall = HEIGHT / map_h;
-    }
+	int rap_h = HEIGHT / map_h;
+	int rap_w = WIDTH  / map_w;
+
+	if (rap_h < rap_w)
+	{
+		size_wall = (HEIGHT -1) / map_h;
+	}
     else
     {
-        size_wall = WIDTH / map_w;
+        size_wall = (WIDTH-1) / map_w;
     }
 
-    //scene->map.size_wall = size_wall;    
+    //scene->map.size_wall = size_wall;
+	printf("size_wall = %d\n", size_wall);
     return (size_wall);
 }
 

@@ -40,6 +40,7 @@ void trace_ray(t_general *general) {
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
     float fov_end = player_angle + fov_rad / 2;
+
     float angle_step = fov_rad / 400;
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
@@ -47,6 +48,7 @@ void trace_ray(t_general *general) {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
         t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width ), 0.0f};
+
 
 
         //if (end_point.x >= window_width) end_point.x = window_width - 1;

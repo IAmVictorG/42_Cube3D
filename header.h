@@ -12,6 +12,7 @@
 
 #define WIDTH 500
 #define HEIGHT 300
+
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
 
@@ -150,6 +151,9 @@ void    print_player(t_player player);
 void	init_window(t_mlib *mlib, t_scene *scene);
 int		position_is_valid(t_general *general, float pos_x, float pos_y);
 
+void	launch_mid_ray(t_general *general);
+
+
 /* hook.c */
 
 int mouse_press(int button, int x, int y, t_mlib *mlib);
@@ -167,6 +171,11 @@ t_vec vec_normalize(t_vec v);
 
 /* render.c*/
 int render(t_general *general);
+void launch_mid_ray(t_general *general);
+int hit_a_wall(t_general *general, int x, int y);
+int hit_corner(t_general *general, int x, int y);
+
+
 
 /* mini_map.c */
 

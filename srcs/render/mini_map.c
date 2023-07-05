@@ -249,7 +249,8 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
 
 
 
-void launch_mid_ray(t_general *general) {
+void launch_mid_ray(t_general *general)
+{
     //printf("RAY\n");
     t_vec position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
