@@ -27,7 +27,7 @@ void    print_player(t_player player)
     printf("\n");
 }
 
-void    print_scene(t_scene *scene)
+/*void    print_scene(t_scene *scene)
 {
     printf("%s\n", scene->sprite.north);
     printf("%s\n", scene->sprite.south);
@@ -45,4 +45,4 @@ void    print_scene(t_scene *scene)
     print_tab(scene->map.matrix);
 
     print_player(scene->player);
-}
+}*/

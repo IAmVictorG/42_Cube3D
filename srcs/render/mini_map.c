@@ -181,7 +181,7 @@ int hit_corner(t_general *general, int x, int y)
 
     if (matrix[y_mat][x_mat] == '1' && matrix[y_mat-1][x_mat-1] == '1')
     {
-        printf("x = %d, y = %d\n",x_mat, y_mat);
+        //printf("x = %d, y = %d\n",x_mat, y_mat);
         return (1);
     }
 
@@ -217,7 +217,7 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
                 if (hit_a_wall(general,x0, y0) == 0)
                 {
 
-                    //my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
+                    my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
                 }
                 else
                     break;
@@ -236,7 +236,7 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
             err -= dy;
             x0 += sx;
         }
-        if (e2 < dx) {
+        else if (e2 < dx) {
             err += dx;
             y0 += sy;
         }

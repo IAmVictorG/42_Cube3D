@@ -17,32 +17,29 @@ static void parse_ceiling(t_scene *scene, char *line)
     set_vector(r, &scene->sky_color);
 }
 
-static void parse_wall(t_scene *scene, char *line)
+static void parse_wall(t_sprites *sprites, char *line)
 {
     char *r;
-    t_sprite *sprite;
-
-    sprite = &scene->sprite;
 
     if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprite->north = r;
+        sprites->wall_north.path = r;
     }
     else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprite->south = r;
+        sprites->wall_south.path = r;
     }
     else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprite->west = r;
+        sprites->wall_west.path = r;
     }
     else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprite->east = r;
+        sprites->wall_east.path = r;
     }
     r = go_to_next_and_get_arg(&line);
     if (ft_strlen(r) != 0 && string_is_only_space(r) == 0)
@@ -89,11 +86,11 @@ static int check_for_1_or_0(char *line)
     return (0);
 }
 
-static int parse_line(t_scene *scene, char *line)
+static int parse_line(t_sprites *sprites, t_scene *scene, char *line)
 {
     if (check_if_is_wall(line))
     {
-        parse_wall(scene, line);
+        parse_wall(sprites, line);
     }
     else if (line[0] == 'F' && is_space(line[1]))
     {
@@ -112,7 +109,7 @@ static int parse_line(t_scene *scene, char *line)
     return (1);
 }
 
-int parser(t_scene *scene, char **copy)
+int parser(t_sprites *sprites, t_scene *scene, char **copy)
 {
     int i;
     int found;
@@ -123,12 +120,12 @@ int parser(t_scene *scene, char **copy)
 
     while (copy[i])
     {
-        if (parse_line(scene, copy[i]) == 1)
+        if (parse_line(sprites, scene, copy[i]) == 1)
         {
             found ++;
             end = i;
         }
-        else if (parse_line(scene, copy[i]) == -1 && found != 6)
+        else if (parse_line(sprites, scene, copy[i]) == -1 && found != 6)
         {
             printf("Error\n You didn't initialise all the stuff needed before the map\n");
             exit(EXIT_FAILURE);

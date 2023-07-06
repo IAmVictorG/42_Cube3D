@@ -30,6 +30,7 @@ void trace_ray(t_general *general) {
     t_vec direction = general->scene->player.dir;
     t_vec ray;
 
+    int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
     int window_width = WIDTH;
     int window_height = HEIGHT;
@@ -41,7 +42,7 @@ void trace_ray(t_general *general) {
     float fov_start = player_angle - fov_rad / 2;
     float fov_end = player_angle + fov_rad / 2;
 
-    float angle_step = fov_rad / 400;
+    float angle_step = fov_rad / WIDTH;
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {
@@ -55,13 +56,29 @@ void trace_ray(t_general *general) {
         //if (end_point.y >= window_height) end_point.y = window_height - 1;
 
         ray = draw_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
-        printf("Ray : %d, %d\n", (int) ray.x, (int) ray.y);
-        for (int i = 0; i < 200; i++)
+        int wall_height;
+        float dist;
+        float delta_angle = angle - player_angle;
+
+        dist = sqrtf((ray.x - general->scene->player.pos.x)*(ray.x - general->scene->player.pos.x) + (ray.y - general->scene->player.pos.y)*(ray.y - general->scene->player.pos.y));
+        dist /= size_wall;
+        dist *= cos(delta_angle);
+        //printf("Ray hit x: %d, y: %d, distance %d\n", (int) ray.x, (int) ray.y, (int) dist);
+        if (dist <= 1.0f)
+            wall_height = HEIGHT;
+        else
+            wall_height = HEIGHT / dist;
+        //if(wall_height > window_height) wall_height = window_height;
+
+        for (int i = 0; i < (window_height - wall_height) / 2; i++)
+            my_mlx_pixel_put(&general->mlib->data, imageincre, i, SKY_COLOR);
+        for (int i = 0; i < wall_height; i++)
         {
-            my_mlx_pixel_put(&general->mlib->data, (int) ray.y, i + HEIGHT / 3, 0x00FF00);
-            
+            my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x00FF00);
         }
-        
+        for (int i = (window_height + wall_height) / 2; i < window_height; i++)
+            my_mlx_pixel_put(&general->mlib->data, imageincre, i, FLOOR_COLOR);
+        imageincre++;
     }
 }
 
@@ -72,6 +89,7 @@ int render_game(t_general *general)
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
+
     /*printf("0,0\n");
     create_ray(general->scene, 0, 0);
     printf("%d,0\n", WIDTH);
@@ -80,6 +98,7 @@ int render_game(t_general *general)
     create_ray(general->scene, 0, HEIGHT);
     printf("%d,%d\n", WIDTH, HEIGHT);
     create_ray(general->scene, WIDTH, HEIGHT);*/
+
     trace_ray(general);
     move(general);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);

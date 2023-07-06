@@ -19,8 +19,8 @@ int position_is_valid(t_general *general, float pos_x, float pos_y)
         //printf("Corner %d: x = %d, y = %d\n", i, corners[i][0], corners[i][1]);
         if (general->scene->map.matrix[corners[i][1]][corners[i][0]] == '1')
         {
-            printf("Position invalide %d\n", i);
-            return i;
+            //printf("Position invalide %d\n", i);
+            return 0;
         }
         i++;
     }
@@ -44,7 +44,7 @@ void init_key(t_general *general)
 
 }
 
-void init_window(t_mlib *mlib, t_scene *scene)
+void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
 {
     t_general *general;
  
@@ -52,14 +52,16 @@ void init_window(t_mlib *mlib, t_scene *scene)
     if (general == NULL)
     {
         printf("ERROR MALLOC FOR general\n");
-
     }
     scene->mini_map = 1;
     init_key(general);
 
     general->mlib = mlib;
     general->scene = scene;
+    general->sprites = sprites;
 
+
+    //t_sprites *sprites = general->sprites;
 
     mlib->utils.mlx = mlx_init();
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
@@ -72,6 +74,18 @@ void init_window(t_mlib *mlib, t_scene *scene)
     mlx_hook(mlib->utils.win, 17, 0, close_window, mlib);  // Hook pour la fermeture de la fenêtre
 
     mlx_loop_hook(mlib->utils.mlx, render, general);
-        
+    
+    // int x;
+    // int y;
+    // sprites->wall_north.data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &x, &y);
+    
+    
+    //mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, sprites->wall_north.data_spr.img_ptr, 0, 0);
+    
+    //mlx_get_data_addr(sprites->wall_north.data_spr.img_ptr, &sprites->wall_north.data_spr.bits_per_pixel, &sprites->wall_north.data_spr.line_length, &sprites->wall_north.data_spr.endian);
+
+    //my_mlx_pixel_put(&general->mlib->data, 10, 10, (int) *(sprites->wall_north.data_spr.addr + 10));
+
+
     mlx_loop(mlib->utils.mlx);
 }

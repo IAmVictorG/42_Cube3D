@@ -34,6 +34,7 @@ int main(int argc, char const *argv[])
     {
         t_scene     *scene;
         t_mlib      *mlib;
+        t_sprites   *sprites;
         int         size_file;
         char const  *filename;
         char        **copy;
@@ -46,14 +47,17 @@ int main(int argc, char const *argv[])
         size_file = get_size_file(filename);
         copy = copy_file (filename, size_file);
 
-        int end_part_1 = parser(scene, copy);        
+        sprites = malloc(sizeof(t_sprites));
+
+        int end_part_1 = parser(sprites, scene, copy);        
         map_parser(scene, copy, end_part_1);
 
         mlib = malloc(sizeof(t_mlib));
         if (mlib == NULL)
             return (0);
+
         
-        parser(scene, copy);
+        parser(sprites, scene, copy);
 
         scene->player.coord_ini = get_player_coord(scene->map.matrix);
 
@@ -75,7 +79,7 @@ int main(int argc, char const *argv[])
 
         create_ray(scene, 1920, 1080);*/
 
-        init_window(mlib, scene);
+        init_window(mlib, scene, sprites);
 
         ft_free_tabs(copy);
         ft_free_tabs(scene->map.matrix);

@@ -10,8 +10,8 @@
 #include <fcntl.h>
 # include <pthread.h>
 
-#define WIDTH 500
-#define HEIGHT 300
+#define WIDTH 900
+#define HEIGHT 700
 
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
@@ -30,6 +30,9 @@
 #define KEY_ESC 53
 #define	KEY_ARR_R 124
 #define	KEY_ARR_L 123
+
+#define SKY_COLOR 0x2211FF
+#define FLOOR_COLOR 0x00FFFF
 
 #define ROTATION_SPEED M_PI / 30
 
@@ -78,12 +81,11 @@ typedef struct s_player
 
 typedef struct s_sprite 
 {
-	char const *north;
-	char const *south;
-	char const *east;
-	char const *west;
+	char const *path;
+	t_data data_spr;
 
-	char const *bonus;
+	int sprite_w;
+	int sprite_h;
 } t_sprite;
 
 typedef struct s_map
@@ -100,7 +102,6 @@ typedef struct s_scene
 	t_vec		sky_color;
 	t_vec		floor_color;
 	t_map		map;
-	t_sprite	sprite;
 	t_player	player;
 	
 } t_scene;
@@ -117,11 +118,20 @@ typedef struct s_keys {
 	int	arrow_l;
 } t_keys;
 
-typedef struct general
+typedef struct s_sprites
+{
+	t_sprite wall_north;
+	t_sprite wall_south;
+	t_sprite wall_east;
+	t_sprite wall_west;
+} t_sprites;
+
+typedef struct s_general
 {
 	t_scene *scene;
 	t_mlib	*mlib;
 	t_keys	*keys;
+	t_sprites *sprites;
 } t_general;
 
 
@@ -148,7 +158,7 @@ void    print_player(t_player player);
 
 
 /* init_window.c*/
-void	init_window(t_mlib *mlib, t_scene *scene);
+void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
 int		position_is_valid(t_general *general, float pos_x, float pos_y);
 
 void	launch_mid_ray(t_general *general);
@@ -196,7 +206,7 @@ void	ft_free_tabs(char **tab);
 
 
 /* parsing.c */
-int parser(t_scene *scene, char **copy);
+int parser(t_sprites *sprites, t_scene *scene, char **copy);
 
 
 /* map_parser.c */
