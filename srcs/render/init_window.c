@@ -61,10 +61,11 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
     general->sprites = sprites;
 
 
-    //t_sprites *sprites = general->sprites;
 
     mlib->utils.mlx = mlx_init();
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
+
+
 
 
     printf("BOUCLE\n");
@@ -75,17 +76,9 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
 
     mlx_loop_hook(mlib->utils.mlx, render, general);
     
-    // int x;
-    // int y;
-    // sprites->wall_north.data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &x, &y);
-    
-    
+
+
     //mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, sprites->wall_north.data_spr.img_ptr, 0, 0);
-    
-    //mlx_get_data_addr(sprites->wall_north.data_spr.img_ptr, &sprites->wall_north.data_spr.bits_per_pixel, &sprites->wall_north.data_spr.line_length, &sprites->wall_north.data_spr.endian);
-
-    //my_mlx_pixel_put(&general->mlib->data, 10, 10, (int) *(sprites->wall_north.data_spr.addr + 10));
-
 
     mlx_loop(mlib->utils.mlx);
 }

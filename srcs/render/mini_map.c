@@ -201,27 +201,27 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
     int sx = (x0 < x1) ? 1 : -1;
     int sy = (y0 < y1) ? 1 : -1;
     int err = dx - dy;
-
+    (void) size_wall;
     while (42) {
         // Ensure the pixel coordinates are within window bounds
         if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) 
         {
-            if (x0 % size_wall == 0 && y0 % size_wall == 0)
+           /*if (x0 % size_wall == 0 && y0 % size_wall == 0)
             {
                 if (hit_corner(general,x0, y0) == 1)
                     break;
 
             }
             else
-            {
+            {*/
                 if (hit_a_wall(general,x0, y0) == 0)
                 {
 
-                    my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
+                   //my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
                 }
                 else
                     break;
-            }
+            //}
             //int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
 
         }

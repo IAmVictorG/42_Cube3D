@@ -160,9 +160,14 @@ void    print_player(t_player player);
 /* init_window.c*/
 void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
 int		position_is_valid(t_general *general, float pos_x, float pos_y);
-
 void	launch_mid_ray(t_general *general);
+int convert_char_to_int(char *color);
 
+/* get_color.c */
+int get_color_wall_south(t_general *general, t_vec ray, int h_wall, int max_wall_h);
+int get_color_wall_north(t_general *general, t_vec ray, int h_wall, int max_wall_h);
+int get_color_wall_west(t_general *general, t_vec ray, int h_wall, int max_wall_h);
+int get_color_wall_east(t_general *general, t_vec ray, int h_wall, int max_wall_h);
 
 /* hook.c */
 
