@@ -372,10 +372,6 @@ void render_wall2D(t_general *general)
 
 }
 
-
-
-
-
 void test(t_general *general)
 {
     char **matrix = general->scene->map.matrix;

@@ -84,88 +84,35 @@ void trace_ray(t_general *general) {
             }
         }
 
-
-        /*if ((int) ray.x % size_wall == 0 && (int) ray.y % size_wall == 0)
+        if ((int) ray.y % size_wall == 0)
         {
             for (int i = 0; i < wall_height; i++)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x000000);
-            }
+                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
+            } 
         }
-        else if ((int) ray.x % size_wall == size_wall - 1 && (int) ray.y % size_wall == size_wall - 1)
+        else if ((int) ray.y % size_wall == size_wall - 1)
         {
             for (int i = 0; i < wall_height; i++)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x000000);
-            }
+                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_north(general, ray, i, wall_height));
+            }                 
         }
-        else if ((int) ray.x % size_wall == size_wall - 1 && (int) ray.y % size_wall ==  0)
+
+        if ((int) ray.x % size_wall == 0)
         {
             for (int i = 0; i < wall_height; i++)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x000000);
-            }
+                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
+            } 
         }
-        else if ((int) ray.x % size_wall ==  0 && (int) ray.y % size_wall ==  size_wall - 1)
+        else if ((int) ray.x % size_wall == size_wall - 1)
         {
             for (int i = 0; i < wall_height; i++)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x000000);
-            }
-        }*/
-        if ((int) ray.y % size_wall == 0 || (int) ray.y % size_wall == size_wall - 1) // NORD
-        {
-            if ((int) ray.y % size_wall == 0)
-            {
-                for (int i = 0; i < wall_height; i++)
-                {
-                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
-                } 
-            }
-            else if ((int) ray.y % size_wall == size_wall - 1)
-            {
-                for (int i = 0; i < wall_height; i++)
-                {
-                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_north(general, ray, i, wall_height));
-                }                 
-            }
-
-        }
-        if ((int) ray.x % size_wall == 0 || (int) ray.x % size_wall == size_wall - 1) //WEST
-        {
-            if ((int) ray.x % size_wall == 0)
-            {
-                for (int i = 0; i < wall_height; i++)
-                {
-                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
-                } 
-            }
-            else if ((int) ray.x % size_wall == size_wall - 1)
-            {
-                for (int i = 0; i < wall_height; i++)
-                {
-                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_west(general, ray, i, wall_height));
-                }                 
-            }            
-        }
-        
-        // else if ((int) ray.y % size_wall == 0) //SOUTH
-        // {
-
-        //     for (int i = 0; i < wall_height; i++)
-        //     {
-        //         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
-        //     }        
-        // }
-        // else if ((int) ray.x % size_wall == 0) //EST
-        // {
-        //     for (int i = 0; i < wall_height; i++)
-        //     {
-        //         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
-        //     } 
-
-        // }
-
+                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_west(general, ray, i, wall_height));
+            }                 
+        }   
 
         imageincre++;
     }
@@ -197,6 +144,32 @@ void load_texture(t_general *general)
     sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
 }
 
+
+void    trace_wall(t_general *general, t_sprite *sprite)
+{
+    int h = sprite->sprite_h;
+    int w = sprite->sprite_w;
+
+    int i;
+    int j;
+    char *color;
+
+    //printf("h = %d & w = %d\n", h,w);
+
+    j = 0;
+    while (j < h)
+    {
+        i = 0;
+        while (i < w)
+        {
+            color = sprite->data_spr.addr + j * sprite->data_spr.line_length + i * sprite->data_spr.bits_per_pixel / 8;
+            my_mlx_pixel_put(&general->mlib->data, i,j, *(unsigned int *)color);
+            i++;
+        }
+        j++;
+    }
+}
+
 int render_game(t_general *general)
 {
     t_mlib  *mlib = general->mlib;
@@ -213,6 +186,8 @@ int render_game(t_general *general)
 
     //my_mlx_pixel_put(&mlib->data, 10, 10, color);
     //mlx_put_image_to_window(&mlib->utils.mlx, mlib->utils.win, sprites->wall_north.data_spr.img_ptr, 0, 0);
+
+    //trace_wall(general, general->sprites->wall_east);
 
     trace_ray(general);
     move(general);
