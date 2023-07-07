@@ -54,7 +54,7 @@ int get_color_wall_east(t_general *general, t_vec ray, int h_wall, int max_wall_
     unsigned int    color;
     int             size_wall;
     int             y;
-    
+
     sprites = general->sprites;
 
     int bpp;
@@ -89,12 +89,12 @@ int get_color_wall_west(t_general *general, t_vec ray, int h_wall, int max_wall_
     char *pixel;
     unsigned int color;
     int size_wall;
-    int y;
+    int x;
     
-    y = (int) ray.y;
+    x = (int) ray.y;
     size_wall = general->scene->map.size_wall;
     sprites = general->sprites;
-    pixel = sprites->wall_west->data_spr.addr + (((y % size_wall)*general->sprites->wall_west->sprite_w/size_wall) * sprites->wall_west->data_spr.line_length + (h_wall * general->sprites->wall_west->sprite_h/ max_wall_h) * (sprites->wall_west->data_spr.bits_per_pixel / 8));
+    pixel = sprites->wall_west->data_spr.addr + ((h_wall * general->sprites->wall_west->sprite_h/ max_wall_h) * sprites->wall_west->data_spr.line_length + ((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall) * (sprites->wall_west->data_spr.bits_per_pixel / 8));
     color = *(unsigned int *)pixel;
     return (color);
     
