@@ -56,7 +56,7 @@ void trace_ray(t_general *general) {
         //if (end_point.x >= window_width) end_point.x = window_width - 1;
         //if (end_point.y >= window_height) end_point.y = window_height - 1;
 
-        ray = draw_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
+        ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
         int wall_height;
         float dist;
         float delta_angle = angle - player_angle;

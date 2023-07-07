@@ -201,6 +201,7 @@ int 	render_mini_map(t_general *general);
 void 	move(t_general *general);
 void	load_texture(t_general *general);
 
+t_vec	calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height);
 
 
 /* parse_utils.c */

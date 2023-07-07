@@ -188,10 +188,10 @@ int hit_corner(t_general *general, int x, int y)
     return (0);
 }
 
-t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
+void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
 {
     t_mlib *mlib;
-    t_vec r;
+
 
     mlib = general->mlib;
 
@@ -206,24 +206,53 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
         // Ensure the pixel coordinates are within window bounds
         if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) 
         {
-           /*if (x0 % size_wall == 0 && y0 % size_wall == 0)
+            if (hit_a_wall(general,x0, y0) == 0)
             {
-                if (hit_corner(general,x0, y0) == 1)
-                    break;
-
+                my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
             }
             else
-            {*/
-                if (hit_a_wall(general,x0, y0) == 0)
-                {
+                break;
+        }
+        else
+            break;
 
-                   //my_mlx_pixel_put(&mlib->data, x0, y0, 0xFF0000);
-                }
-                else
-                    break;
-            //}
-            //int color = (x0 % size_wall == 0 || y0 % size_wall == 0) ? 0xFFFF00 : 0xFF0000;
 
+        if (x0 == x1 && y0 == y1)   
+            break;
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x0 += sx;
+        }
+        else if (e2 < dx) {
+            err += dx;
+            y0 += sy;
+        }
+    }
+
+}
+
+t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
+{
+    t_mlib *mlib;
+    t_vec r;
+
+    mlib = general->mlib;
+
+
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+    (void) size_wall;
+    while (42) 
+    {
+        // Ensure the pixel coordinates are within window bounds
+        if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) 
+        {
+            if (hit_a_wall(general,x0, y0) == 1)
+                break;
         }
         else
             break;
@@ -246,8 +275,6 @@ t_vec draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wal
     r.z = 0;
     return (r);
 }
-
-
 
 void launch_mid_ray(t_general *general)
 {
