@@ -24,22 +24,31 @@ t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
     return (dir_r);
 }
 
+// void    display_line_sprite()
+// {
+//         for (int i = 0; i < (window_height - wall_height) / 2; i++)
+//         {
+//             if (imageincre < WIDTH && i < HEIGHT) 
+//             {
+//                 my_mlx_pixel_put(&general->mlib->data, imageincre, i, SKY_COLOR);
+//             }
+//         }
 
+// }
 
-void trace_ray(t_general *general) {
-    //printf("RAY\n");
+void trace_ray(t_general *general) 
+{
+
     t_vec position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
     t_vec ray;
-
-    //char    **matrix = general->scene.
 
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
     int window_width = WIDTH;
     int window_height = HEIGHT;
 
-    //t_mlib *mlib = general->mlib;
+
 
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
@@ -54,10 +63,6 @@ void trace_ray(t_general *general) {
         float sin_angle = sinf(angle);
         t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width ), 0.0f};
 
-
-        //if (end_point.x >= window_width) end_point.x = window_width - 1;
-        //if (end_point.y >= window_height) end_point.y = window_height - 1;
-
         ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
         int wall_height;
         float dist;
@@ -66,14 +71,23 @@ void trace_ray(t_general *general) {
         dist = sqrtf((ray.x - general->scene->player.pos.x)*(ray.x - general->scene->player.pos.x) + (ray.y - general->scene->player.pos.y)*(ray.y - general->scene->player.pos.y));
         dist /= size_wall;
         dist *= cos(delta_angle);
-        //printf("Ray hit x: %d, y: %d, distance %d\n", (int) ray.x, (int) ray.y, (int) dist);
-        if (dist <= 1.0f)
-            wall_height = HEIGHT;
-        else
-            wall_height = HEIGHT / dist;
 
-        for (int i = 0; i < (window_height - wall_height) / 2; i++) {
-            if (imageincre < WIDTH && i < HEIGHT) {
+        int r;
+        if (dist <= 1.0f)
+        {
+            r = 10;
+            wall_height = HEIGHT;
+        }
+        else
+        {
+            r = 0;
+             wall_height = HEIGHT / dist;
+        }
+
+        for (int i = 0; i < (window_height - wall_height) / 2; i++)
+        {
+            if (imageincre < WIDTH && i < HEIGHT) 
+            {
                 my_mlx_pixel_put(&general->mlib->data, imageincre, i, SKY_COLOR);
             }
         }
@@ -131,16 +145,16 @@ void load_texture(t_general *general)
 {    
     t_sprites *sprites = general->sprites;
 
-    sprites->wall_north->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &sprites->wall_north->sprite_w , &sprites->wall_north->sprite_h);
+    sprites->wall_north->data_spr.img_ptr = mlx_xpm_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.xpm", &sprites->wall_north->sprite_w , &sprites->wall_north->sprite_h);
     sprites->wall_north->data_spr.addr = mlx_get_data_addr(sprites->wall_north->data_spr.img_ptr, &sprites->wall_north->data_spr.bits_per_pixel, &sprites->wall_north->data_spr.line_length, &sprites->wall_north->data_spr.endian); /* devrait etre un pointeur */
     
-    sprites->wall_south->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_South.png", &sprites->wall_south->sprite_w , &sprites->wall_south->sprite_h);
+    sprites->wall_south->data_spr.img_ptr = mlx_xpm_file_to_image(general->mlib->utils.mlx, "sprites/Wall_South.xpm", &sprites->wall_south->sprite_w , &sprites->wall_south->sprite_h);
     sprites->wall_south->data_spr.addr = mlx_get_data_addr(sprites->wall_south->data_spr.img_ptr, &sprites->wall_south->data_spr.bits_per_pixel, &sprites->wall_south->data_spr.line_length, &sprites->wall_south->data_spr.endian); /* devrait etre un pointeur */
 
-    sprites->wall_east->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_East.png", &sprites->wall_east->sprite_w , &sprites->wall_east->sprite_h);
+    sprites->wall_east->data_spr.img_ptr = mlx_xpm_file_to_image(general->mlib->utils.mlx, "sprites/Wall_East.xpm", &sprites->wall_east->sprite_w , &sprites->wall_east->sprite_h);
     sprites->wall_east->data_spr.addr = mlx_get_data_addr(sprites->wall_east->data_spr.img_ptr, &sprites->wall_east->data_spr.bits_per_pixel, &sprites->wall_east->data_spr.line_length, &sprites->wall_east->data_spr.endian); /* devrait etre un pointeur */
 
-    sprites->wall_west->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_West.png", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
+    sprites->wall_west->data_spr.img_ptr = mlx_xpm_file_to_image(general->mlib->utils.mlx, "sprites/Wall_West.xpm", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
     sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
 }
 

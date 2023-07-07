@@ -293,7 +293,7 @@ void launch_mid_ray(t_general *general)
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
     float fov_end = player_angle + fov_rad / 2;
-    float angle_step = fov_rad / 400;
+    float angle_step = fov_rad / 5;
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {

@@ -71,6 +71,21 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
     mlib->utils.mlx = mlx_init();
     
     load_texture(general);
+    printf("h_wall est = %d w_wall est = %d h_wall ouest = %d w_wall ouest = %d\n",
+            general->sprites->wall_east->sprite_h,
+            general->sprites->wall_east->sprite_w,
+            general->sprites->wall_west->sprite_h,
+            general->sprites->wall_west->sprite_w
+            );
+
+
+    printf("h_wall est = %d w_wall est = %d h_wall ouest = %d w_wall ouest = %d\n",
+            general->sprites->wall_south->sprite_h,
+            general->sprites->wall_south->sprite_w,
+            general->sprites->wall_north->sprite_h,
+            general->sprites->wall_north->sprite_w
+            );
+
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 
 
