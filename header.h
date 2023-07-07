@@ -161,7 +161,7 @@ void    print_player(t_player player);
 void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
 int		position_is_valid(t_general *general, float pos_x, float pos_y);
 void	launch_mid_ray(t_general *general);
-int convert_char_to_int(char *color);
+int		convert_char_to_int(char *color);
 
 /* get_color.c */
 int get_color_wall_south(t_general *general, t_vec ray, int h_wall, int max_wall_h);

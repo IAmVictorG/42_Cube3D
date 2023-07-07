@@ -265,7 +265,8 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
             err -= dy;
             x0 += sx;
         }
-        else if (e2 < dx) {
+        else if (e2 < dx) 
+        {
             err += dx;
             y0 += sy;
         }

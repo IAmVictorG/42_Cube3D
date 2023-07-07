@@ -32,6 +32,8 @@ void trace_ray(t_general *general) {
     t_vec direction = general->scene->player.dir;
     t_vec ray;
 
+    //char    **matrix = general->scene.
+
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
     int window_width = WIDTH;
@@ -111,41 +113,59 @@ void trace_ray(t_general *general) {
                 my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, 0x000000);
             }
         }*/
-        if ((int) ray.x % size_wall == 0) //WEST
+        if ((int) ray.y % size_wall == 0 || (int) ray.y % size_wall == size_wall - 1) // NORD
         {
-            for (int i = 0; i < wall_height; i++)
+            if ((int) ray.y % size_wall == 0)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i,  get_color_wall_west(general, ray, i, wall_height));
+                for (int i = 0; i < wall_height; i++)
+                {
+                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
+                } 
             }
-        }
-        else if ((int) ray.y % size_wall == 0) //SOUTH
-        {
-
-            for (int i = 0; i < wall_height; i++)
+            else if ((int) ray.y % size_wall == size_wall - 1)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
-            }        
+                for (int i = 0; i < wall_height; i++)
+                {
+                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_north(general, ray, i, wall_height));
+                }                 
+            }
+
         }
-        else if ((int) ray.y % size_wall == size_wall - 1) // NORD
+        if ((int) ray.x % size_wall == 0 || (int) ray.x % size_wall == size_wall - 1) //WEST
         {
-            for (int i = 0; i < wall_height; i++)
+            if ((int) ray.x % size_wall == 0)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_north(general, ray, i, wall_height));
-            } 
-
-        }
-        else if ((int) ray.x % size_wall == size_wall - 1) //EST
-        {
-            for (int i = 0; i < wall_height; i++)
+                for (int i = 0; i < wall_height; i++)
+                {
+                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
+                } 
+            }
+            else if ((int) ray.x % size_wall == size_wall - 1)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
-            } 
-
+                for (int i = 0; i < wall_height; i++)
+                {
+                    my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_west(general, ray, i, wall_height));
+                }                 
+            }            
         }
-        else
-        {
+        
+        // else if ((int) ray.y % size_wall == 0) //SOUTH
+        // {
 
-        }
+        //     for (int i = 0; i < wall_height; i++)
+        //     {
+        //         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_south(general, ray, i, wall_height));
+        //     }        
+        // }
+        // else if ((int) ray.x % size_wall == 0) //EST
+        // {
+        //     for (int i = 0; i < wall_height; i++)
+        //     {
+        //         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, get_color_wall_east(general, ray, i, wall_height));
+        //     } 
+
+        // }
+
 
         imageincre++;
     }
@@ -167,13 +187,13 @@ void load_texture(t_general *general)
     sprites->wall_north->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &sprites->wall_north->sprite_w , &sprites->wall_north->sprite_h);
     sprites->wall_north->data_spr.addr = mlx_get_data_addr(sprites->wall_north->data_spr.img_ptr, &sprites->wall_north->data_spr.bits_per_pixel, &sprites->wall_north->data_spr.line_length, &sprites->wall_north->data_spr.endian); /* devrait etre un pointeur */
     
-    sprites->wall_south->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_south->sprite_w , &sprites->wall_south->sprite_h);
+    sprites->wall_south->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_South.png", &sprites->wall_south->sprite_w , &sprites->wall_south->sprite_h);
     sprites->wall_south->data_spr.addr = mlx_get_data_addr(sprites->wall_south->data_spr.img_ptr, &sprites->wall_south->data_spr.bits_per_pixel, &sprites->wall_south->data_spr.line_length, &sprites->wall_south->data_spr.endian); /* devrait etre un pointeur */
 
-    sprites->wall_east->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_east->sprite_w , &sprites->wall_east->sprite_h);
+    sprites->wall_east->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_East.png", &sprites->wall_east->sprite_w , &sprites->wall_east->sprite_h);
     sprites->wall_east->data_spr.addr = mlx_get_data_addr(sprites->wall_east->data_spr.img_ptr, &sprites->wall_east->data_spr.bits_per_pixel, &sprites->wall_east->data_spr.line_length, &sprites->wall_east->data_spr.endian); /* devrait etre un pointeur */
 
-    sprites->wall_west->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
+    sprites->wall_west->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_West.png", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
     sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
 }
 
