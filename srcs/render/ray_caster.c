@@ -160,18 +160,21 @@ int convert_char_to_int(char *color)
 }
 
 
-static void load_texture(t_general *general)
+void load_texture(t_general *general)
 {    
     t_sprites *sprites = general->sprites;
 
-    sprites->wall_north.data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &sprites->wall_north.sprite_w , &sprites->wall_north.sprite_h);
-    sprites->wall_north.data_spr.addr = mlx_get_data_addr(sprites->wall_north.data_spr.img_ptr, &sprites->wall_north.data_spr.bits_per_pixel, &sprites->wall_north.data_spr.line_length, &sprites->wall_north.data_spr.endian); /* devrait etre un pointeur */
+    sprites->wall_north->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_North.png", &sprites->wall_north->sprite_w , &sprites->wall_north->sprite_h);
+    sprites->wall_north->data_spr.addr = mlx_get_data_addr(sprites->wall_north->data_spr.img_ptr, &sprites->wall_north->data_spr.bits_per_pixel, &sprites->wall_north->data_spr.line_length, &sprites->wall_north->data_spr.endian); /* devrait etre un pointeur */
     
-    sprites->wall_south.data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_south.sprite_w , &sprites->wall_south.sprite_h);
-    sprites->wall_south.data_spr.addr = mlx_get_data_addr(sprites->wall_south.data_spr.img_ptr, &sprites->wall_south.data_spr.bits_per_pixel, &sprites->wall_south.data_spr.line_length, &sprites->wall_south.data_spr.endian); /* devrait etre un pointeur */
+    sprites->wall_south->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_south->sprite_w , &sprites->wall_south->sprite_h);
+    sprites->wall_south->data_spr.addr = mlx_get_data_addr(sprites->wall_south->data_spr.img_ptr, &sprites->wall_south->data_spr.bits_per_pixel, &sprites->wall_south->data_spr.line_length, &sprites->wall_south->data_spr.endian); /* devrait etre un pointeur */
 
-    sprites->wall_east.data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_east.sprite_w , &sprites->wall_east.sprite_h);
-    sprites->wall_east.data_spr.addr = mlx_get_data_addr(sprites->wall_east.data_spr.img_ptr, &sprites->wall_east.data_spr.bits_per_pixel, &sprites->wall_east.data_spr.line_length, &sprites->wall_east.data_spr.endian); /* devrait etre un pointeur */
+    sprites->wall_east->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_east->sprite_w , &sprites->wall_east->sprite_h);
+    sprites->wall_east->data_spr.addr = mlx_get_data_addr(sprites->wall_east->data_spr.img_ptr, &sprites->wall_east->data_spr.bits_per_pixel, &sprites->wall_east->data_spr.line_length, &sprites->wall_east->data_spr.endian); /* devrait etre un pointeur */
+
+    sprites->wall_west->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/test.png", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
+    sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
 }
 
 int render_game(t_general *general)
@@ -182,9 +185,9 @@ int render_game(t_general *general)
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
 
-    load_texture(general);
+    //load_texture(general);
     //my_mlx_pixel_put(&sprites->wall_north.data_spr, 10, 10, convert_char_to_int(sprites->wall_north.data_spr.addr));
-    my_mlx_pixel_put(&mlib->data, 15, 15, 0xFF0000);
+    //my_mlx_pixel_put(&mlib->data, 15, 15, 0xFF0000);
 
 
 

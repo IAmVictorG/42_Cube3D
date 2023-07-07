@@ -49,6 +49,17 @@ int main(int argc, char const *argv[])
 
         sprites = malloc(sizeof(t_sprites));
 
+        t_sprite    *wall_north = malloc(sizeof(t_sprite));
+        t_sprite    *wall_south = malloc(sizeof(t_sprite));
+        t_sprite    *wall_east = malloc(sizeof(t_sprite));
+        t_sprite    *wall_west = malloc(sizeof(t_sprite));
+
+
+        sprites->wall_north = wall_north;
+        sprites->wall_south = wall_south;
+        sprites->wall_east = wall_east;
+        sprites->wall_west = wall_west;
+
         int end_part_1 = parser(sprites, scene, copy);        
         map_parser(scene, copy, end_part_1);
 

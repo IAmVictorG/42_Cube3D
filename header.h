@@ -120,10 +120,10 @@ typedef struct s_keys {
 
 typedef struct s_sprites
 {
-	t_sprite wall_north;
-	t_sprite wall_south;
-	t_sprite wall_east;
-	t_sprite wall_west;
+	t_sprite *wall_north;
+	t_sprite *wall_south;
+	t_sprite *wall_east;
+	t_sprite *wall_west;
 } t_sprites;
 
 typedef struct s_general
@@ -199,6 +199,9 @@ int hit_corner(t_general *general, int x, int y);
 int 	render_game(t_general *general);
 int 	render_mini_map(t_general *general);
 void 	move(t_general *general);
+void	load_texture(t_general *general);
+
+
 
 /* parse_utils.c */
 int		is_space(char c);

@@ -53,8 +53,14 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
     {
         printf("ERROR MALLOC FOR general\n");
     }
+
+    
+
     scene->mini_map = 1;
     init_key(general);
+
+
+
 
     general->mlib = mlib;
     general->scene = scene;
@@ -63,12 +69,14 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
 
 
     mlib->utils.mlx = mlx_init();
+    
+    load_texture(general);
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 
 
 
 
-    printf("BOUCLE\n");
+
     mlx_hook(mlib->utils.win, 2, 0, key_press_exit, general);  // Hook pour les touches pressées
     mlx_hook(mlib->utils.win, 3, 0, key_release, general);
     mlx_hook(mlib->utils.win, 4, 0, mouse_press, mlib);  // Hook pour les clics de souris

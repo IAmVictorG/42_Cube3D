@@ -24,22 +24,22 @@ static void parse_wall(t_sprites *sprites, char *line)
     if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprites->wall_north.path = r;
+        sprites->wall_north->path = r;
     }
     else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprites->wall_south.path = r;
+        sprites->wall_south->path = r;
     }
     else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprites->wall_west.path = r;
+        sprites->wall_west->path = r;
     }
     else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2]))
     {
         r = go_to_next_and_get_arg(&line);
-        sprites->wall_east.path = r;
+        sprites->wall_east->path = r;
     }
     r = go_to_next_and_get_arg(&line);
     if (ft_strlen(r) != 0 && string_is_only_space(r) == 0)
