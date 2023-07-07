@@ -47,54 +47,48 @@ int get_color_wall_south(t_general *general, t_vec ray, int h_wall, int max_wall
 int get_color_wall_east(t_general *general, t_vec ray, int h_wall, int max_wall_h)
 {
 
-    //printVec(ray);
-
     t_sprites       *sprites;
+    int             size_wall;
+    int             x;
     char            *pixel;
     unsigned int    color;
-    int             size_wall;
-    int             y;
 
+    int             x_pix;
+    int             y_pix;
+    
     sprites = general->sprites;
-
-    int bpp;
-    bpp = sprites->wall_east->data_spr.bits_per_pixel;
-
-    int sprite_w = sprites->wall_east->sprite_w;
-
-    int line_length = sprites->wall_east->data_spr.line_length;
-
-
-    //printf("w = %d\n", sprite_w);
-
-    int y_pix;
-    int x_pix;
-    
     size_wall = general->scene->map.size_wall;
-    y = (int) ray.y;
-
-    y_pix = (h_wall) * sprite_w/size_wall;
-    x_pix = (y % size_wall) * sprite_w/ max_wall_h;
-
+    x = (int) ray.y;
     
-    pixel = sprites->wall_east->data_spr.addr + (y_pix * line_length + x_pix * (bpp / 8));
+    x_pix = ((x % size_wall)*general->sprites->wall_east->sprite_w/size_wall);
+    y_pix = (h_wall * general->sprites->wall_east->sprite_h/ max_wall_h);
 
+
+    pixel = sprites->wall_east->data_spr.addr + y_pix * sprites->wall_east->data_spr.line_length + x_pix * (sprites->wall_east->data_spr.bits_per_pixel / 8);
     color = *(unsigned int *)pixel;
     return (color);
 }
 
 int get_color_wall_west(t_general *general, t_vec ray, int h_wall, int max_wall_h)
 {
-    t_sprites   *sprites;
-    char *pixel;
-    unsigned int color;
-    int size_wall;
-    int x;
+    t_sprites       *sprites;
+    int             size_wall;
+    int             x;
+    char            *pixel;
+    unsigned int    color;
+
+    int             x_pix;
+    int             y_pix;
     
-    x = (int) ray.y;
-    size_wall = general->scene->map.size_wall;
     sprites = general->sprites;
-    pixel = sprites->wall_west->data_spr.addr + ((h_wall * general->sprites->wall_west->sprite_h/ max_wall_h) * sprites->wall_west->data_spr.line_length + ((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall) * (sprites->wall_west->data_spr.bits_per_pixel / 8));
+    size_wall = general->scene->map.size_wall;
+    x = (int) ray.y;
+    
+    x_pix = ((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall);
+    y_pix = (h_wall * general->sprites->wall_west->sprite_h/ max_wall_h);
+
+
+    pixel = sprites->wall_west->data_spr.addr + y_pix * sprites->wall_west->data_spr.line_length + x_pix * (sprites->wall_west->data_spr.bits_per_pixel / 8);
     color = *(unsigned int *)pixel;
     return (color);
     
