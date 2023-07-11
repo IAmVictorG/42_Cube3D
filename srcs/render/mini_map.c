@@ -234,10 +234,10 @@ void draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall
 
 t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
 {
-    t_mlib *mlib;
+    //t_mlib *mlib;
     t_vec r;
 
-    mlib = general->mlib;
+    //mlib = general->mlib;
 
 
     int dx = abs(x1 - x0);
