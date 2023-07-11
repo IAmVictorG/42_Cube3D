@@ -97,8 +97,6 @@ void trace_ray(t_general *general)
     int window_width = WIDTH;
     int window_height = HEIGHT;
 
-
-
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
@@ -175,10 +173,7 @@ void trace_ray(t_general *general)
 
 int convert_char_to_int(char *color)
 {
-
     return (*color << 24 | *(color + 1) << 16 | *(color + 2) << 8 | *(color + 3));
-
-
 }
 
 

@@ -69,6 +69,7 @@ typedef struct s_coord
 {
 	int	x;
 	int	y;
+	int	z;
 } t_coord;
 
 typedef struct s_player 
@@ -147,7 +148,7 @@ int		get_size_file(const char *filename);
 char	**copy_file(const char *filename, int size_file);
 
 
-void	draw_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height);
+void	draw_rays(t_general *general, t_vec position, int x1, int y1);
 void	render_wall2D(t_general *general);
 
 
@@ -215,7 +216,7 @@ void	ft_free_tabs(char **tab);
 
 
 /* parsing.c */
-int parser(t_sprites *sprites, t_scene *scene, char **copy);
+int		parser(t_sprites *sprites, t_scene *scene, char **copy);
 
 
 /* map_parser.c */
