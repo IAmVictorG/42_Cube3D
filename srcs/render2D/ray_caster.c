@@ -24,12 +24,57 @@ t_vec create_ray(t_scene *scene, int pixel_x, int pixel_y)
     return (dir_r);
 }*/
 
+t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height) 
+{
+    //t_mlib *mlib;
+    t_vec r;
+
+    //mlib = general->mlib;
+
+
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+    (void) size_wall;
+    while (42) 
+    {
+        // Ensure the pixel coordinates are within window bounds
+        if (x0 >= 0 && x0 < window_width && y0 >= 0 && y0 < window_height) 
+        {
+            if (hit_a_wall(general,x0, y0) == 1)
+                break;
+        }
+        else
+            break;
+
+
+        if (x0 == x1 && y0 == y1)   
+            break;
+        int e2 = 2 * err;
+        if (e2 > -dy) 
+        {
+            err -= dy;
+            x0 += sx;
+        }
+        else if (e2 < dx) 
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+    r.x = x0;
+    r.y = y0;
+    r.z = 0;
+    return (r);
+}
+
 void draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int imageincre)
 {
     int             i;
     int             x_int;
     unsigned int    color;
-
 
     for (i = 0; i < wall_height; i++)
     {
@@ -60,7 +105,6 @@ void draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imag
     int             x_int;
     unsigned int    color;
 
-
     for (i = 0; i < wall_height; i++)
     {
         x_int = (int) roundf(ray.x);
@@ -68,7 +112,6 @@ void draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imag
         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
     } 
 }
-
 
 void draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imageincre)
 {
@@ -86,11 +129,9 @@ void draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imag
 
 void trace_ray(t_general *general) 
 {
-
     t_vec position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
     t_vec ray;
-
 
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
@@ -103,6 +144,8 @@ void trace_ray(t_general *general)
     float fov_end = player_angle + fov_rad / 2;
 
     float angle_step = fov_rad / WIDTH;
+
+    //printf("angle_step = %f \n", angle_step);
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {

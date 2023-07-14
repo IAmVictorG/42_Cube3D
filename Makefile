@@ -7,7 +7,9 @@ LINUX_FLAGS = -lm -lX11 -lXext -lpthread
 MAC_FLAGS = -framework OpenGL -framework AppKit
 
 SRCS =  $(addprefix srcs/, main.c display.c) \
-		$(addprefix srcs/render/, init_window.c ray_caster.c utils.c hook.c mini_map.c render.c get_color.c) \
+		$(addprefix srcs/render2D/, init_window.c ray_caster.c utils.c mini_map.c render.c 2D_player_render.c) \
+		$(addprefix srcs/render3D/, get_color.c) \
+		$(addprefix srcs/gameplay/, hook.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
 		$(addprefix srcs/parsing/, copy_file_utils.c map_parser.c parse_utils.c parsing.c) \
 

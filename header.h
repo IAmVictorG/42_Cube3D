@@ -135,6 +135,12 @@ typedef struct s_general
 	t_sprites *sprites;
 } t_general;
 
+/* 2D_render_player */
+void draw_cross(t_general *general, int x, int y, int color);
+void draw_line(t_general *general, int x0, int y0, int x1, int y1, int color);
+void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int color);
+
+
 
 /* display.c */
 void    printVec(t_vec vector);
