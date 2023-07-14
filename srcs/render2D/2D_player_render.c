@@ -59,3 +59,22 @@ void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int colo
     draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x + arrow_perp_x), y1 - head_len * (arrow_dir_y + arrow_perp_y), color);
     draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x - arrow_perp_x), y1 - head_len * (arrow_dir_y - arrow_perp_y), color);
 }
+
+void draw_player(t_general *general)
+{
+    int color;
+    t_coord coord_vector;
+
+    color = 0x00FF00;
+
+    int int_x0 = roundf(general->scene->player.pos.x);
+    int int_y0 = roundf(general->scene->player.pos.y);
+
+    draw_cross(general, int_x0, int_y0, color);
+
+    float dir_scale = 0.2 * general->scene->map.size_wall;
+    coord_vector.x = general->scene->player.dir.x * dir_scale;
+    coord_vector.y = general->scene->player.dir.y * dir_scale;
+
+    draw_arrow(general, int_x0, int_y0, coord_vector.x, coord_vector.y, 0xFF0000);
+}

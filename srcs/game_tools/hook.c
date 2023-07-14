@@ -169,3 +169,47 @@ void move(t_general *general)
         //print_player(general->scene->player);
     }
 }
+
+int position_is_valid(t_general *general, float pos_x, float pos_y)
+{
+    int player_size;
+    int i;
+    
+    player_size = 1;
+    int corners[4][2] = {
+        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)},
+        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)}
+    };
+
+    i = 0;
+    while (i < 4)
+    {
+        //printf("Corner %d: x = %d, y = %d\n", i, corners[i][0], corners[i][1]);
+        if (general->scene->map.matrix[corners[i][1]][corners[i][0]] == '1')
+        {
+            //printf("Position invalide %d\n", i);
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+void init_key(t_general *general)
+{
+    general->keys = malloc(sizeof(t_keys));
+    if (general->keys == NULL)
+    {
+        printf("Malloc ERROR KEYS\n");
+        exit(EXIT_FAILURE);
+    }
+    general->keys->w = 0;
+    general->keys->a = 0;
+    general->keys->s = 0;
+    general->keys->d = 0;
+    general->keys->arrow_l = 0;
+    general->keys->arrow_r = 0;
+
+}

@@ -1,4 +1,4 @@
-#include "../../header.h"
+#include "../header.h"
 
 int render(t_general *general)
 {
