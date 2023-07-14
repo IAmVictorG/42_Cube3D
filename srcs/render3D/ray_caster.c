@@ -127,7 +127,6 @@ void trace_ray(t_general *general)
         else if ((int) ray.x % size_wall == size_wall - 1)
         {
             draw_3D_line_west(general, ray, wall_height, imageincre);
-                
         }   
 
         imageincre++;

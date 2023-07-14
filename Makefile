@@ -10,8 +10,8 @@ SRCS =  $(addprefix srcs/, main.c display.c render.c init_window.c) \
 		$(addprefix srcs/game_tools/, hook.c utils.c) \
 		$(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils.c) \
 		$(addprefix srcs/parsing/, copy_file_utils.c map_parser.c parse_utils.c parsing.c) \
-		$(addprefix srcs/render3D/, ray_caster.c get_color.c 3D_wall_render.c) \
-		$(addprefix srcs/render2D/, mini_map.c 2D_player_render.c 2D_wall_render.c)
+		$(addprefix srcs/render2D/, mini_map.c 2D_player_render.c 2D_wall_render.c) \
+		$(addprefix srcs/render3D/, ray_caster.c get_color.c 3D_wall_render.c) 
 
 LIBS 	= $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}
