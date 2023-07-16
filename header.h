@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fcntl.h>
-# include <pthread.h>
+#include <pthread.h>
 
 #include "includes/get_next_line/get_next_line.h"
 #include "includes/libft/libft.h"

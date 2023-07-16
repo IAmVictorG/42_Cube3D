@@ -11,10 +11,14 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
 
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
+
+    //printf("dx = %d, dy = %d\n", dx, dy);
+
     int sx = (x0 < x1) ? 1 : -1;
     int sy = (y0 < y1) ? 1 : -1;
     int err = dx - dy;
     (void) size_wall;
+
     while (42) 
     {
         // Ensure the pixel coordinates are within window bounds
@@ -47,6 +51,20 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
     return (r);
 }
 
+t_coord   calculate_rays2(t_general *general)
+{
+    t_coord ray_point;
+    (void)  general;
+
+    ray_point.x = 0;
+    ray_point.y = 0;
+    ray_point.z = 0;
+
+
+    return ray_point;
+}
+
+
 void trace_ray(t_general *general) 
 {
     t_vec position = general->scene->player.pos;
@@ -71,7 +89,9 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width ), 0.0f};
+        t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width), 0.0f}; //windows_width ???
+        //printVec(end_point);
+
 
         ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
         int wall_height;
@@ -112,7 +132,6 @@ void trace_ray(t_general *general)
         if ((int) ray.y % size_wall == 0)
         {
             draw_3D_line_south(general, ray, wall_height, imageincre);
-
         }
         else if ((int) ray.y % size_wall == size_wall - 1)
         {
