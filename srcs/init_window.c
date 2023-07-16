@@ -10,7 +10,7 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
         printf("ERROR MALLOC FOR general\n");
     }
 
-    scene->mini_map = 0;
+    scene->mini_map = 1;
     init_key(general);
 
     general->mlib = mlib;

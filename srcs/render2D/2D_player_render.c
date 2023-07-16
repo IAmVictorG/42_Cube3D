@@ -53,7 +53,7 @@ void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int colo
     float arrow_perp_y = arrow_dir_x;
 
     // Length of the arrowhead
-    float head_len = 5;
+    float head_len = 7;
 
     // Draw the two sides of the arrowhead
     draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x + arrow_perp_x), y1 - head_len * (arrow_dir_y + arrow_perp_y), color);
@@ -76,5 +76,5 @@ void draw_player(t_general *general)
     coord_vector.x = general->scene->player.dir.x * dir_scale;
     coord_vector.y = general->scene->player.dir.y * dir_scale;
 
-    draw_arrow(general, int_x0, int_y0, coord_vector.x, coord_vector.y, 0xFF0000);
+    draw_arrow(general, int_x0, int_y0, coord_vector.x, coord_vector.y, 0x00FF00);
 }

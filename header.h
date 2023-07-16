@@ -156,6 +156,8 @@ int 	mouse_press(int button, int x, int y, t_mlib *mlib);
 int 	close_window(t_mlib *mlib);
 int		key_press_exit(int keycode, t_general *general);
 void 	move(t_general *general);
+int		position_is_valid(t_general *general, int pos_x, int pos_y);
+void	init_key(t_general *general);
 
 /* game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
@@ -231,7 +233,6 @@ t_vec	calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
 void	trace_ray(t_general *general);
 int 	render_game(t_general *general);
 
-
 /* render3D/3D_wall_render.c */
 void	draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_east(t_general *general, t_vec ray, int wall_height, int imageincre);
@@ -242,13 +243,8 @@ void	draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imag
 void 	move(t_general *general);
 void	load_texture(t_general *general);
 
-//int key_press(int keycode, t_general *general);
-int		position_is_valid(t_general *general, float pos_x, float pos_y);
-void	init_key(t_general *general);
-
 /* init_window.c*/
 void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
-int		position_is_valid(t_general *general, float pos_x, float pos_y);
 void	launch_mid_ray(t_general *general);
 int		convert_char_to_int(char *color);
 
