@@ -96,11 +96,11 @@ void trace_ray(t_general *general)
         ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
         int wall_height;
         float dist;
-        float delta_angle = angle - player_angle;
+        //float delta_angle = angle - player_angle;
 
         dist = sqrtf((ray.x - general->scene->player.pos.x)*(ray.x - general->scene->player.pos.x) + (ray.y - general->scene->player.pos.y)*(ray.y - general->scene->player.pos.y));
         dist /= size_wall;
-        dist *= cos(delta_angle);
+        //dist *= cos(delta_angle);
 
         //int r;
         if (dist <= 1.0f)

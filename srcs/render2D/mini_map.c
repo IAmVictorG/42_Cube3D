@@ -123,8 +123,8 @@ int render_mini_map(t_general *general)
     render_wall2D(general);
     draw_grid(general);
     move(general);
+    launch_mid_ray(general);
     draw_player(general);
-    //launch_mid_ray(general);
     
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);

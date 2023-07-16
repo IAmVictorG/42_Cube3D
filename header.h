@@ -11,8 +11,8 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
-#define WIDTH 900
-#define HEIGHT 700
+#define WIDTH 797
+#define HEIGHT 797
 
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
