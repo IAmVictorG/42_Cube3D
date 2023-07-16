@@ -89,18 +89,18 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width), 0.0f}; //windows_width ???
+        t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width), 0.0f}; //windows_width ??? issue with the length of the ray
         //printVec(end_point);
 
 
         ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
         int wall_height;
         float dist;
-        //float delta_angle = angle - player_angle;
+        float delta_angle = angle - player_angle;
 
         dist = sqrtf((ray.x - general->scene->player.pos.x)*(ray.x - general->scene->player.pos.x) + (ray.y - general->scene->player.pos.y)*(ray.y - general->scene->player.pos.y));
         dist /= size_wall;
-        //dist *= cos(delta_angle);
+        dist *= cos(delta_angle);
 
         //int r;
         if (dist <= 1.0f)
