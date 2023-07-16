@@ -165,6 +165,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	vec_normalize(t_vec v);
 void	load_texture(t_general *general);
+t_coord get_end_point(t_general *general, t_coord position, float angle);
+
 
 /* parsing/copy_files_utils */
 int		get_size_file(const char *filename);

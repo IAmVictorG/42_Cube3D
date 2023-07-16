@@ -70,3 +70,29 @@ void load_texture(t_general *general)
     sprites->wall_west->data_spr.img_ptr = mlx_xpm_file_to_image(general->mlib->utils.mlx, "sprites/Wall_West.xpm", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
     sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
 }
+
+t_coord get_end_point(t_general *general, t_coord position, float angle)
+{
+    //t_matrix matrix = general->scene->matrix;
+
+    (void) general;
+
+    int size_wall = general->scene->map.size_wall;
+
+    t_coord next_pix;
+
+    next_pix.x = position.x;
+    next_pix.y = position.y;
+
+
+    while (next_pix.x > size_wall && next_pix.y > size_wall)
+    {
+        next_pix.x = (int) ((float) next_pix.x + cosf(angle) * size_wall);
+        next_pix.y = (int) ((float) next_pix.y + sinf(angle) * size_wall);
+    }
+    next_pix.z = 0;
+    //printCoord(next_pix);
+    //printf("\n");
+    return next_pix;
+
+}
