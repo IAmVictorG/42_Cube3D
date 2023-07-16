@@ -17,7 +17,7 @@ int hit_corner(t_general *general, int x, int y)
     return (0);
 }
 
-void draw_rays(t_general *general, t_vec position, int x1, int y1) 
+void draw_rays(t_general *general, t_coord position, int x1, int y1) 
 {
     t_mlib *mlib;
 
@@ -76,7 +76,7 @@ void draw_rays(t_general *general, t_vec position, int x1, int y1)
 
 void launch_mid_ray(t_general *general)
 {
-    t_vec   position;
+    t_coord   position;
     t_vec   direction;
 
     float   player_angle;

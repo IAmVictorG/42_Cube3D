@@ -487,14 +487,16 @@ t_vec	get_player_orientation(char **matrix, t_coord coord_ini)
 	return (orientation_ini);
 }
 
-t_vec	get_player_position(t_coord coord_ini, int size_wall)
+t_coord	get_player_position(t_coord coord_ini, int size_wall)
 {
-	t_vec position;
+	t_coord position;
 	float	size_wall_f = (float) size_wall;
 
-	position.y = .5f;
-	position.y = coord_ini.y * size_wall_f + size_wall_f * 0.5;
-	position.x = coord_ini.x * size_wall_f + size_wall_f * 0.5;
+	position.y = (int)(coord_ini.y * size_wall + size_wall_f * 0.5);
+	position.x = (int)(coord_ini.x * size_wall + size_wall_f * 0.5);
+	//position.z = .5f;
+
+	printCoord(position);
 
 	return (position);
 }

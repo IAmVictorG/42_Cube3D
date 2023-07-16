@@ -67,7 +67,7 @@ t_coord   calculate_rays2(t_general *general)
 
 void trace_ray(t_general *general) 
 {
-    t_vec position = general->scene->player.pos;
+    t_coord position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
     t_vec ray;
 

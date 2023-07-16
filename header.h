@@ -76,7 +76,7 @@ typedef struct s_coord
 typedef struct s_player 
 {
 	t_coord	coord_ini;
-	t_vec	pos;
+	t_coord	pos;
 	t_vec	dir;
 	float	speed;
 } t_player;
@@ -190,7 +190,7 @@ int		get_size_wall (int map_w, int map_h);
 int		map_parser(t_scene *scene, char **copy, int end_parse_1);
 t_coord	get_player_coord(char **matrix);
 t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
-t_vec	get_player_position(t_coord coord_ini, int size_wall);
+t_coord	get_player_position(t_coord coord_ini, int size_wall);
 
 
 /* parsing/parse_utils.c */
@@ -216,7 +216,7 @@ void	render_wall2D(t_general *general);
 
 /* mini_map */
 int 	hit_corner(t_general *general, int x, int y);
-void	draw_rays(t_general *general, t_vec position, int x1, int y1);
+void	draw_rays(t_general *general, t_coord position, int x1, int y1);
 void 	launch_mid_ray(t_general *general);
 int 	render_mini_map(t_general *general);
 
