@@ -74,7 +74,54 @@ void draw_rays(t_general *general, t_coord position, int x1, int y1)
 
 }
 
+// void    draw_ray2(t_coord position, t_vec direction)
+// {
+//     /*Il faut ecrire a nouveau draw_ray en parcourant
+//     la range de x jusqu'au bord de la fenetre
+//     OU
+//     la range de y jusqu au bord de la fenetre
+//     penser a utiliser la trigonometrie
+    
+//     */
 
+
+//     int x;
+//     int y;
+
+//     int range;
+
+//     if (WIDTH - position.x < HEIGHT - position.y)
+//     {
+//         range = WIDTH - position.x;
+//         while (position.x < range)
+//         {
+            
+//             my_mlx_pixel_put(&mlib->data, position.x, position.y * , 0xFF0000);
+
+//             position.x++;
+//         }
+
+
+
+//     }
+//     else
+//     {
+//         range = HEIGHT - position.y;
+//     }
+
+
+
+
+
+//     while (/* condition */)
+//     {
+//         /* code */
+//     }
+    
+
+
+
+// }
 
 
 void launch_mid_ray(t_general *general)
@@ -84,11 +131,11 @@ void launch_mid_ray(t_general *general)
     t_coord   end_point;
 
     float   player_angle;
-    float   fov_rad;
-    float   fov_start;
-    float   fov_end;
-    float   angle;
-    float   angle_step;
+    //float   fov_rad;
+    //float   fov_start;
+    //float   fov_end;
+    //float   angle;
+    //float   angle_step;
 
     float   cos_angle;
     float   sin_angle;  
@@ -101,21 +148,36 @@ void launch_mid_ray(t_general *general)
 
 
     player_angle = atan2f(direction.y, direction.x);
-    fov_rad = FOV * M_PI / 180;
-    fov_start = player_angle - fov_rad / 2;
-    fov_end = player_angle + fov_rad / 2;
-    angle_step = fov_rad / 100;
 
-    for (angle = fov_start; angle <= fov_end; angle += angle_step)
-    {
-        cos_angle = cosf(angle);
-        sin_angle = sinf(angle);
-        //end_point = get_end_point(general, position, angle);
-        end_point.x = position.x + cos_angle * (WIDTH);
-        end_point.y = position.y + sin_angle * (WIDTH);
-        end_point.z = 0.0f;
-        draw_rays(general, position, end_point.x, end_point.y);
-    }
+
+    cos_angle = cosf(player_angle);
+    sin_angle = sinf(player_angle);
+
+    end_point.x = position.x + cos_angle * (WIDTH);
+    end_point.y = position.y + sin_angle * (WIDTH);
+    end_point.z = 0.0f;
+
+    draw_rays(general, position, end_point.x, end_point.y);
+
+    printf("player_angle = %f\n", player_angle);
+    // fov_rad = FOV * M_PI / 180;
+    // fov_start = player_angle - fov_rad / 2;
+    // fov_end = player_angle + fov_rad / 2;
+    // angle_step = fov_rad / 100;
+
+
+
+
+    // for (angle = fov_start; angle <= fov_end; angle += angle_step)
+    // {
+    //     cos_angle = cosf(angle);
+    //     sin_angle = sinf(angle);
+    //     //end_point = get_end_point(general, position, angle);
+    //     end_point.x = position.x + cos_angle * (WIDTH);
+    //     end_point.y = position.y + sin_angle * (WIDTH);
+    //     end_point.z = 0.0f;
+    //     draw_rays(general, position, end_point.x, end_point.y);
+    // }
 }
 
 
