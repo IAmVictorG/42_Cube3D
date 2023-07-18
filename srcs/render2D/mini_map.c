@@ -90,8 +90,8 @@ void launch_mid_ray(t_general *general)
     float   angle;
     float   angle_step;
 
-    //float   cos_angle;
-    //float   sin_angle;  
+    float   cos_angle;
+    float   sin_angle;  
 
 
     position = general->scene->player.pos;
@@ -108,12 +108,12 @@ void launch_mid_ray(t_general *general)
 
     for (angle = fov_start; angle <= fov_end; angle += angle_step)
     {
-        //cos_angle = cosf(angle);
-        //sin_angle = sinf(angle);
-        end_point = get_end_point(general, position, angle);
-        //end_point.x = position.x + cos_angle * (WIDTH);
-        //end_point.y = position.y + sin_angle * (WIDTH);
-        //end_point.z = 0.0f;
+        cos_angle = cosf(angle);
+        sin_angle = sinf(angle);
+        //end_point = get_end_point(general, position, angle);
+        end_point.x = position.x + cos_angle * (WIDTH);
+        end_point.y = position.y + sin_angle * (WIDTH);
+        end_point.z = 0.0f;
         draw_rays(general, position, end_point.x, end_point.y);
     }
 }
