@@ -35,7 +35,7 @@
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x00FFFF
 
-#define ROTATION_SPEED M_PI / 30
+#define ROTATION_SPEED M_PI / 120
 
 
 typedef struct	s_utils 
