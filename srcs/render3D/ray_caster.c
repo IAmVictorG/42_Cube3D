@@ -54,6 +54,7 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
 float get_dist(t_coord pos, t_vec ray, float delta_angle, int size_wall)
 {
     float dist;
+    (void) delta_angle;
 
     dist = sqrtf((ray.x - pos.x)*(ray.x - pos.x) + (ray.y - pos.y)*(ray.y - pos.y));
     dist /= size_wall;
@@ -84,11 +85,14 @@ void    display_floor(t_mlib *mlib, int wall_height, int imageincre)
     }
 }
 
-int get_color_wall_south_near(t_general *general, int x, int h_wall, int wall_height)
+int get_color_wall_south_near(t_general *general, int x, int h_wall, int start, int end)
 {
     t_sprites       *sprites;
     char            *pixel;
     unsigned int    color;
+
+
+    int range = end - start;
     int             size_wall;
     
     int             x_pix;
@@ -97,8 +101,18 @@ int get_color_wall_south_near(t_general *general, int x, int h_wall, int wall_he
     size_wall = general->scene->map.size_wall;
     sprites = general->sprites;
     
-    x_pix = roundf((x % size_wall)*general->sprites->wall_south->sprite_w/size_wall);
-    y_pix = roundf(h_wall * general->sprites->wall_south->sprite_h/ wall_height);
+    x_pix = roundf((x % size_wall) * general->sprites->wall_south->sprite_w / size_wall);
+
+
+    /*Le calcul est bidon !!!!!! il manque la taille du sprite dans le calcul !!!!!!!!*/
+
+
+    y_pix = roundf(((float) h_wall / (float) HEIGHT) * start + (((float) h_wall / (float) HEIGHT) * range));
+
+
+    //printf("x_pix = %d y_pix = %d\n", x_pix, y_pix);
+
+    //y_pix = roundf(h_wall * general->sprites->wall_south->sprite_h/ range);
     
     pixel = sprites->wall_south->data_spr.addr + (y_pix * sprites->wall_south->data_spr.line_length + x_pix * (sprites->wall_south->data_spr.bits_per_pixel / 8));
     color = *(unsigned int *)pixel;
@@ -119,19 +133,20 @@ void draw_3D_line_south_near(t_general *general, t_vec ray, int wall_height, int
     int end;
     int i;
     int x_pix;
+    unsigned int color;
 
     start = (HEIGHT - (int) roundf(dist * HEIGHT)) / 2;
     end = start + (int) roundf(dist * HEIGHT);
 
-    printf("start = %d end = %d range = %d\n", start, end, end - start);
+    //printf("start = %d end = %d range = %d\n", start, end, end - start);
 
-    i = start;
-    while (i < end)
+    i = 0;
+    while (i < HEIGHT)
     {
-
         x_pix = (int) roundf(ray.x);
-
-        my_mlx_pixel_put(&general->mlib->data, imageincre, i, 0xFF0000);
+        //printf("rap %f\n", i / HEIGHT);
+        color = get_color_wall_south_near(general ,x_pix, i, start, end);
+        my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
         i++;
     }
 
