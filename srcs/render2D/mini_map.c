@@ -24,51 +24,52 @@ void draw_rays(t_general *general, t_coord position, int x1, int y1)
     mlib = general->mlib;
 
     t_coord relative_pos;
-    t_coord position_int;
-
-    position_int.x = (int) position.x;
-    position_int.y = (int) position.y;
     
 
-    relative_pos.x = abs(x1 - position_int.x);
-    relative_pos.y = abs(y1 - position_int.y);
+    relative_pos.x = abs(x1 - position.x);
+    relative_pos.y = abs(y1 - position.y);
 
-    int sx = (position_int.x < x1) ? 1 : -1;
-    int sy = (position_int.y < y1) ? 1 : -1;
+    int sx = (position.x < x1) ? 1 : -1;
+    int sy = (position.y < y1) ? 1 : -1;
     int err = relative_pos.x - relative_pos.y;
 
 
     while (42) 
     {
         // Ensure the pixel coordinates are within window bounds
-        if (position_int.x >= 0 && position_int.x < WIDTH && position_int.y >= 0 && position_int.y < HEIGHT) 
+        if (position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT) 
         {
-            if (hit_a_wall(general,position_int.x, position_int.y) == 0)
+            if (hit_a_wall(general,position.x, position.y) == 0)
             {
-                my_mlx_pixel_put(&mlib->data, position_int.x, position_int.y, 0xFF0000);
+                my_mlx_pixel_put(&mlib->data, position.x, position.y, 0xFF0000);
             }
             else
             {
+                printf("first\n");
                 break;
             }
         }
         else
         {
+            printf("second\n");
             break;
         }
 
-        if (position_int.x == x1 && position_int.y == y1)   
-            break;
+        // if (position.x == x1 && position.y == y1)
+        // {
+        //     printf("third\n");
+        //     break;
+        // }
         int e2 = 2 * err;
         if (e2 > -relative_pos.y)
         {
             err -= relative_pos.y;
-            position_int.x += sx;
+            position.x += sx;
         }
         else if (e2 < relative_pos.x) 
         {
             err += relative_pos.x;
-            position_int.y += sy;
+            position.y += sy;
         }
     }
 
@@ -172,26 +173,17 @@ void    draw_ray2(t_general *general)
 
         while (x_pix < WIDTH && y_pix < HEIGHT)
         {
-            y_pix_f = roundf((x_pix - position.x) * y_div_x + position.x);
-            x_pix_f = (y_pix - position.y) * x_div_y + position.y;
-            //printf("x_pix = %d y_pix_f = %f\n", x_pix, y_pix_f);
+            y_pix_f = (x_pix - position.x) * y_div_x + position.y;
+            x_pix_f = (y_pix - position.y) * x_div_y + position.x;
 
             if (y_pix_f < HEIGHT)
             {
                 my_mlx_pixel_put(&mlib->data, x_pix, y_pix_f, 0xFF0000);
-                //my_mlx_pixel_put(&mlib->data, x_pix_f, y_pix, 0x00FF00);
             }
-            // else 
-            // {
-            //     printf("y_div_x = %f x_div_y = %f\n", y_div_x, x_div_y);
-            //     printf("x_pix   = %d y_pix_f = %f\n", x_pix, y_pix_f);
-            //     printf("\n");
-
-            // }
 
             if (x_pix_f < WIDTH)
             {
-                my_mlx_pixel_put(&mlib->data, x_pix_f, y_pix, 0x00FF00);
+                my_mlx_pixel_put(&mlib->data, x_pix_f, y_pix, 0xFF0000);
             }
 
 
@@ -275,8 +267,8 @@ int render_mini_map(t_general *general)
     render_wall2D(general);
     draw_grid(general);
     move(general);
-    //launch_mid_ray(general);
-    draw_ray2(general);
+    launch_mid_ray(general);
+    //draw_ray2(general);
     draw_player(general);
     
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);

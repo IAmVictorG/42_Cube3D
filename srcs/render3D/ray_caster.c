@@ -31,8 +31,8 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
             break;
 
 
-        if (x0 == x1 && y0 == y1)   
-            break;
+        // if (x0 == x1 && y0 == y1)   
+        //     break;
         int e2 = 2 * err;
         if (e2 > -dy) 
         {
