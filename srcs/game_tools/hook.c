@@ -107,7 +107,7 @@ void move(t_general *general)
             general->scene->player.pos.x = pos_x;
             general->scene->player.pos.y = pos_y;
         }
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
 
     if (general->keys->w == 1) /*z sur AZERTY*/
@@ -120,7 +120,7 @@ void move(t_general *general)
             general->scene->player.pos.x = pos_x;
             general->scene->player.pos.y = pos_y;
         }
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
 
 
@@ -136,7 +136,7 @@ void move(t_general *general)
             general->scene->player.pos.y = pos_y;
         }
 
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
     if (general->keys->d == 1)
     {
@@ -149,7 +149,7 @@ void move(t_general *general)
             general->scene->player.pos.y = pos_y;
         }
 
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
 
     }
 
@@ -160,7 +160,7 @@ void move(t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
 
     }
     if (general->keys->r == 1)
@@ -169,7 +169,7 @@ void move(t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-       // print_player(general->scene->player);
+       // // print_player(general->scene->player);
 
     }
     if (general->keys->arrow_l == 1)
@@ -178,7 +178,7 @@ void move(t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
 
     }
     if (general->keys->arrow_r == 1)
@@ -187,7 +187,7 @@ void move(t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
 }
 

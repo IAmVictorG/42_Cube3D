@@ -96,3 +96,13 @@ t_coord get_end_point(t_general *general, t_coord position, float angle)
     return next_pix;
 
 }
+
+float   rad_to_deg(float angle)
+{
+    return ((angle * 180)/M_PI);
+}
+
+float   deg_to_rad(float angle)
+{
+    return ((angle * M_PI) / 180);
+}

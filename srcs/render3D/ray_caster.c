@@ -51,17 +51,104 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
     return (r);
 }
 
-t_coord   calculate_rays2(t_general *general)
+float get_dist(t_coord pos, t_vec ray, float delta_angle, int size_wall)
 {
-    t_coord ray_point;
-    (void)  general;
+    float dist;
 
-    ray_point.x = 0;
-    ray_point.y = 0;
-    ray_point.z = 0;
+    dist = sqrtf((ray.x - pos.x)*(ray.x - pos.x) + (ray.y - pos.y)*(ray.y - pos.y));
+    dist /= size_wall;
+    dist *= cos(delta_angle);
 
 
-    return ray_point;
+    return dist;
+}
+
+void    display_sky(t_mlib *mlib, int wall_height, int imageincre)
+{
+    for (int i = 0; i < (HEIGHT - wall_height) / 2; i++)
+    {
+        if (imageincre < WIDTH && i < HEIGHT) 
+        {
+            my_mlx_pixel_put(&mlib->data, imageincre, i, SKY_COLOR);
+        }
+    }
+}
+
+void    display_floor(t_mlib *mlib, int wall_height, int imageincre)
+{
+    for (int i = (HEIGHT + wall_height) / 2; i < HEIGHT; i++) {
+        if (imageincre < WIDTH && i < HEIGHT) 
+        {
+            my_mlx_pixel_put(&mlib->data, imageincre, i, FLOOR_COLOR);
+        }
+    }
+}
+
+int get_color_wall_south_near(t_general *general, int x, int h_wall, int wall_height)
+{
+    t_sprites       *sprites;
+    char            *pixel;
+    unsigned int    color;
+    int             size_wall;
+    
+    int             x_pix;
+    int             y_pix;
+
+    size_wall = general->scene->map.size_wall;
+    sprites = general->sprites;
+    
+    x_pix = roundf((x % size_wall)*general->sprites->wall_south->sprite_w/size_wall);
+    y_pix = roundf(h_wall * general->sprites->wall_south->sprite_h/ wall_height);
+    
+    pixel = sprites->wall_south->data_spr.addr + (y_pix * sprites->wall_south->data_spr.line_length + x_pix * (sprites->wall_south->data_spr.bits_per_pixel / 8));
+    color = *(unsigned int *)pixel;
+    
+    return (color);
+}
+
+void draw_3D_line_south_near(t_general *general, t_vec ray, int wall_height, int imageincre, float dist)
+{
+
+    (void) general;
+    (void) ray;
+    (void) wall_height;
+    (void) imageincre;
+    (void) dist;
+
+    int             start;
+    int end;
+    int i;
+    int x_pix;
+
+    start = (HEIGHT - (int) roundf(dist * HEIGHT)) / 2;
+    end = start + (int) roundf(dist * HEIGHT);
+
+    printf("start = %d end = %d range = %d\n", start, end, end - start);
+
+    i = start;
+    while (i < end)
+    {
+
+        x_pix = (int) roundf(ray.x);
+
+        my_mlx_pixel_put(&general->mlib->data, imageincre, i, 0xFF0000);
+        i++;
+    }
+
+
+    // int             x_int;
+    // unsigned int    color;
+
+
+    // float           pct_text_display = dist * ;
+    // (void) dist;
+
+    // for (i = 0; i < wall_height; i++)
+    // {
+    //     x_int = (int) roundf(ray.x);
+    //     color = get_color_wall_south_near(general, x_int, i, wall_height);
+    //     my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+    // } 
 }
 
 
@@ -73,8 +160,6 @@ void trace_ray(t_general *general)
 
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
-    int window_width = WIDTH;
-    int window_height = HEIGHT;
 
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
@@ -89,67 +174,66 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * (window_width), position.y + sin_angle * (window_width), 0.0f}; //windows_width ??? issue with the length of the ray
-        //printVec(end_point);
+        t_vec end_point = {position.x + cos_angle * (WIDTH), position.y + sin_angle * (WIDTH), 0.0f}; // ??? 
 
 
-        ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, window_width, window_height);
+        ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
         int wall_height;
         float dist;
-        float delta_angle = angle - player_angle;
 
-        dist = sqrtf((ray.x - general->scene->player.pos.x)*(ray.x - general->scene->player.pos.x) + (ray.y - general->scene->player.pos.y)*(ray.y - general->scene->player.pos.y));
-        dist /= size_wall;
-        dist *= cos(delta_angle);
+        dist = get_dist(position, ray, angle - player_angle, size_wall);
+        //printf("angle = %f dist = %f\n", angle, dist);
+
 
         //int r;
         if (dist <= 1.0f)
         {
             //r = 10;
+            //printf("Tu es trop pret\n");
             wall_height = HEIGHT;
+            
+            if ((int) ray.y % size_wall == 0)
+            {
+                draw_3D_line_south_near(general, ray, wall_height, imageincre, dist);
+            }
+
+
+
         }
         else
         {
-            //r = 0;
+
              wall_height = HEIGHT / dist;
-        }
 
-        for (int i = 0; i < (window_height - wall_height) / 2; i++)
-        {
-            if (imageincre < WIDTH && i < HEIGHT) 
+            display_sky(general->mlib, wall_height, imageincre);
+            display_floor(general->mlib, wall_height, imageincre);
+
+            if ((int) ray.y % size_wall == 0)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, i, SKY_COLOR);
+                draw_3D_line_south(general, ray, wall_height, imageincre);
             }
-        }
-
-        for (int i = (window_height + wall_height) / 2; i < window_height; i++) {
-            if (imageincre < WIDTH && i < HEIGHT) 
+            
+            if ((int) ray.y % size_wall == size_wall - 1)
             {
-                my_mlx_pixel_put(&general->mlib->data, imageincre, i, FLOOR_COLOR);
+                draw_3D_line_north(general,ray, wall_height, imageincre);                 
             }
+
+            if ((int) ray.x % size_wall == 0)
+            {
+                draw_3D_line_east(general, ray, wall_height, imageincre);
+
+            }
+            
+            if ((int) ray.x % size_wall == size_wall - 1)
+            {
+                draw_3D_line_west(general, ray, wall_height, imageincre);
+            }   
         }
 
-        if ((int) ray.y % size_wall == 0)
-        {
-            draw_3D_line_south(general, ray, wall_height, imageincre);
-        }
-        else if ((int) ray.y % size_wall == size_wall - 1)
-        {
-            draw_3D_line_north(general,ray, wall_height, imageincre);                 
-        }
-
-        if ((int) ray.x % size_wall == 0)
-        {
-            draw_3D_line_east(general, ray, wall_height, imageincre);
-
-        }
-        else if ((int) ray.x % size_wall == size_wall - 1)
-        {
-            draw_3D_line_west(general, ray, wall_height, imageincre);
-        }   
 
         imageincre++;
     }
+    //exit(42);
 }
 
 int render_game(t_general *general)
