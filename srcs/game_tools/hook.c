@@ -2,6 +2,7 @@
 
 int key_pression(int keycode, t_general *general)
 {
+     printf("Key %d\n", keycode);
     if (keycode == KEY_W)
         general->keys->w = 1;
     else if (keycode == KEY_A)
@@ -27,6 +28,7 @@ int key_pression(int keycode, t_general *general)
 
 int key_release(int keycode, t_general *general)
 {
+   
     if (keycode == KEY_W)
         general->keys->w = 0;
     else if (keycode == KEY_A)

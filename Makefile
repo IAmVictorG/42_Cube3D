@@ -20,6 +20,7 @@ CC		= gcc
 RM		= rm -f
 LEAKS   = leaks_cube3D
 PROD	= test
+LINUX = linux
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o ${<:.c=.o}
@@ -27,7 +28,6 @@ PROD	= test
 $(NAME): $(OBJS)
 	make -C includes/mlx
 	make -C includes/libft
-	make -C includes/mlx_opengl
 	cp includes/mlx/libmlx.dylib .
 	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -lz -L includes/mlx -lmlx $(MAC_FLAGS) -o $(NAME) -fsanitize=address -O2
 
@@ -35,7 +35,15 @@ $(LEAKS): $(OBJS)
 	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -lz -L includes/mlx -lmlx $(MAC_FLAGS) -o $(LEAKS)
 
 $(PROD): $(OBJS)
-	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -L includes/mlx -lmlx $(MAC_FLAGS) -o $(NAME) -fsanitize=address
+	$(CC)   $(CFLAGS) $(OBJS) $(LIBS)  $(MAC_FLAGS) -o $(NAME) -fsanitize=address
+
+$(LINUX) : $(OBJS)
+	make -C includes/minilibx-linux
+	make -C includes/libft
+	cp includes/minilibx-linux/libmlx.a .
+	$(CC) $(OBJS) $(LIBS) -L includes/minilibx-linux  libmlx.a $(LINUX_FLAGS) -o $(NAME)
+	
+
 
 
 all:		$(NAME)
@@ -43,6 +51,7 @@ all:		$(NAME)
 clean:
 			$(RM) $(OBJS)
 			make clean -C includes/mlx_opengl
+			make clean -C includes/minilibx-linux
 
 fclean:		clean
 			$(RM) $(NAME)
