@@ -87,102 +87,40 @@ void    display_floor(t_mlib *mlib, int wall_height, int imageincre)
 
 int get_color_wall_south_near(t_general *general, int x, int h_wall, float dist)
 {
-    t_sprites       *sprites;
+
     char            *pixel;
-    unsigned int    color;
-
-    sprites = general->sprites;
-    int sprite_h = sprites->wall_south->sprite_h;
-
-
-
-    int start = (sprite_h - (int) roundf(dist * sprite_h)) / 2;
-    int end = start + (int) roundf(dist * sprite_h);
-
-
-    int range = end - start;
-    int             size_wall;
-    
     int             x_pix;
     int             y_pix;
+    int             start;
+    int             end;
 
-    size_wall = general->scene->map.size_wall;
+    x_pix = roundf((x % general->scene->map.size_wall) * general->sprites->wall_south->sprite_w / general->scene->map.size_wall);
+
+    start = (general->sprites->wall_south->sprite_h - (int) roundf(dist * general->sprites->wall_south->sprite_h)) / 2;
+    end = start + (int) roundf(dist * general->sprites->wall_south->sprite_h);
+
+    y_pix = start + (int) roundf(((float) h_wall / (float) HEIGHT) * (float) (end - start));
+    pixel = general->sprites->wall_south->data_spr.addr + (y_pix * general->sprites->wall_south->data_spr.line_length + x_pix * (general->sprites->wall_south->data_spr.bits_per_pixel / 8));
     
-    x_pix = roundf((x % size_wall) * general->sprites->wall_south->sprite_w / size_wall);
-
-
-    /*Le calcul est bidon !!!!!! il manque la taille du sprite dans le calcul !!!!!!!!*/
-
-    float   pct_pix_height = (float) h_wall / (float) HEIGHT;
-    int     pix_in_range = (int) roundf(pct_pix_height * (float) range);
-
-
-
-
-    // float pct_pix_sprite = (float) sprites->wall_south->sprite_h / (float) HEIGHT;
-    // int pix_start = (int) roundf(pct_pix_sprite * (float) start);
-    y_pix = start + pix_in_range;
-
-
-    //printf("c = %f %f pix_start = %d\n",pct_pix_height, pct_pix_sprite, pix_start);
-
-    //y_pix = roundf(((float) h_wall / (float) HEIGHT) * start + (((float) h_wall / (float) HEIGHT) * range));
-
-
-    //printf("x_pix = %d y_pix = %d\n", x_pix, y_pix);
-
-    //y_pix = roundf(h_wall * general->sprites->wall_south->sprite_h/ range);
-    
-    pixel = sprites->wall_south->data_spr.addr + (y_pix * sprites->wall_south->data_spr.line_length + x_pix * (sprites->wall_south->data_spr.bits_per_pixel / 8));
-    color = *(unsigned int *)pixel;
-    
-    return (color);
+    return (*(unsigned int *)pixel);
 }
 
-void draw_3D_line_south_near(t_general *general, t_vec ray, int wall_height, int imageincre, float dist)
+void draw_3D_line_south_near(t_general *general, t_vec ray, int imageincre, float dist)
 {
 
-    (void) general;
-    (void) ray;
-    (void) wall_height;
-    (void) imageincre;
-    (void) dist;
-
-    // int             start;
-    // int end;
     int i;
     int x_text;
     unsigned int color;
-
-    // start = (HEIGHT - (int) roundf(dist * HEIGHT)) / 2; //premier pixel du sprite a afficher
-    // end = start + (int) roundf(dist * HEIGHT); //dernier pixel du sprite a afficher
-
-    //printf("start = %d end = %d range = %d\n", start, end, end - start);
 
     i = 0;
     while (i < HEIGHT)
     {
         x_text = (int) roundf(ray.x);
-        //printf("rap %f\n", i / HEIGHT);
         color = get_color_wall_south_near(general ,x_text, i, dist);
         my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
         i++;
     }
 
-
-    // int             x_int;
-    // unsigned int    color;
-
-
-    // float           pct_text_display = dist * ;
-    // (void) dist;
-
-    // for (i = 0; i < wall_height; i++)
-    // {
-    //     x_int = (int) roundf(ray.x);
-    //     color = get_color_wall_south_near(general, x_int, i, wall_height);
-    //     my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
-    // } 
 }
 
 
@@ -202,7 +140,6 @@ void trace_ray(t_general *general)
 
     float angle_step = fov_rad / WIDTH;
 
-    //printf("angle_step = %f \n", angle_step);
 
     for (float angle = fov_start; angle <= fov_end; angle += angle_step)
     {
@@ -216,19 +153,15 @@ void trace_ray(t_general *general)
         float dist;
 
         dist = get_dist(position, ray, angle - player_angle, size_wall);
-        //printf("angle = %f dist = %f\n", angle, dist);
 
-
-        //int r;
         if (dist <= 1.0f)
         {
-            //r = 10;
-            //printf("Tu es trop pret\n");
+
             wall_height = HEIGHT;
             
             if ((int) ray.y % size_wall == 0)
             {
-                draw_3D_line_south_near(general, ray, wall_height, imageincre, dist);
+                draw_3D_line_south_near(general, ray, imageincre, dist);
             }
 
 
