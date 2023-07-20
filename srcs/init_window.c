@@ -19,8 +19,9 @@ void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
 
     mlib->utils.mlx = mlx_init();
     
-    load_texture(general);
-
+    //load_texture_xpm(general);
+    load_texture_png(general);
+    
 
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 
