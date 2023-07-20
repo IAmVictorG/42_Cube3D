@@ -120,8 +120,120 @@ void draw_3D_line_south_near(t_general *general, t_vec ray, int imageincre, floa
         my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
         i++;
     }
-
 }
+
+int get_color_wall_north_near(t_general *general, int x, int h_wall, float dist)
+{
+
+    char            *pixel;
+    int             x_pix;
+    int             y_pix;
+    int             start;
+    int             end;
+
+    x_pix = roundf((x % general->scene->map.size_wall) * general->sprites->wall_north->sprite_w / general->scene->map.size_wall);
+
+    start = (general->sprites->wall_north->sprite_h - (int) roundf(dist * general->sprites->wall_north->sprite_h)) / 2;
+    end = start + (int) roundf(dist * general->sprites->wall_north->sprite_h);
+
+    y_pix = start + (int) roundf(((float) h_wall / (float) HEIGHT) * (float) (end - start));
+    pixel = general->sprites->wall_north->data_spr.addr + (y_pix * general->sprites->wall_north->data_spr.line_length + x_pix * (general->sprites->wall_north->data_spr.bits_per_pixel / 8));
+    
+    return (*(unsigned int *)pixel);
+}
+
+void draw_3D_line_north_near(t_general *general, t_vec ray, int imageincre, float dist)
+{
+
+    int i;
+    int x_text;
+    unsigned int color;
+
+    i = 0;
+    while (i < HEIGHT)
+    {
+        x_text = (int) roundf(ray.x);
+        color = get_color_wall_north_near(general ,x_text, i, dist);
+        my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+        i++;
+    }
+}
+
+
+int get_color_wall_west_near(t_general *general, int x, int h_wall, float dist)
+{
+
+    char            *pixel;
+    int             x_pix;
+    int             y_pix;
+    int             start;
+    int             end;
+
+    x_pix = roundf((x % general->scene->map.size_wall) * general->sprites->wall_west->sprite_w / general->scene->map.size_wall);
+
+    start = (general->sprites->wall_west->sprite_h - (int) roundf(dist * general->sprites->wall_west->sprite_h)) / 2;
+    end = start + (int) roundf(dist * general->sprites->wall_west->sprite_h);
+
+    y_pix = start + (int) roundf(((float) h_wall / (float) HEIGHT) * (float) (end - start));
+    pixel = general->sprites->wall_west->data_spr.addr + (y_pix * general->sprites->wall_west->data_spr.line_length + x_pix * (general->sprites->wall_west->data_spr.bits_per_pixel / 8));
+    
+    return (*(unsigned int *)pixel);
+}
+
+void draw_3D_line_west_near(t_general *general, t_vec ray, int imageincre, float dist)
+{
+
+    int i;
+    int x_text;
+    unsigned int color;
+
+    i = 0;
+    while (i < HEIGHT)
+    {
+        x_text = (int) roundf(ray.x);
+        color = get_color_wall_west_near(general ,x_text, i, dist);
+        my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+        i++;
+    }
+}
+
+int get_color_wall_east_near(t_general *general, int x, int h_wall, float dist)
+{
+
+    char            *pixel;
+    int             x_pix;
+    int             y_pix;
+    int             start;
+    int             end;
+
+    x_pix = roundf((x % general->scene->map.size_wall) * general->sprites->wall_east->sprite_w / general->scene->map.size_wall);
+
+    start = (general->sprites->wall_east->sprite_h - (int) roundf(dist * general->sprites->wall_east->sprite_h)) / 2;
+    end = start + (int) roundf(dist * general->sprites->wall_east->sprite_h);
+
+    y_pix = start + (int) roundf(((float) h_wall / (float) HEIGHT) * (float) (end - start));
+    pixel = general->sprites->wall_east->data_spr.addr + (y_pix * general->sprites->wall_east->data_spr.line_length + x_pix * (general->sprites->wall_east->data_spr.bits_per_pixel / 8));
+    
+    return (*(unsigned int *)pixel);
+}
+
+void draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float dist)
+{
+
+    int i;
+    int x_text;
+    unsigned int color;
+
+    i = 0;
+    while (i < HEIGHT)
+    {
+        x_text = (int) roundf(ray.x);
+        color = get_color_wall_east_near(general ,x_text, i, dist);
+        my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+        i++;
+    }
+}
+
 
 
 void trace_ray(t_general *general) 
@@ -164,6 +276,21 @@ void trace_ray(t_general *general)
                 draw_3D_line_south_near(general, ray, imageincre, dist);
             }
 
+            if ((int) ray.y % size_wall == size_wall - 1)
+            {
+                draw_3D_line_north_near(general,ray, imageincre, dist);                 
+            }
+
+            if ((int) ray.x % size_wall == 0)
+            {
+                draw_3D_line_east_near(general,ray, imageincre, dist);
+
+            }
+            
+            if ((int) ray.x % size_wall == size_wall - 1)
+            {
+                draw_3D_line_west_near(general,ray, imageincre, dist);
+            }  
 
 
         }
