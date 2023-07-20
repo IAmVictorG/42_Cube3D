@@ -56,3 +56,18 @@ void draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imag
         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
     }
 }
+
+
+void draw_3D_line_color(t_general *general, t_vec ray, int wall_height, int imageincre, unsigned int color)
+{
+    int i;
+    int x_int;
+
+
+    for (i = 0; i < wall_height; i++)
+    {
+        x_int = (int) roundf(ray.x);
+
+        my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+    }
+}

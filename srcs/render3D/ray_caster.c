@@ -85,6 +85,26 @@ void    display_floor(t_mlib *mlib, int wall_height, int imageincre)
     }
 }
 
+int pix_in_S (t_vec ray, int size_wall)
+{
+    return (int) ray.y % size_wall == 0;
+}
+
+int pix_in_N (t_vec ray, int size_wall)
+{
+    return (int) ray.y % size_wall == size_wall - 1;
+}
+
+int pix_in_E (t_vec ray, int size_wall)
+{
+    return (int) ray.x % size_wall == 0;
+}
+
+int pix_in_W (t_vec ray, int size_wall)
+{
+    return (int) ray.x % size_wall == size_wall - 1;
+}
+
 void trace_ray(t_general *general) 
 {
     t_coord position = general->scene->player.pos;
@@ -106,7 +126,7 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * (WIDTH), position.y + sin_angle * (WIDTH), 0.0f}; // ?
+        t_vec end_point = {position.x + cos_angle * WIDTH, position.y + sin_angle * WIDTH, 0.0f}; // ?
 
 
         ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
@@ -118,7 +138,7 @@ void trace_ray(t_general *general)
         if (dist <= 1.0f)
         {
             
-            if ((int) ray.y % size_wall == 0)
+            if (pix_in_S(ray, size_wall) == 1)
             {
                 draw_3D_line_south_near(general, ray, imageincre, dist);
             }
@@ -131,7 +151,6 @@ void trace_ray(t_general *general)
             if ((int) ray.x % size_wall == 0)
             {
                 draw_3D_line_east_near(general,ray, imageincre, dist);
-
             }
             
             if ((int) ray.x % size_wall == size_wall - 1)
@@ -143,37 +162,64 @@ void trace_ray(t_general *general)
         else
         {
 
-             wall_height = HEIGHT / dist;
+            wall_height = HEIGHT / dist;
 
             display_sky(general->mlib, wall_height, imageincre);
             display_floor(general->mlib, wall_height, imageincre);
 
-            if ((int) ray.y % size_wall == 0)
+            if (pix_in_S(ray, size_wall) == 1)
             {
                 draw_3D_line_south(general, ray, wall_height, imageincre);
             }
             
-            if ((int) ray.y % size_wall == size_wall - 1)
+            if (pix_in_E(ray, size_wall) == 1)
+            {
+                draw_3D_line_east(general, ray, wall_height, imageincre);
+            }
+            
+            if (pix_in_N(ray, size_wall) == 1)
             {
                 draw_3D_line_north(general,ray, wall_height, imageincre);                 
             }
 
-            if ((int) ray.x % size_wall == 0)
-            {
-                draw_3D_line_east(general, ray, wall_height, imageincre);
-
-            }
-            
-            if ((int) ray.x % size_wall == size_wall - 1)
+            if (pix_in_W(ray, size_wall) == 1)
             {
                 draw_3D_line_west(general, ray, wall_height, imageincre);
-            }   
+            }
+
+            /*float angle_diff = fmodf(atan2f(ray.y, ray.x) - player_angle + 2 * M_PI, 2 * M_PI);*/
+
+
+            // if (pix_in_N(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
+            // {
+            //     printf("%f %f\n", ray.x / size_wall, ray.y / size_wall);
+            //     draw_3D_line_color(general, ray, wall_height, imageincre, 0xFFFFFF);
+            // }
+ 
+            // if (pix_in_N(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
+            // {
+            //     draw_3D_line_color(general, ray, wall_height, imageincre, 0xFFFF00);
+            // }
+
+            // if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
+            // {
+            //     draw_3D_line_color(general, ray, wall_height, imageincre, 0x00FFFF);
+            // }
+
+            // if (pix_in_S(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
+            // {
+            //     draw_3D_line_color(general, ray, wall_height, imageincre, 0xFF00FF);
+            // }
+
+
+
+
         }
 
 
         imageincre++;
     }
-    //exit(42);
+    //exit(42);dd
 }
 
 int render_game(t_general *general)
