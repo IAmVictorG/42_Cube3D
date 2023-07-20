@@ -80,15 +80,12 @@ int get_color_wall_west(t_general *general, int x, int h_wall, int max_wall_h)
     
     sprites = general->sprites;
     size_wall = general->scene->map.size_wall;
-    //float rr = 2*r/(64);
 
     x_pix = roundf((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall);
     y_pix = roundf(h_wall * general->sprites->wall_west->sprite_h / max_wall_h);
-    // y_pix = y_pix * 0.3;
-    // y_pix += r;
+
 
     pixel = sprites->wall_west->data_spr.addr + y_pix * sprites->wall_west->data_spr.line_length + x_pix * (sprites->wall_west->data_spr.bits_per_pixel / 8);
     color = *(unsigned int *)pixel;
     return (color);
-    
 }

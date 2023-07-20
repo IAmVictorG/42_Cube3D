@@ -159,7 +159,6 @@ void draw_3D_line_north_near(t_general *general, t_vec ray, int imageincre, floa
     }
 }
 
-
 int get_color_wall_west_near(t_general *general, int x, int h_wall, float dist)
 {
 
@@ -190,12 +189,13 @@ void draw_3D_line_west_near(t_general *general, t_vec ray, int imageincre, float
     i = 0;
     while (i < HEIGHT)
     {
-        x_text = (int) roundf(ray.x);
+        x_text = (int) roundf(ray.y);
         color = get_color_wall_west_near(general ,x_text, i, dist);
         my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
         i++;
     }
 }
+
 
 int get_color_wall_east_near(t_general *general, int x, int h_wall, float dist)
 {
@@ -221,20 +221,18 @@ void draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float
 {
 
     int i;
-    int x_text;
+    int x_ray;
     unsigned int color;
 
     i = 0;
     while (i < HEIGHT)
     {
-        x_text = (int) roundf(ray.x);
-        color = get_color_wall_east_near(general ,x_text, i, dist);
+        x_ray = (int) roundf(ray.y);
+        color = get_color_wall_east_near(general ,x_ray, i, dist);
         my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
         i++;
     }
 }
-
-
 
 void trace_ray(t_general *general) 
 {
@@ -268,8 +266,6 @@ void trace_ray(t_general *general)
 
         if (dist <= 1.0f)
         {
-
-            wall_height = HEIGHT;
             
             if ((int) ray.y % size_wall == 0)
             {
@@ -291,7 +287,6 @@ void trace_ray(t_general *general)
             {
                 draw_3D_line_west_near(general,ray, imageincre, dist);
             }  
-
 
         }
         else
