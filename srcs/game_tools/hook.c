@@ -3,17 +3,17 @@
 int key_pression(int keycode, t_general *general)
 {
      printf("Key %d\n", keycode);
-    if (keycode == KEY_W)
+    if (keycode == KEY_W || keycode == 119)
         general->keys->w = 1;
-    else if (keycode == KEY_A)
+    else if (keycode == KEY_A || keycode == 97)
         general->keys->a = 1;
-    else if (keycode == KEY_S)
+    else if (keycode == KEY_S || keycode == 115)
         general->keys->s = 1;
-    else if (keycode == KEY_D)
+    else if (keycode == KEY_D || keycode == 100)
         general->keys->d = 1;
-    else if (keycode == KEY_Q)
+    else if (keycode == KEY_Q || keycode == 113)
         general->keys->q = 1;
-    else if (keycode == KEY_R)
+    else if (keycode == KEY_R || keycode == 114)
         general->keys->r = 1;
     else if (keycode == KEY_ARR_R)
         general->keys->arrow_r = 1;
@@ -28,18 +28,19 @@ int key_pression(int keycode, t_general *general)
 
 int key_release(int keycode, t_general *general)
 {
-   
-    if (keycode == KEY_W)
+    printf("keycode %d\n", keycode);
+
+    if (keycode == KEY_W || keycode == 119)
         general->keys->w = 0;
-    else if (keycode == KEY_A)
+    else if (keycode == KEY_A || keycode == 97)
         general->keys->a = 0;
-    else if (keycode == KEY_S)
+    else if (keycode == KEY_S || keycode == 115)
         general->keys->s = 0;
-    else if (keycode == KEY_D)
+    else if (keycode == KEY_D || keycode == 100)
         general->keys->d = 0;
-    else if (keycode == KEY_Q)
+    else if (keycode == KEY_Q || keycode == 113)
         general->keys->q = 0;
-    else if (keycode == KEY_R)
+    else if (keycode == KEY_R || keycode == 114)
         general->keys->r = 0;
     else if (keycode == KEY_ARR_R)
         general->keys->arrow_r = 0;
@@ -52,6 +53,8 @@ int key_release(int keycode, t_general *general)
 // Fonction pour gérer les événements souris
 int mouse_press(int button, int x, int y, t_mlib *mlib)
 {
+    printf("keycode = %d\n", button);
+
     (void) button;
     (void) x;
     (void) y;
@@ -68,8 +71,8 @@ int close_window(t_mlib *mlib)
 int key_press_exit(int keycode, t_general *general)
 {
     key_pression(keycode, general);
-    //printf("keycode = %d\n", keycode);
-    if (keycode == 53)
+    printf("keycode = %d\n", keycode);
+    if (keycode == 53 || keycode == 65307)
     {
         exit(EXIT_FAILURE);
     }

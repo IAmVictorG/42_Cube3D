@@ -42,7 +42,6 @@ $(LINUX) : $(OBJS)
 	make -C includes/libft
 	cp includes/minilibx-linux/libmlx.a .
 	$(CC) $(OBJS) $(LIBS) -L includes/minilibx-linux  libmlx.a $(LINUX_FLAGS) -o $(NAME)
-	
 
 
 

@@ -15,6 +15,7 @@ int main(int argc, char const *argv[])
         char        **copy;
 
         filename = "map2.cub";
+        printf("TEST\n");
         scene = malloc(sizeof(t_scene));
         if (scene == NULL)
             return (0);
