@@ -1,0 +1,112 @@
+            if (pix_in_N(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
+            {
+
+                if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_north_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_north_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_east_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y)
+                {
+                    draw_3D_line_east_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_east_near(general,ray, wall_height, imageincre);
+                }
+
+
+            }
+
+ 
+            if (pix_in_N(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
+            {
+
+                if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_west_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
+                {
+                    draw_3D_line_west_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_north_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_north_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_north_near(general,ray, wall_height, imageincre);
+                }
+
+
+
+
+
+            }
+
+            if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
+            {
+
+                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_east_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y)
+                {
+                    draw_3D_line_east_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+
+
+
+
+            }
+
+            if (pix_in_S(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
+            {
+
+                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
+                {
+                    draw_3D_line_south_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
+                {
+                    draw_3D_line_west_near(general,ray, wall_height, imageincre);
+                }
+                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
+                {
+                    draw_3D_line_west_near(general,ray, wall_height, imageincre);
+                }
+
+            }
