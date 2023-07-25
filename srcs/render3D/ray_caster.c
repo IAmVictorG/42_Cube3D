@@ -288,10 +288,6 @@ void trace_ray(t_general *general)
                     draw_3D_line_north_near(general,ray, imageincre, dist);
                 }
 
-
-
-
-
             }
 
             if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
@@ -317,9 +313,6 @@ void trace_ray(t_general *general)
                 {
                     draw_3D_line_south_near(general,ray, imageincre, dist);
                 }
-
-
-
 
             }
 
@@ -504,13 +497,8 @@ void trace_ray(t_general *general)
                 {
                     draw_3D_line_west(general,ray, wall_height, imageincre);
                 }
-
             }
-
-
         }
-
-
         imageincre++;
     }
     //exit(42);dd
