@@ -57,7 +57,6 @@ void draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imag
     }
 }
 
-
 void draw_3D_line_color(t_general *general, t_vec ray, int wall_height, int imageincre, unsigned int color)
 {
     int i;
