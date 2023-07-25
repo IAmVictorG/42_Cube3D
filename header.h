@@ -131,10 +131,11 @@ typedef struct s_sprites
 
 typedef struct s_general
 {
-	t_scene *scene;
-	t_mlib	*mlib;
-	t_keys	*keys;
-	t_sprites *sprites;
+	t_scene		*scene;
+	t_mlib		*mlib;
+	t_keys		*keys;
+	t_sprites	*sprites;
+	clock_t		time;
 } t_general;
 
 /* init_window.c */
