@@ -1,27 +1,7 @@
 #include "../header.h"
 
-void init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites)
+void init_window(t_general *general, t_mlib *mlib)
 {
-    t_general *general;
- 
-    general = (t_general *) malloc (sizeof(t_general));
-    if (general == NULL)
-    {
-        printf("ERROR MALLOC FOR general\n");
-    }
-
-    scene->mini_map = 1;
-    init_key(general);
-
-    general->mlib = mlib;
-    general->scene = scene;
-    general->sprites = sprites;
-
-    mlib->utils.mlx = mlx_init();
-    
-    //load_texture_xpm(general);
-    load_texture_png(general);
-    
 
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 

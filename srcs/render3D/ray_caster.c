@@ -117,13 +117,13 @@ float get_dist(t_coord pos, t_vec ray, float delta_angle, int size_wall)
     return dist;
 }
 
-void    display_sky(t_mlib *mlib, int wall_height, int imageincre)
+void    display_sky(t_mlib *mlib, int wall_height, int imageincre, unsigned int sky_color)
 {
     for (int i = 0; i < (HEIGHT - wall_height) / 2; i++)
     {
         if (imageincre < WIDTH && i < HEIGHT) 
         {
-            my_mlx_pixel_put(&mlib->data, imageincre, i, SKY_COLOR);
+            my_mlx_pixel_put(&mlib->data, imageincre, i, sky_color);
         }
     }
 }
@@ -349,7 +349,7 @@ void trace_ray(t_general *general)
 
             wall_height = HEIGHT / dist;
 
-            display_sky(general->mlib, wall_height, imageincre);
+            display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
             display_floor(general->mlib, wall_height, imageincre);
 
             //float angle_to_corner = atan2f(ray.y - position.y, ray.x - position.x);

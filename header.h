@@ -101,8 +101,8 @@ typedef struct s_map
 typedef struct s_scene 
 {
 	int			mini_map;
-	t_vec		sky_color;
-	t_vec		floor_color;
+	t_coord		sky_color;
+	t_coord		floor_color;
 	t_map		map;
 	t_player	player;
 	
@@ -139,7 +139,7 @@ typedef struct s_general
 } t_general;
 
 /* init_window.c */
-void 	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
+void 	init_window(t_general *general, t_mlib *mlib);
 
 /* render.c */
 int 	render(t_general *general);
@@ -169,6 +169,11 @@ void	load_texture_xpm(t_general *general);
 void	load_texture_png(t_general *general);
 t_coord get_end_point(t_general *general, t_coord position, float angle);
 
+
+/* parsing/args_manager.c */
+char	*get_filename(const char *file_path);
+char    *get_extension(char *filename);
+int		filename_is_valid(const char *file_path);
 
 /* parsing/copy_files_utils */
 int		get_size_file(const char *filename);
@@ -262,9 +267,7 @@ void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float
 void 	move(t_general *general);
 void	load_texture(t_general *general);
 
-/* init_window.c*/
-void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
-void	launch_mid_ray(t_general *general);
+
 int		convert_char_to_int(char *color);
 
 #endif

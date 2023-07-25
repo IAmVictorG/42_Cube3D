@@ -134,6 +134,8 @@ int render_mini_map(t_general *general)
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
     mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
+    //free(mlib->data.img_ptr);
+    //free(mlib->data.addr);
     //mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, mlib->data.img_ptr);
     return (0);
 }
