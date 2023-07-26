@@ -81,15 +81,6 @@ typedef struct s_player
 	float	speed;
 } t_player;
 
-typedef struct s_sprite 
-{
-	char const *path;
-	t_data data_spr;
-
-	int sprite_w;
-	int sprite_h;
-} t_sprite;
-
 typedef struct s_map
 {
 	char	**matrix;
@@ -121,6 +112,15 @@ typedef struct s_keys
 	int	arrow_r;
 	int	arrow_l;
 } t_keys;
+
+typedef struct s_sprite 
+{
+	char const *path;
+	t_data data_spr;
+
+	int sprite_w;
+	int sprite_h;
+} t_sprite;
 
 typedef struct s_sprites
 {
@@ -159,7 +159,9 @@ int 	close_window(t_mlib *mlib);
 int		key_press_exit(int keycode, t_general *general);
 void 	move(t_general *general);
 int		position_is_valid(t_general *general, int pos_x, int pos_y);
-void	init_key(t_general *general);
+//void	init_key(t_general *general);
+t_keys *init_key();
+
 
 /* game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
@@ -199,10 +201,23 @@ int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
 int		check_player(char **matrix);
 int		check_EOF(char **copy_file, int ind_map, int h_map);
 int		get_size_wall (int map_w, int map_h);
-int		map_parser(t_scene *scene, char **copy, int end_parse_1);
+
+
+
+
+
 t_coord	get_player_coord(char **matrix);
 t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
 t_coord	get_player_position(t_coord coord_ini, int size_wall);
+
+
+int		map_parser(char **copy, int end_parse_end);
+
+
+int		init_map(t_map *map, char **copy, int end_parse_1);
+
+
+
 
 
 /* parsing/parse_utils.c */

@@ -267,19 +267,25 @@ int position_is_valid(t_general *general, int pos_x, int pos_y)
     return (1);
 }
 
-void init_key(t_general *general)
+t_keys *init_key()
 {
-    general->keys = malloc(sizeof(t_keys));
-    if (general->keys == NULL)
+    t_keys *keys;
+
+
+    keys = (t_keys *) malloc(sizeof(t_keys));
+    if (keys == NULL)
     {
-        printf("Malloc ERROR KEYS\n");
-        exit(EXIT_FAILURE);
+        return (NULL);
+        //printf("Malloc ERROR KEYS\n");
+        //exit(EXIT_FAILURE);
     }
-    general->keys->w = 0;
-    general->keys->a = 0;
-    general->keys->s = 0;
-    general->keys->d = 0;
-    general->keys->arrow_l = 0;
-    general->keys->arrow_r = 0;
+    keys->w = 0;
+    keys->a = 0;
+    keys->s = 0;
+    keys->d = 0;
+    keys->arrow_l = 0;
+    keys->arrow_r = 0;
+
+    return (keys);
 
 }

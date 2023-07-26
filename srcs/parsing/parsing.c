@@ -49,6 +49,8 @@ static void parse_wall(t_sprites *sprites, char *line)
         printf("R = %s\n", r);
         printf("Error\n Too many arguments on line\n");
     }
+
+    free (r);
 }
 
 static int check_if_is_wall(char *line)

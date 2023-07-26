@@ -87,6 +87,7 @@ void load_texture_png(t_general *general)
 
     sprites->wall_west->data_spr.img_ptr = mlx_png_file_to_image(general->mlib->utils.mlx, "sprites/Wall_West.png", &sprites->wall_west->sprite_w , &sprites->wall_west->sprite_h);
     sprites->wall_west->data_spr.addr = mlx_get_data_addr(sprites->wall_west->data_spr.img_ptr, &sprites->wall_west->data_spr.bits_per_pixel, &sprites->wall_west->data_spr.line_length, &sprites->wall_west->data_spr.endian); /* devrait etre un pointeur */
+
 }
 
 t_coord get_end_point(t_general *general, t_coord position, float angle)

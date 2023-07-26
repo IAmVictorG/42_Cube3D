@@ -41,7 +41,7 @@ int	find_map(char **copy_file, int end_part_1)
 
 /* Renvoie le nombre de ligne que fait la map */
 /* Renvoie le nombre de ligne depuis ind_map jusqu'a la premiere ligne vide rencontrée */
-int height_map(char **copy_file, int ind_map)
+int get_height_map(char **copy_file, int ind_map)
 {
 	int	i;
 
@@ -53,6 +53,27 @@ int height_map(char **copy_file, int ind_map)
 	}
 	return (i);
 }
+
+
+int	get_width_map(char **map)
+{
+	int	size_current_line;
+	int	max_size;
+	int	i;
+
+	i = 0;
+	max_size = 0;
+	while (map[i] != NULL)
+	{
+		size_current_line = ft_strlen(map[i]);
+		if (size_current_line > max_size)
+			max_size = size_current_line;
+		i++;
+	}
+
+	return (max_size -1 );
+}
+
 
 int check_EOF(char **copy_file, int ind_map, int h_map)
 {
@@ -133,24 +154,7 @@ int	check_caract_map(char **map_unc)
 	return (1);
 }
 
-int	find_largest_line(char **map)
-{
-	int	size_current_line;
-	int	max_size;
-	int	i;
 
-	i = 0;
-	max_size = 0;
-	while (map[i] != NULL)
-	{
-		size_current_line = ft_strlen(map[i]);
-		if (size_current_line > max_size)
-			max_size = size_current_line;
-		i++;
-	}
-
-	return (max_size -1 );
-}
 
 char *line_matrix_creator(char *line, int w_matrix)
 {
@@ -501,135 +505,93 @@ t_coord	get_player_position(t_coord coord_ini, int size_wall)
 	return (position);
 }
 
-int map_parser(t_scene *scene, char **copy, int end_parse_1)
+
+
+
+int init_map(t_map *map, char **copy, int end_parse_1)
 {
     int     ind_map;
     int     h_map;
-    int     chk_EOF;
     char    **map_uncompleted;
-    int     caract_ok;
     int     w_map;
     char    **matrix;
-    int     chk_walls;
-    int     chk_player;
-
-
-    (void) scene;
-    //(void) h_map;
 
     ind_map = find_map(copy, end_parse_1);
-    if (ind_map == -1)
-    {
-        //printf("ERROR 1 : Inconsistant map.\n");
-		//printf("Error\n");
-        return (0);
-    }
+    h_map = get_height_map(copy, ind_map);
 
-    h_map = height_map(copy, ind_map);
-    if (h_map <= 2)
-    {
-        //printf("ERROR 2 : Heigth map deficient.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-    scene->map.height_map = h_map;
-
-    chk_EOF = check_EOF(copy, ind_map, h_map);
-    if (chk_EOF == 0)
-    {
-        //printf("ERROR 3 : Inconsistant map.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
 
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
-    {
-        //printf("ERROR 4 : Impossible to create map.\n");
-		//printf("Error\n");
-
         return (0);
-    }
 
-    caract_ok = check_caract_map(map_uncompleted);
-    if (caract_ok == 0)
-    {
-        //printf("ERROR 5 : Prohibited character in map.\n");
-		//printf("Error\n");
+    w_map = get_width_map(map_uncompleted);
 
-        return (0);
-    }
-
-    w_map = find_largest_line(map_uncompleted);
-    if (w_map < 3)
-    {
-        //printf("ERROR 6 : Width map deficient.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-    scene->map.width_map = w_map;
 
     matrix = matrix_creator(map_uncompleted, h_map, w_map);
     if (matrix == NULL)
-    {
-        //printf("ERROR 7 : Impossible to create matrix.\n");
-		//printf("Error\n");
-
         return (0);
-    }
-    scene->map.matrix = matrix;
+
+    
+    map->width_map = w_map;
+	map->height_map = h_map;
+    map->matrix = matrix;
+
     ft_free_tabs(map_uncompleted);
-
-    chk_walls = parse_first_wall(matrix[0]);
-    if (chk_walls == 0)
-    {
-        //printf("ERROR 8 : Inconsistent first wall.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-
-    chk_walls = check_last_first_one(matrix);
-    if (chk_walls == 0)
-    {
-        //printf("ERROR 9 : Inconsistent middle wall.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-
-    chk_walls = parse_first_wall(matrix[h_map - 1]);
-    if (chk_walls == 0)
-    {
-        //printf("ERROR 10 : Inconsistent last wall.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-
-    chk_player = check_player(matrix);
-    if (chk_player == 0)
-    {
-        //printf("ERROR 11 : Inconsistent player.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-
-    chk_walls = wall_inspector(matrix, h_map, w_map);
-    if (chk_walls == 0)
-    {
-        //printf("ERROR 12 : Leaks in wall.\n");
-		//printf("Error\n");
-
-        return (0);
-    }
-
     return (1);
-
 }
 
 
+int map_parser(char **copy, int end_parse_1)
+{
+    int     ind_map;
+    int     h_map;
+    char    **map_uncompleted;
+    int     w_map;
+    char    **matrix;
+
+    ind_map = find_map(copy, end_parse_1);
+    if (ind_map == -1)
+        return (0);
+
+    h_map = get_height_map(copy, ind_map);
+    if (h_map <= 2)
+        return (0);
+
+    if (check_EOF(copy, ind_map, h_map) == 0)
+        return (0);
+
+    map_uncompleted = map_creator(copy, h_map, ind_map);
+    if (map_uncompleted == NULL)
+        return (0);
+
+    if (check_caract_map(map_uncompleted) == 0)
+        return (0);
+
+    w_map = get_width_map(map_uncompleted);
+    if (w_map < 3)
+        return (0);
+
+    matrix = matrix_creator(map_uncompleted, h_map, w_map);
+    if (matrix == NULL)
+        return (0);
+
+    if (parse_first_wall(matrix[0]) == 0)
+        return (0);
+
+    if (check_last_first_one(matrix) == 0)
+        return (0);
+
+    if (parse_first_wall(matrix[h_map - 1]) == 0)
+        return (0);
+
+    if (check_player(matrix) == 0)
+        return (0);
+
+    if (wall_inspector(matrix, h_map, w_map) == 0)
+        return (0);
+
+    ft_free_tabs(map_uncompleted);
+	ft_free_tabs(matrix);
+
+    return (1);
+}
