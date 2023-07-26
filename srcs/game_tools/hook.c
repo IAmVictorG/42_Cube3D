@@ -240,7 +240,7 @@ int position_is_valid(t_general *general, int pos_x, int pos_y)
     int player_size;
     int i;
     
-    player_size = 1;
+    player_size = 5;
     int corners[4][2] = 
     {
         {((pos_x - player_size) / general->scene->map.size_wall), ((pos_y - player_size) / general->scene->map.size_wall)},
