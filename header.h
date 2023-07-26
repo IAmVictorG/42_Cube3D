@@ -102,6 +102,7 @@ typedef struct s_scene
 {
 	int			mini_map;
 	t_coord		sky_color;
+	int			sky_color_int;
 	t_coord		floor_color;
 	t_map		map;
 	t_player	player;

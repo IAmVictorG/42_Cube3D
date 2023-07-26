@@ -184,6 +184,8 @@ void trace_ray(t_general *general)
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
 
+    
+
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
