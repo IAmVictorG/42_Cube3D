@@ -267,4 +267,7 @@ void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
 void	launch_mid_ray(t_general *general);
 int		convert_char_to_int(char *color);
 
+/* draw_segment.c*/
+void draw_segment(t_general *general, int x0, int y0, int x1, int y1, int color);
+
 #endif
