@@ -6,6 +6,7 @@ static void parse_floor(t_scene *scene, char *line)
 
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &scene->floor_color);
+    free(r);
 }
 
 static void parse_ceiling(t_scene *scene, char *line)
@@ -15,6 +16,7 @@ static void parse_ceiling(t_scene *scene, char *line)
     (void) scene;
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &scene->sky_color);
+    free(r);
 }
 
 static void parse_wall(t_sprites *sprites, char *line)

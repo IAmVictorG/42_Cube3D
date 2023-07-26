@@ -258,3 +258,17 @@ void    draw_ray2(t_general *general)
 
 
 }
+
+char *get_extension(const char *file_path)
+{
+    char    **tab;
+    int     size_tb;
+
+    tab = ft_split((char *) file_path, '.');
+    if (tab == NULL)
+        return (NULL);
+
+    size_tb = size_tab(tab);
+    printf("get_extension addr = %p\n", &(tab[size_tb - 1]));
+    return (tab[size_tb - 1]);
+}

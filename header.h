@@ -37,7 +37,6 @@
 
 #define ROTATION_SPEED M_PI / 120
 
-
 typedef struct	s_utils 
 {
 	void	*mlx;
@@ -65,6 +64,12 @@ typedef struct s_vec
 	float y;
 	float z;
 } t_vec;
+
+typedef struct	s_tab_of_vec
+{
+	t_vec v1;
+	t_vec v2;
+} t_tab;
 
 typedef struct s_coord 
 {
@@ -101,8 +106,9 @@ typedef struct s_map
 typedef struct s_scene 
 {
 	int			mini_map;
-	t_vec		sky_color;
-	t_vec		floor_color;
+	t_coord		sky_color;
+	int			sky_color_int;
+	t_coord		floor_color;
 	t_map		map;
 	t_player	player;
 	
@@ -139,7 +145,7 @@ typedef struct s_general
 } t_general;
 
 /* init_window.c */
-void 	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
+void 	init_window(t_general *general, t_mlib *mlib);
 
 /* render.c */
 int 	render(t_general *general);
@@ -162,13 +168,18 @@ void	init_key(t_general *general);
 
 /* game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	vec_normalize(t_vec v);
 void	load_texture_xpm(t_general *general);
 void	load_texture_png(t_general *general);
 t_coord get_end_point(t_general *general, t_coord position, float angle);
 
+
+/* parsing/args_manager.c */
+char	*get_filename(const char *file_path);
+char    *get_extension(char *filename);
+int		filename_is_valid(const char *file_path);
 
 /* parsing/copy_files_utils */
 int		get_size_file(const char *filename);
@@ -262,12 +273,15 @@ void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float
 void 	move(t_general *general);
 void	load_texture(t_general *general);
 
-/* init_window.c*/
-void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
-void	launch_mid_ray(t_general *general);
+
 int		convert_char_to_int(char *color);
 
 /* draw_segment.c*/
-void draw_segment(t_general *general, int x0, int y0, int x1, int y1, int color);
+void	draw_segment(t_general *general, t_coord c0, t_coord c1, int c);
+
+/* draw_rays.c*/
+void    draw_ray2(t_general *general, t_coord c0, t_coord c1, int color);
+
+t_tab find_point_on_screen(t_general *general, t_coord c0, t_coord c1);
 
 #endif

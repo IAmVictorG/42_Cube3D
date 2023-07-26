@@ -60,7 +60,7 @@ void print_tab(char **tab)
 	printf("\n--------------------------------- END\n");
 }
 
-void	set_vector(char *str, t_vec *vec)
+void	set_vector(char *str, t_coord *vec)
 {
 	int i;
 	int	start;

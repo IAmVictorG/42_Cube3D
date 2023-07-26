@@ -117,13 +117,13 @@ float get_dist(t_coord pos, t_vec ray, float delta_angle, int size_wall)
     return dist;
 }
 
-void    display_sky(t_mlib *mlib, int wall_height, int imageincre)
+void    display_sky(t_mlib *mlib, int wall_height, int imageincre, unsigned int sky_color)
 {
     for (int i = 0; i < (HEIGHT - wall_height) / 2; i++)
     {
         if (imageincre < WIDTH && i < HEIGHT) 
         {
-            my_mlx_pixel_put(&mlib->data, imageincre, i, SKY_COLOR);
+            my_mlx_pixel_put(&mlib->data, imageincre, i, sky_color);
         }
     }
 }
@@ -184,6 +184,8 @@ void trace_ray(t_general *general)
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
 
+    
+
     float player_angle = atan2f(direction.y, direction.x);
     float fov_rad = FOV * M_PI / 180;
     float fov_start = player_angle - fov_rad / 2;
@@ -202,11 +204,18 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * WIDTH, position.y + sin_angle * WIDTH, 0.0f}; // ?
+        t_vec end_point = {position.x + cos_angle * 2000000, position.y + sin_angle * 2000000, 0.0f}; // ?
 
+        t_tab result = find_point_on_screen(general, (t_coord){position.x, position.y, 0}, (t_coord){end_point.x, end_point.y, 0});
 
-        ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
-        ray_bef = calculate_rays_bef(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        //ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        //ray_bef = calculate_rays_bef(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        
+        //printf("Ray (%f, %f) vs (%f, %f)\n", result.v1.x, result.v1.y, ray.x, ray.y);
+        //printf("Ray_bef (%f, %f) vs (%f, %f)\n\n", result.v2.x, result.v2.y, ray_bef.x, ray_bef.y);
+
+        ray = result.v1;
+        ray_bef = result.v2;
         int wall_height;
         float dist;
 
@@ -288,10 +297,6 @@ void trace_ray(t_general *general)
                     draw_3D_line_north_near(general,ray, imageincre, dist);
                 }
 
-
-
-
-
             }
 
             if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
@@ -317,9 +322,6 @@ void trace_ray(t_general *general)
                 {
                     draw_3D_line_south_near(general,ray, imageincre, dist);
                 }
-
-
-
 
             }
 
@@ -356,7 +358,7 @@ void trace_ray(t_general *general)
 
             wall_height = HEIGHT / dist;
 
-            display_sky(general->mlib, wall_height, imageincre);
+            display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
             display_floor(general->mlib, wall_height, imageincre);
 
             //float angle_to_corner = atan2f(ray.y - position.y, ray.x - position.x);
@@ -504,13 +506,8 @@ void trace_ray(t_general *general)
                 {
                     draw_3D_line_west(general,ray, wall_height, imageincre);
                 }
-
             }
-
-
         }
-
-
         imageincre++;
     }
     //exit(42);dd

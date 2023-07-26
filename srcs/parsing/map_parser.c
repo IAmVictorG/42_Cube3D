@@ -350,22 +350,22 @@ int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
 			{
 				if (check_right(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Droite\n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Droite\n", lin, col);
 					return (0);
 				}
 				if (check_top(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Haut  \n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Haut  \n", lin, col);
 					return (0);
 				}
 				if (check_bottom(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Bas   \n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Bas   \n", lin, col);
 					return (0);
 				}
 				if (check_left(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Gauche\n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Gauche\n", lin, col);
 					return (0);
 				}
 			}
@@ -520,14 +520,17 @@ int map_parser(t_scene *scene, char **copy, int end_parse_1)
     ind_map = find_map(copy, end_parse_1);
     if (ind_map == -1)
     {
-        printf("ERROR 1 : Inconsistant map.\n");
+        //printf("ERROR 1 : Inconsistant map.\n");
+		//printf("Error\n");
         return (0);
     }
 
     h_map = height_map(copy, ind_map);
     if (h_map <= 2)
     {
-        printf("ERROR 2 : Heigth map deficient.\n");
+        //printf("ERROR 2 : Heigth map deficient.\n");
+		//printf("Error\n");
+
         return (0);
     }
     scene->map.height_map = h_map;
@@ -535,28 +538,36 @@ int map_parser(t_scene *scene, char **copy, int end_parse_1)
     chk_EOF = check_EOF(copy, ind_map, h_map);
     if (chk_EOF == 0)
     {
-        printf("ERROR 3 : Inconsistant map.\n");
+        //printf("ERROR 3 : Inconsistant map.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
     {
-        printf("ERROR 4 : Impossible to create map.\n");
+        //printf("ERROR 4 : Impossible to create map.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     caract_ok = check_caract_map(map_uncompleted);
     if (caract_ok == 0)
     {
-        printf("ERROR 5 : Prohibited character in map.\n");
+        //printf("ERROR 5 : Prohibited character in map.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     w_map = find_largest_line(map_uncompleted);
     if (w_map < 3)
     {
-        printf("ERROR 6 : Width map deficient.\n");
+        //printf("ERROR 6 : Width map deficient.\n");
+		//printf("Error\n");
+
         return (0);
     }
     scene->map.width_map = w_map;
@@ -564,7 +575,9 @@ int map_parser(t_scene *scene, char **copy, int end_parse_1)
     matrix = matrix_creator(map_uncompleted, h_map, w_map);
     if (matrix == NULL)
     {
-        printf("ERROR 7 : Impossible to create matrix.\n");
+        //printf("ERROR 7 : Impossible to create matrix.\n");
+		//printf("Error\n");
+
         return (0);
     }
     scene->map.matrix = matrix;
@@ -573,39 +586,49 @@ int map_parser(t_scene *scene, char **copy, int end_parse_1)
     chk_walls = parse_first_wall(matrix[0]);
     if (chk_walls == 0)
     {
-        printf("ERROR 8 : Inconsistent first wall.\n");
+        //printf("ERROR 8 : Inconsistent first wall.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     chk_walls = check_last_first_one(matrix);
     if (chk_walls == 0)
     {
-        printf("ERROR 9 : Inconsistent middle wall.\n");
+        //printf("ERROR 9 : Inconsistent middle wall.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     chk_walls = parse_first_wall(matrix[h_map - 1]);
     if (chk_walls == 0)
     {
-        printf("ERROR 10 : Inconsistent last wall.\n");
+        //printf("ERROR 10 : Inconsistent last wall.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     chk_player = check_player(matrix);
     if (chk_player == 0)
     {
-        printf("ERROR 11 : Inconsistent player.\n");
+        //printf("ERROR 11 : Inconsistent player.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
     chk_walls = wall_inspector(matrix, h_map, w_map);
     if (chk_walls == 0)
     {
-        printf("ERROR 12 : Leaks in wall.\n");
+        //printf("ERROR 12 : Leaks in wall.\n");
+		//printf("Error\n");
+
         return (0);
     }
 
-    return (-1561);
+    return (1);
 
 }
 

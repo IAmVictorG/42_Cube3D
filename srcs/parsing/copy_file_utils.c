@@ -10,7 +10,7 @@ int get_size_file(const char *filename)
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
-        return -1;
+        return (-1);
     size_file = 0;
     while ((line = get_next_line(fd)) != NULL)
     {
