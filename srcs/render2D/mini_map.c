@@ -17,14 +17,13 @@ int hit_corner(t_general *general, int x, int y)
     return (0);
 }
 
-void draw_rays(t_general *general, t_coord position, int x1, int y1) 
+/*void draw_rays(t_general *general, t_coord position, int x1, int y1) 
 {
     t_mlib *mlib;
+    t_coord relative_pos;
 
     mlib = general->mlib;
 
-    t_coord relative_pos;
-    
 
     relative_pos.x = abs(x1 - position.x);
     relative_pos.y = abs(y1 - position.y);
@@ -40,18 +39,12 @@ void draw_rays(t_general *general, t_coord position, int x1, int y1)
         if (position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT) 
         {
             if (hit_a_wall(general,position.x, position.y) == 0)
-            {
                 my_mlx_pixel_put(&mlib->data, position.x, position.y, 0xFF0000);
-            }
             else
-            {
                 break;
-            }
         }
         else
-        {
             break;
-        }
 
         // if (position.x == x1 && position.y == y1)
         // {
@@ -71,7 +64,7 @@ void draw_rays(t_general *general, t_coord position, int x1, int y1)
         }
     }
 
-}
+}*/
 
 void launch_mid_ray(t_general *general)
 {
@@ -100,7 +93,7 @@ void launch_mid_ray(t_general *general)
     fov_rad = FOV * M_PI / 180;
     fov_start = player_angle - fov_rad / 2;
     fov_end = player_angle + fov_rad / 2;
-    angle_step = fov_rad / 100;
+    angle_step = fov_rad / WIDTH;
 
     //printf("fov_start = %f player_angle = %f fov_end = %f\n", fov_start, player_angle, fov_end);
 
@@ -108,10 +101,11 @@ void launch_mid_ray(t_general *general)
     {
         cos_angle = cosf(angle);
         sin_angle = sinf(angle);
-        end_point.x = position.x + cos_angle * (WIDTH);
-        end_point.y = position.y + sin_angle * (WIDTH);
+        end_point.x = position.x + cos_angle * 10000000;
+        end_point.y = position.y + sin_angle * 10000000;
         end_point.z = 0.0f;
-        draw_rays(general, position, end_point.x, end_point.y);
+        //draw_rays(general, position, end_point.x, end_point.y);
+        draw_ray2(general, position,(t_coord){end_point.x, end_point.y, 0}, 0xFF0000);
     }
 }
 

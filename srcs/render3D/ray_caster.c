@@ -204,11 +204,18 @@ void trace_ray(t_general *general)
     {
         float cos_angle = cosf(angle);
         float sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * WIDTH, position.y + sin_angle * WIDTH, 0.0f}; // ?
+        t_vec end_point = {position.x + cos_angle * 2000000, position.y + sin_angle * 2000000, 0.0f}; // ?
 
+        t_tab result = find_point_on_screen(general, (t_coord){position.x, position.y, 0}, (t_coord){end_point.x, end_point.y, 0});
 
-        ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
-        ray_bef = calculate_rays_bef(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        //ray = calculate_rays(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        //ray_bef = calculate_rays_bef(general, position.x, position.y, end_point.x, end_point.y, size_wall, WIDTH, HEIGHT);
+        
+        //printf("Ray (%f, %f) vs (%f, %f)\n", result.v1.x, result.v1.y, ray.x, ray.y);
+        //printf("Ray_bef (%f, %f) vs (%f, %f)\n\n", result.v2.x, result.v2.y, ray_bef.x, ray_bef.y);
+
+        ray = result.v1;
+        ray_bef = result.v2;
         int wall_height;
         float dist;
 

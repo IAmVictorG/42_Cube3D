@@ -16,21 +16,54 @@ void draw_cross(t_general *general, int x, int y, int color)
 
 void draw_line(t_general *general, int x0, int y0, int x1, int y1, int color) 
 {
-    t_mlib  *mlib;
-    mlib = general->mlib;
+	int dx = x1 - x0;
+	int dy = y1 - y0;
+	float err = 0.5f;
 
-    int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
-    int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-    int err = (dx>dy ? dx : -dy)/2, e2;
-
-    while (1) 
-    {
-        my_mlx_pixel_put(&mlib->data, x0, y0, color);
-        if (x0==x1 && y0==y1) break;
-        e2 = err;
-        if (e2 >-dx) { err -= dy; x0 += sx; }
-        if (e2 < dy) { err += dx; y0 += sy; }
-    }
+	if (abs(dx) >= abs(dy))
+	{
+		while (42)
+		{
+			if (err > 1.001f)
+			{
+				if (dy > 0)
+					y0++;
+				else
+					y0--;
+				err -= 1.0f;
+			}
+			my_mlx_pixel_put(&(general->mlib->data), x0,y0,color);
+			err += fabs((float) dy / (float)dx);
+			if (x0 == x1)
+				break;
+			if (dx > 0)
+				x0++;
+			else
+				x0--;
+		}
+	}
+	else
+	{
+		while (42)
+		{
+			if (err > 1.001f)
+			{
+				if (dx > 0)
+					x0++;
+				else
+					x0--;
+				err -= 1.0f;
+			}
+			my_mlx_pixel_put(&(general->mlib->data), x0,y0,color);
+			err += fabs((float) dx / (float) dy);
+			if (y0 == y1)
+				break;
+			if (dy > 0)
+				y0++;
+			else
+				y0--;
+		}
+	}
 }
 
 void draw_arrow(t_general *general, int x0, int y0, float dx, float dy, int color) 

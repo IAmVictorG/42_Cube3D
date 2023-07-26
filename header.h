@@ -37,7 +37,6 @@
 
 #define ROTATION_SPEED M_PI / 120
 
-
 typedef struct	s_utils 
 {
 	void	*mlx;
@@ -65,6 +64,12 @@ typedef struct s_vec
 	float y;
 	float z;
 } t_vec;
+
+typedef struct	s_tab_of_vec
+{
+	t_vec v1;
+	t_vec v2;
+} t_tab;
 
 typedef struct s_coord 
 {
@@ -165,7 +170,7 @@ t_keys *init_key();
 
 /* game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	vec_normalize(t_vec v);
 void	load_texture_xpm(t_general *general);
@@ -285,5 +290,13 @@ void	load_texture(t_general *general);
 
 
 int		convert_char_to_int(char *color);
+
+/* draw_segment.c*/
+void	draw_segment(t_general *general, t_coord c0, t_coord c1, int c);
+
+/* draw_rays.c*/
+void    draw_ray2(t_general *general, t_coord c0, t_coord c1, int color);
+
+t_tab find_point_on_screen(t_general *general, t_coord c0, t_coord c1);
 
 #endif
