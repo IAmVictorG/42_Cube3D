@@ -167,7 +167,7 @@ char *line_matrix_creator(char *line, int w_matrix)
 		return (NULL);
 
 	i = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 	{	
 		copy_line[i] = line[i];
 		i++;
@@ -576,6 +576,8 @@ int map_parser(char **copy, int end_parse_1)
 		printf("map_uncompleted\n");
         return (0);
 	}
+
+
     if (check_caract_map(map_uncompleted) == 0)
 	{
 		printf("caract_map\n");
@@ -588,6 +590,7 @@ int map_parser(char **copy, int end_parse_1)
 		printf("w_map");
         return (0);
 	}
+
     matrix = matrix_creator(map_uncompleted, h_map, w_map);
     if (matrix == NULL)
 	{

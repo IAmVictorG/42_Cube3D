@@ -2,18 +2,18 @@
 
 
 
-EA			   ./textures/texture1.xpm
+EA			   sprites/Wall_East.png
 
 
 
 
-NO   ./textures/texture2.xpm
+NO   sprites/Wall_North.png
 
 
-SO			./textures/texture3.xpm
+SO			sprites/Wall_South.png
 
 
-WE	./textures/texture4.xpm
+WE	sprites/Wall_West.png
 
 F   0,0,0
 

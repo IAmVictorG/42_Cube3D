@@ -11,7 +11,7 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
-#define WIDTH 1200
+#define WIDTH 797
 #define HEIGHT 797
 
 #define FOV 60
@@ -100,6 +100,7 @@ typedef struct s_scene
 	t_coord		sky_color;
 	int			sky_color_int;
 	t_coord		floor_color;
+	int			floor_color_int;
 	t_map		map;
 	t_player	player;
 	

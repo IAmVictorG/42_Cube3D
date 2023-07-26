@@ -1,7 +1,8 @@
-NO ./textures/texture1.xpm
-SO ./textures/texture2.xpm
-WE ./textures/texture3.xpm
-EA ./textures/texture4.xpm
+NO sprites/Wall_North.png
+SO sprites/Wall_South.png
+WE sprites/Wall_West.png
+EA sprites/Wall_East.png
+
 F 139, 140, 198
 C 101, 210, 93
 

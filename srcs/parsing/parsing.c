@@ -8,16 +8,23 @@ static void parse_floor(t_scene *scene, char *line)
 
     r = go_to_next_and_get_arg(&line);
     set_vector(r, &vector);
+
+    scene->floor_color_int = create_trgb(0, vector.x, vector.y, vector.z);
+
     free(r);
 }
 
 static void parse_ceiling(t_scene *scene, char *line)
 {
     char *r;
-
+    t_coord vector;
     (void) scene;
+
     r = go_to_next_and_get_arg(&line);
-    set_vector(r, &scene->sky_color);
+    set_vector(r, &vector);
+
+    scene->sky_color_int = create_trgb(0, vector.x, vector.y, vector.z);
+
     free(r);
 }
 
