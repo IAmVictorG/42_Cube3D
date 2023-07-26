@@ -551,45 +551,76 @@ int map_parser(char **copy, int end_parse_1)
 
     ind_map = find_map(copy, end_parse_1);
     if (ind_map == -1)
+	{
+		printf("ind_map\n");
         return (0);
+	}
 
     h_map = get_height_map(copy, ind_map);
     if (h_map <= 2)
+	{
+		printf("h_map\n");
         return (0);
+	}
 
     if (check_EOF(copy, ind_map, h_map) == 0)
+	{
+		printf("EOF\n");
+
         return (0);
+	}
 
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
+	{
+		printf("map_uncompleted\n");
         return (0);
-
+	}
     if (check_caract_map(map_uncompleted) == 0)
+	{
+		printf("caract_map\n");
         return (0);
+	}
 
     w_map = get_width_map(map_uncompleted);
     if (w_map < 3)
+	{
+		printf("w_map");
         return (0);
-
+	}
     matrix = matrix_creator(map_uncompleted, h_map, w_map);
     if (matrix == NULL)
+	{
+		printf("matrix\n");
         return (0);
+	}
 
     if (parse_first_wall(matrix[0]) == 0)
+	{
+		printf("first wall\n");
         return (0);
+	}
 
     if (check_last_first_one(matrix) == 0)
+	{
+		printf("last first one\n");
         return (0);
-
+	}
     if (parse_first_wall(matrix[h_map - 1]) == 0)
+	{
+		printf("first wall\n");
         return (0);
-
+	}
     if (check_player(matrix) == 0)
+	{
+		printf("check_player\n");
         return (0);
-
+	}
     if (wall_inspector(matrix, h_map, w_map) == 0)
+	{
+		printf("wall_inspector\n");
         return (0);
-
+	}
     ft_free_tabs(map_uncompleted);
 	ft_free_tabs(matrix);
 

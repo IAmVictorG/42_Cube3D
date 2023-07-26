@@ -28,6 +28,8 @@ void    print_player(t_player player)
     printf("\n");
 }
 
+
+
 /*void    print_scene(t_scene *scene)
 {
     printf("%s\n", scene->sprite.north);

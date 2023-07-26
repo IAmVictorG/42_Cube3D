@@ -11,7 +11,7 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
-#define WIDTH 797
+#define WIDTH 1200
 #define HEIGHT 797
 
 #define FOV 60
@@ -120,8 +120,8 @@ typedef struct s_keys
 
 typedef struct s_sprite 
 {
-	char const *path;
-	t_data data_spr;
+	char	*path;
+	t_data	data_spr;
 
 	int sprite_w;
 	int sprite_h;
@@ -164,7 +164,6 @@ int 	close_window(t_mlib *mlib);
 int		key_press_exit(int keycode, t_general *general);
 void 	move(t_general *general);
 int		position_is_valid(t_general *general, int pos_x, int pos_y);
-//void	init_key(t_general *general);
 t_keys *init_key();
 
 
@@ -173,8 +172,8 @@ int		hit_a_wall(t_general *general, int x, int y);
 int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	vec_normalize(t_vec v);
-void	load_texture_xpm(t_general *general);
-void	load_texture_png(t_general *general);
+int		load_texture_xpm(t_general *general);
+int		load_texture_png(t_general *general);
 t_coord get_end_point(t_general *general, t_coord position, float angle);
 
 
@@ -206,10 +205,6 @@ int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
 int		check_player(char **matrix);
 int		check_EOF(char **copy_file, int ind_map, int h_map);
 int		get_size_wall (int map_w, int map_h);
-
-
-
-
 
 t_coord	get_player_coord(char **matrix);
 t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
@@ -286,7 +281,6 @@ void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float
 
 //int		render(t_general *general);
 void 	move(t_general *general);
-void	load_texture(t_general *general);
 
 
 int		convert_char_to_int(char *color);

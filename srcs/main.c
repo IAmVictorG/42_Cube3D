@@ -77,14 +77,14 @@ int main(int argc, char const *argv[])
 
     if (filename_is_valid(file_path) == 0)
     {
-        printf("Error\n");
+        printf("Error filename\n");
         return (0);       
     }
 
     size_file = get_size_file(file_path);
     if (size_file == -1)
     {
-        printf("Error\n");
+        printf("Error size_file\n");
         return (0);
     }
 
@@ -93,7 +93,7 @@ int main(int argc, char const *argv[])
     sprites = init_sprites("sprites/Wall_North.png", "sprites/Wall_South.png","sprites/Wall_West.png","sprites/Wall_East.png");
     if (sprites == NULL)
     {
-        printf("Error\n");
+        printf("Error sprite\n");
         return (0);
     }
 
@@ -115,15 +115,20 @@ int main(int argc, char const *argv[])
 
     int end_part_1 = parser(sprites, scene, copy);
 
+    printf("sprite north = %s\n", sprites->wall_north->path);
+    printf("sprite east = %s\n", sprites->wall_east->path);
+    printf("sprite south = %s\n", sprites->wall_south->path);
+    printf("sprite west = %s\n", sprites->wall_west->path);
+
     if (map_parser(copy, end_part_1) == 0)
     {
-        printf("Error\n");
+        printf("Error map_parser\n");
         return (0);
     }
 
     if (init_map(&scene->map, copy, end_part_1) == 0)
     {
-        printf("Error\n");
+        printf("Error init_map\n");
         return (0);
 
     }
@@ -134,7 +139,13 @@ int main(int argc, char const *argv[])
     general->scene = scene;
     general->sprites = sprites;
 
-    load_texture_png(general);
+    if (load_texture_png(general) == 0)
+    {
+        printf("texture file\n");
+        return (0);
+    }
+    
+
     init_window(general, mlib);
     
     ft_free_tabs(scene->map.matrix);

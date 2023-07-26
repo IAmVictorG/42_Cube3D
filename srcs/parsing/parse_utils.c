@@ -100,11 +100,8 @@ char *go_to_next_and_get_arg(char **line)
 	{
 		(*line)++;
 	}
-	while (**line && is_space(**line))
-	{
-		(*line)++;;
-	}
-	while ((*line)[i] && !is_space((*line)[i]))
+
+	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 	{
 		i++;
 	}
