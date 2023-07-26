@@ -21,9 +21,6 @@ static void parse_ceiling(t_scene *scene, char *line)
     free(r);
 }
 
-
-
-
 static void parse_wall(t_sprites *sprites, char *line)
 {
     char *r;
