@@ -284,6 +284,16 @@ void	draw_3D_line_north_near(t_general *general, t_vec ray, int imageincre, floa
 void	draw_3D_line_west_near(t_general *general, t_vec ray, int imageincre, float dist);
 void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float dist);
 
+/* draw_manager.c */
+void draw_manager(t_general *general, t_tab tab, int imageincre, float dist);
+
+/* pix_in.c */
+
+int	pix_in_S (t_vec ray, int size_wall);
+int	pix_in_N (t_vec ray, int size_wall);
+int	pix_in_E (t_vec ray, int size_wall);
+int	pix_in_W (t_vec ray, int size_wall);
+
 //int		render(t_general *general);
 void 	move(t_general *general);
 void	load_texture(t_general *general);
