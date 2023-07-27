@@ -1,6 +1,6 @@
 #include "../../header.h"
 
-int get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h)
+int get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h)
 {
     t_sprites       *sprites;
     char            *pixel;
@@ -13,7 +13,8 @@ int get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h)
     size_wall = 64;
     sprites = general->sprites;
 
-    x_pix = roundf((x % size_wall)*general->sprites->wall_north->sprite_w/size_wall); /*arrondi ???*/
+    int xx = x;
+    x_pix = roundf(((float)(xx % size_wall) + (float)(x - xx))* (float)general->sprites->wall_north->sprite_w/(float)size_wall); /*arrondi ???*/
     y_pix = roundf(h_wall * general->sprites->wall_north->sprite_h/ max_wall_h);
 
     pixel = sprites->wall_north->data_spr.addr + (y_pix * sprites->wall_north->data_spr.line_length + x_pix * (sprites->wall_north->data_spr.bits_per_pixel / 8));
@@ -79,7 +80,7 @@ int get_color_wall_west(t_general *general, int x, int h_wall, int max_wall_h)
     int             y_pix;
     
     sprites = general->sprites;
-    size_wall = sprites->wall_west->sprite_w;
+    size_wall = 64;
 
     x_pix = roundf((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall);
     y_pix = roundf(h_wall * general->sprites->wall_west->sprite_h / max_wall_h);

@@ -33,7 +33,7 @@
 #define	KEY_ARR_L 123
 
 
-#define WALL_SIZE 64
+#define SIZE_WALL 64
 
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x556B2F
@@ -253,7 +253,7 @@ int 	render_mini_map(t_general *general);
 
 /* render3D/get_color.c */
 int		get_color_wall_south(t_general *general, int x, int h_wall, int max_wall_h);
-int		get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h);
+int		get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h);
 int		get_color_wall_west(t_general *general, int x, int h_wall, int max_wall_h);
 int		get_color_wall_east(t_general *general, int x, int h_wall, int max_wall_h);
 
