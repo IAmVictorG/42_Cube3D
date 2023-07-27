@@ -11,8 +11,8 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
-#define WIDTH 797
-#define HEIGHT 797
+#define WIDTH 1200
+#define HEIGHT 1200
 
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
@@ -31,6 +31,9 @@
 #define KEY_ESC 53
 #define	KEY_ARR_R 124
 #define	KEY_ARR_L 123
+
+
+#define WALL_SIZE 64
 
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x556B2F

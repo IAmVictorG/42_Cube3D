@@ -10,7 +10,7 @@ int get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h)
     int             x_pix;
     int             y_pix;
 
-    size_wall = general->scene->map.size_wall;
+    size_wall = 64;
     sprites = general->sprites;
 
     x_pix = roundf((x % size_wall)*general->sprites->wall_north->sprite_w/size_wall); /*arrondi ???*/
@@ -32,7 +32,7 @@ int get_color_wall_south(t_general *general, int x, int h_wall, int max_wall_h)
     int             x_pix;
     int             y_pix;
 
-    size_wall = general->scene->map.size_wall;
+    size_wall = 64;
     sprites = general->sprites;
     
     x_pix = roundf((x % size_wall)*general->sprites->wall_south->sprite_w/size_wall);
@@ -56,7 +56,7 @@ int get_color_wall_east(t_general *general, int x, int h_wall, int max_wall_h)
     int             y_pix;
     
     sprites = general->sprites;
-    size_wall = general->scene->map.size_wall;
+    size_wall = 64;
     
     x_pix = roundf((x % size_wall)*general->sprites->wall_east->sprite_w/size_wall);
     y_pix = roundf(h_wall * general->sprites->wall_east->sprite_h/ max_wall_h);
@@ -79,7 +79,7 @@ int get_color_wall_west(t_general *general, int x, int h_wall, int max_wall_h)
     int             y_pix;
     
     sprites = general->sprites;
-    size_wall = general->scene->map.size_wall;
+    size_wall = sprites->wall_west->sprite_w;
 
     x_pix = roundf((x % size_wall)*general->sprites->wall_west->sprite_w/size_wall);
     y_pix = roundf(h_wall * general->sprites->wall_west->sprite_h / max_wall_h);

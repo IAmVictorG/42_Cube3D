@@ -55,6 +55,31 @@ void    init_scene (t_scene *scene)
     scene->mini_map = 1;
 }
 
+int check_texture_exists (char *file_path)
+{
+    int result;
+
+
+    result = open(file_path, O_RDONLY);
+    close(result);
+
+    //printf("result);
+    return (result);
+}
+
+int check_textures_exists (t_sprites *sprites)
+{
+    if (check_texture_exists(sprites->wall_north->path) == -1)
+        return (0);
+    if (check_texture_exists(sprites->wall_east->path) == -1)
+        return (0);
+    if (check_texture_exists(sprites->wall_west->path) == -1)
+        return (0);
+    if (check_texture_exists(sprites->wall_south->path) == -1)
+        return (0);
+    return (1);
+}
+
 int main(int argc, char const *argv[])
 {
 
@@ -115,10 +140,16 @@ int main(int argc, char const *argv[])
 
     int end_part_1 = parser(sprites, scene, copy);
 
-    printf("sprite north = %s\n", sprites->wall_north->path);
-    printf("sprite east = %s\n", sprites->wall_east->path);
-    printf("sprite south = %s\n", sprites->wall_south->path);
-    printf("sprite west = %s\n", sprites->wall_west->path);
+    if (check_textures_exists(sprites) == 0)
+    {
+        printf("Error : file texture invalid.\n");
+        return (0);
+    }
+
+    // printf("sprite north = %d\n", check_texture_exists(sprites->wall_north->path));
+    // printf("sprite east = %s\n", sprites->wall_east->path);
+    // printf("sprite south = %s\n", sprites->wall_south->path);
+    // printf("sprite west = %s\n", sprites->wall_west->path);
 
     if (map_parser(copy, end_part_1) == 0)
     {
@@ -141,7 +172,7 @@ int main(int argc, char const *argv[])
 
     if (load_texture_png(general) == 0)
     {
-        printf("texture file\n");
+        printf("Error : impossible to load texture file.\n");
         return (0);
     }
     
