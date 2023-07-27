@@ -11,8 +11,8 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
-#define WIDTH 900
-#define HEIGHT 700
+#define WIDTH 1200
+#define HEIGHT 797
 
 #define FOV 60
 #define MAX_DISTANCE 20 // BLOCK_LENGTH
@@ -33,10 +33,9 @@
 #define	KEY_ARR_L 123
 
 #define SKY_COLOR 0x2211FF
-#define FLOOR_COLOR 0x00FFFF
+#define FLOOR_COLOR 0x556B2F
 
-#define ROTATION_SPEED M_PI / 30
-
+#define ROTATION_SPEED M_PI / 120
 
 typedef struct	s_utils 
 {
@@ -66,6 +65,13 @@ typedef struct s_vec
 	float z;
 } t_vec;
 
+typedef struct	s_tab_of_vec
+{
+	t_vec v1;
+	t_vec v2;
+	t_vec v3;
+} t_tab;
+
 typedef struct s_coord 
 {
 	int	x;
@@ -76,19 +82,10 @@ typedef struct s_coord
 typedef struct s_player 
 {
 	t_coord	coord_ini;
-	t_vec	pos;
+	t_coord	pos;
 	t_vec	dir;
 	float	speed;
 } t_player;
-
-typedef struct s_sprite 
-{
-	char const *path;
-	t_data data_spr;
-
-	int sprite_w;
-	int sprite_h;
-} t_sprite;
 
 typedef struct s_map
 {
@@ -101,8 +98,9 @@ typedef struct s_map
 typedef struct s_scene 
 {
 	int			mini_map;
-	t_vec		sky_color;
-	t_vec		floor_color;
+	t_coord		sky_color;
+	int			sky_color_int;
+	t_coord		floor_color;
 	t_map		map;
 	t_player	player;
 	
@@ -121,6 +119,15 @@ typedef struct s_keys
 	int	arrow_l;
 } t_keys;
 
+typedef struct s_sprite 
+{
+	char	*path;
+	t_data	data_spr;
+
+	int sprite_w;
+	int sprite_h;
+} t_sprite;
+
 typedef struct s_sprites
 {
 	t_sprite *wall_north;
@@ -131,14 +138,15 @@ typedef struct s_sprites
 
 typedef struct s_general
 {
-	t_scene *scene;
-	t_mlib	*mlib;
-	t_keys	*keys;
-	t_sprites *sprites;
+	t_scene		*scene;
+	t_mlib		*mlib;
+	t_keys		*keys;
+	t_sprites	*sprites;
+	clock_t		time;
 } t_general;
 
 /* init_window.c */
-void 	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
+void 	init_window(t_general *general, t_mlib *mlib);
 
 /* render.c */
 int 	render(t_general *general);
@@ -156,13 +164,24 @@ int 	mouse_press(int button, int x, int y, t_mlib *mlib);
 int 	close_window(t_mlib *mlib);
 int		key_press_exit(int keycode, t_general *general);
 void 	move(t_general *general);
+int		position_is_valid(t_general *general, int pos_x, int pos_y);
+t_keys *init_key();
+
 
 /* game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	vec_normalize(t_vec v);
-void	load_texture(t_general *general);
+int		load_texture_xpm(t_general *general);
+int		load_texture_png(t_general *general);
+t_coord get_end_point(t_general *general, t_coord position, float angle);
+
+
+/* parsing/args_manager.c */
+char	*get_filename(const char *file_path);
+char    *get_extension(char *filename);
+int		filename_is_valid(const char *file_path);
 
 /* parsing/copy_files_utils */
 int		get_size_file(const char *filename);
@@ -187,10 +206,19 @@ int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
 int		check_player(char **matrix);
 int		check_EOF(char **copy_file, int ind_map, int h_map);
 int		get_size_wall (int map_w, int map_h);
-int		map_parser(t_scene *scene, char **copy, int end_parse_1);
+
 t_coord	get_player_coord(char **matrix);
 t_vec	get_player_orientation(char **matrix, t_coord coord_ini);
-t_vec	get_player_position(t_coord coord_ini, int size_wall);
+t_coord	get_player_position(t_coord coord_ini, int size_wall);
+
+
+int		map_parser(char **copy, int end_parse_end);
+
+
+int		init_map(t_map *map, char **copy, int end_parse_1);
+
+
+
 
 
 /* parsing/parse_utils.c */
@@ -216,40 +244,54 @@ void	render_wall2D(t_general *general);
 
 /* mini_map */
 int 	hit_corner(t_general *general, int x, int y);
-void	draw_rays(t_general *general, t_vec position, int x1, int y1);
+void	draw_rays(t_general *general, t_coord position, int x1, int y1);
 void 	launch_mid_ray(t_general *general);
 int 	render_mini_map(t_general *general);
 
 /* render3D/get_color.c */
-int		get_color_wall_south(t_general *general, int x, int h_wall, int max_wall_h);
-int		get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h);
-int		get_color_wall_west(t_general *general, int x, int h_wall, int max_wall_h);
-int		get_color_wall_east(t_general *general, int x, int h_wall, int max_wall_h);
+int		get_color_wall_south(t_general *general, float x, int h_wall, int max_wall_h);
+int		get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h);
+int		get_color_wall_west(t_general *general, float x, int h_wall, int max_wall_h);
+int		get_color_wall_east(t_general *general, float x, int h_wall, int max_wall_h);
+
+/* render3D/get_color_near.c */
+int		get_color_wall_south_near(t_general *general, int x, int h_wall, float dist);
+int		get_color_wall_north_near(t_general *general, int x, int h_wall, float dist);
+int		get_color_wall_west_near(t_general *general, int x, int h_wall, float dist);
+int		get_color_wall_east_near(t_general *general, int x, int h_wall, float dist);
+
 
 /* render3D/ray_caster.c */
 t_vec	calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int size_wall, int window_width, int window_height);
 void	trace_ray(t_general *general);
 int 	render_game(t_general *general);
 
-
 /* render3D/3D_wall_render.c */
 void	draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_east(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imageincre);
+void 	draw_3D_line_color(t_general *general, t_vec ray, int wall_height, int imageincre, unsigned int color);
+
+
+/* render3D/3D_wall_render_near.c */
+void	draw_3D_line_south_near(t_general *general, t_vec ray, int imageincre, float dist);
+void	draw_3D_line_north_near(t_general *general, t_vec ray, int imageincre, float dist);
+void	draw_3D_line_west_near(t_general *general, t_vec ray, int imageincre, float dist);
+void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float dist);
 
 //int		render(t_general *general);
 void 	move(t_general *general);
-void	load_texture(t_general *general);
 
-//int key_press(int keycode, t_general *general);
-int		position_is_valid(t_general *general, float pos_x, float pos_y);
-void	init_key(t_general *general);
 
-/* init_window.c*/
-void	init_window(t_mlib *mlib, t_scene *scene, t_sprites *sprites);
-int		position_is_valid(t_general *general, float pos_x, float pos_y);
-void	launch_mid_ray(t_general *general);
 int		convert_char_to_int(char *color);
+
+/* draw_segment.c*/
+void	draw_segment(t_general *general, t_coord c0, t_coord c1, int c);
+
+/* draw_rays.c*/
+void    draw_ray2(t_general *general, t_coord c0, t_coord c1, int color);
+
+t_tab find_point_on_screen(t_general *general, t_coord c0, t_coord c1);
 
 #endif

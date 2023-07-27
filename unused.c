@@ -141,3 +141,134 @@ void    trace_wall(t_general *general, t_sprite *sprite)
         j++;
     }
 }
+
+
+void    draw_ray2(t_general *general)
+{
+    /*Il faut ecrire a nouveau draw_ray en parcourant
+    la range de x jusqu'au bord de la fenetre
+    OU
+    la range de y jusqu au bord de la fenetre
+    penser a utiliser la trigonometrie
+    
+    */
+    t_mlib *mlib;
+    mlib = general->mlib;
+
+    t_coord position = general->scene->player.pos;
+    int     x_pix = general->scene->player.pos.x;
+    int     y_pix = general->scene->player.pos.y;
+
+    float   y_pix_f;
+    float   x_pix_f;
+
+    t_vec   direction = general->scene->player.dir;
+    float   angle_player;
+    float   x_div_y = 0;
+    float   y_div_x = 0;
+
+
+    if (direction.x > 0 && direction.y > 0)
+    {
+        angle_player = atan2f(direction.y, direction.x);
+        //printf("SW ");
+        //printf("angle_player = %f (%f)\n", angle_player, rad_to_deg(angle_player));
+        y_div_x = direction.y / direction.x;
+        x_div_y = direction.x / direction.y;
+
+        //printf("y_div_x = %f x_div_y = %f\n", y_div_x, x_div_y);
+
+        while (x_pix < WIDTH && y_pix < HEIGHT)
+        {
+            y_pix_f = (x_pix - position.x) * y_div_x + position.y;
+            x_pix_f = (y_pix - position.y) * x_div_y + position.x;
+
+            if (y_pix_f < HEIGHT)
+            {
+                my_mlx_pixel_put(&mlib->data, x_pix, y_pix_f, 0xFF0000);
+            }
+
+            if (x_pix_f < WIDTH)
+            {
+                my_mlx_pixel_put(&mlib->data, x_pix_f, y_pix, 0xFF0000);
+            }
+
+
+
+            x_pix++;
+            y_pix++;
+        }
+        //exit(42);
+
+
+    }
+
+    if (direction.x < 0 && direction.y < 0)
+    {
+        angle_player = atan2f(direction.y, direction.x);
+        printf("NE ");
+        printf("angle_player = %f (%f)\n", angle_player, rad_to_deg(angle_player));
+
+
+    }
+
+    if (direction.x > 0 && direction.y < 0)
+    {
+        angle_player = atan2f(direction.y, direction.x);
+        printf("NW ");
+        printf("angle_player = %f (%f)\n", angle_player, rad_to_deg(angle_player));
+
+    }
+
+    if (direction.x < 0 && direction.y > 0)
+    {
+        angle_player = atan2f(direction.y, direction.x);
+        printf("SE ");
+        printf("angle_player = %f (%f)\n", angle_player, rad_to_deg(angle_player));
+
+    }
+
+
+//    t_coord range;
+
+//     int x;
+//     int y;
+
+//     int range;
+
+//     if (WIDTH - position.x < HEIGHT - position.y)
+//     {
+//         range = WIDTH - position.x;
+//         while (position.x < range)
+//         {
+            
+
+
+//             position.x++;
+//         }
+
+
+
+//     }
+//     else
+//     {
+//         range = HEIGHT - position.y;
+//     }
+
+
+
+}
+
+char *get_extension(const char *file_path)
+{
+    char    **tab;
+    int     size_tb;
+
+    tab = ft_split((char *) file_path, '.');
+    if (tab == NULL)
+        return (NULL);
+
+    size_tb = size_tab(tab);
+    printf("get_extension addr = %p\n", &(tab[size_tb - 1]));
+    return (tab[size_tb - 1]);
+}

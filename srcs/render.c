@@ -6,9 +6,7 @@ int render(t_general *general)
 
     t = clock();
 
-    t = clock() - t;
-
-
+    general->time = t;
     if (general->scene->mini_map)
     {
         render_mini_map(general);
@@ -18,7 +16,8 @@ int render(t_general *general)
         render_game(general);
     }
     (void) t;
-
+    t = clock() - t;
+    t /= 1000;
     //printf("IMAGE RENDERING %lu ms\n", t);
     //mlx_string_put(general->mlib->utils.mlx, general->mlib->utils.win, 300, 200, 0xFFFFFF, "FPS ");
     return (1);

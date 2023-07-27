@@ -60,7 +60,7 @@ void print_tab(char **tab)
 	printf("\n--------------------------------- END\n");
 }
 
-void	set_vector(char *str, t_vec *vec)
+void	set_vector(char *str, t_coord *vec)
 {
 	int i;
 	int	start;
@@ -100,11 +100,8 @@ char *go_to_next_and_get_arg(char **line)
 	{
 		(*line)++;
 	}
-	while (**line && is_space(**line))
-	{
-		(*line)++;;
-	}
-	while ((*line)[i] && !is_space((*line)[i]))
+
+	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 	{
 		i++;
 	}

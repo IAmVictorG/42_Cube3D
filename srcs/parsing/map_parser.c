@@ -41,7 +41,7 @@ int	find_map(char **copy_file, int end_part_1)
 
 /* Renvoie le nombre de ligne que fait la map */
 /* Renvoie le nombre de ligne depuis ind_map jusqu'a la premiere ligne vide rencontrée */
-int height_map(char **copy_file, int ind_map)
+int get_height_map(char **copy_file, int ind_map)
 {
 	int	i;
 
@@ -53,6 +53,27 @@ int height_map(char **copy_file, int ind_map)
 	}
 	return (i);
 }
+
+
+int	get_width_map(char **map)
+{
+	int	size_current_line;
+	int	max_size;
+	int	i;
+
+	i = 0;
+	max_size = 0;
+	while (map[i] != NULL)
+	{
+		size_current_line = ft_strlen(map[i]);
+		if (size_current_line > max_size)
+			max_size = size_current_line;
+		i++;
+	}
+
+	return (max_size -1 );
+}
+
 
 int check_EOF(char **copy_file, int ind_map, int h_map)
 {
@@ -133,24 +154,7 @@ int	check_caract_map(char **map_unc)
 	return (1);
 }
 
-int	find_largest_line(char **map)
-{
-	int	size_current_line;
-	int	max_size;
-	int	i;
 
-	i = 0;
-	max_size = 0;
-	while (map[i] != NULL)
-	{
-		size_current_line = ft_strlen(map[i]);
-		if (size_current_line > max_size)
-			max_size = size_current_line;
-		i++;
-	}
-
-	return (max_size -1 );
-}
 
 char *line_matrix_creator(char *line, int w_matrix)
 {
@@ -350,22 +354,22 @@ int	wall_inspector(char **matrix, int h_matrix, int w_matrix)
 			{
 				if (check_right(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Droite\n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Droite\n", lin, col);
 					return (0);
 				}
 				if (check_top(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Haut  \n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Haut  \n", lin, col);
 					return (0);
 				}
 				if (check_bottom(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Bas   \n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Bas   \n", lin, col);
 					return (0);
 				}
 				if (check_left(matrix, lin, col, size_matrix) == 0)
 				{
-					printf("Le point (x = %d, y = %d) : Gauche\n", lin, col);
+					//printf("Le point (x = %d, y = %d) : Gauche\n", lin, col);
 					return (0);
 				}
 			}
@@ -487,124 +491,138 @@ t_vec	get_player_orientation(char **matrix, t_coord coord_ini)
 	return (orientation_ini);
 }
 
-t_vec	get_player_position(t_coord coord_ini, int size_wall)
+t_coord	get_player_position(t_coord coord_ini, int size_wall)
 {
-	t_vec position;
+	t_coord position;
 	float	size_wall_f = (float) size_wall;
 
-	position.y = .5f;
-	position.y = coord_ini.y * size_wall_f + size_wall_f * 0.5;
-	position.x = coord_ini.x * size_wall_f + size_wall_f * 0.5;
+	position.y = (int)(coord_ini.y * size_wall + size_wall_f * 0.5);
+	position.x = (int)(coord_ini.x * size_wall + size_wall_f * 0.5);
+	//position.z = .5f;
+
+	printCoord(position);
 
 	return (position);
 }
 
-int map_parser(t_scene *scene, char **copy, int end_parse_1)
+
+
+
+int init_map(t_map *map, char **copy, int end_parse_1)
 {
     int     ind_map;
     int     h_map;
-    int     chk_EOF;
     char    **map_uncompleted;
-    int     caract_ok;
     int     w_map;
     char    **matrix;
-    int     chk_walls;
-    int     chk_player;
-
-
-    (void) scene;
-    //(void) h_map;
 
     ind_map = find_map(copy, end_parse_1);
-    if (ind_map == -1)
-    {
-        printf("ERROR 1 : Inconsistant map.\n");
-        return (0);
-    }
+    h_map = get_height_map(copy, ind_map);
 
-    h_map = height_map(copy, ind_map);
-    if (h_map <= 2)
-    {
-        printf("ERROR 2 : Heigth map deficient.\n");
-        return (0);
-    }
-    scene->map.height_map = h_map;
-
-    chk_EOF = check_EOF(copy, ind_map, h_map);
-    if (chk_EOF == 0)
-    {
-        printf("ERROR 3 : Inconsistant map.\n");
-        return (0);
-    }
 
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
-    {
-        printf("ERROR 4 : Impossible to create map.\n");
         return (0);
-    }
 
-    caract_ok = check_caract_map(map_uncompleted);
-    if (caract_ok == 0)
-    {
-        printf("ERROR 5 : Prohibited character in map.\n");
-        return (0);
-    }
+    w_map = get_width_map(map_uncompleted);
 
-    w_map = find_largest_line(map_uncompleted);
-    if (w_map < 3)
-    {
-        printf("ERROR 6 : Width map deficient.\n");
-        return (0);
-    }
-    scene->map.width_map = w_map;
 
     matrix = matrix_creator(map_uncompleted, h_map, w_map);
     if (matrix == NULL)
-    {
-        printf("ERROR 7 : Impossible to create matrix.\n");
         return (0);
-    }
-    scene->map.matrix = matrix;
+
+    
+    map->width_map = w_map;
+	map->height_map = h_map;
+    map->matrix = matrix;
+
     ft_free_tabs(map_uncompleted);
-
-    chk_walls = parse_first_wall(matrix[0]);
-    if (chk_walls == 0)
-    {
-        printf("ERROR 8 : Inconsistent first wall.\n");
-        return (0);
-    }
-
-    chk_walls = check_last_first_one(matrix);
-    if (chk_walls == 0)
-    {
-        printf("ERROR 9 : Inconsistent middle wall.\n");
-        return (0);
-    }
-
-    chk_walls = parse_first_wall(matrix[h_map - 1]);
-    if (chk_walls == 0)
-    {
-        printf("ERROR 10 : Inconsistent last wall.\n");
-        return (0);
-    }
-
-    chk_player = check_player(matrix);
-    if (chk_player == 0)
-    {
-        printf("ERROR 11 : Inconsistent player.\n");
-        return (0);
-    }
-
-    chk_walls = wall_inspector(matrix, h_map, w_map);
-    if (chk_walls == 0)
-    {
-        printf("ERROR 12 : Leaks in wall.\n");
-        return (0);
-    }
-
-    return (-1561);
-
+    return (1);
 }
 
 
+int map_parser(char **copy, int end_parse_1)
+{
+    int     ind_map;
+    int     h_map;
+    char    **map_uncompleted;
+    int     w_map;
+    char    **matrix;
+
+    ind_map = find_map(copy, end_parse_1);
+    if (ind_map == -1)
+	{
+		printf("ind_map\n");
+        return (0);
+	}
+
+    h_map = get_height_map(copy, ind_map);
+    if (h_map <= 2)
+	{
+		printf("h_map\n");
+        return (0);
+	}
+
+    if (check_EOF(copy, ind_map, h_map) == 0)
+	{
+		printf("EOF\n");
+
+        return (0);
+	}
+
+    map_uncompleted = map_creator(copy, h_map, ind_map);
+    if (map_uncompleted == NULL)
+	{
+		printf("map_uncompleted\n");
+        return (0);
+	}
+    if (check_caract_map(map_uncompleted) == 0)
+	{
+		printf("caract_map\n");
+        return (0);
+	}
+
+    w_map = get_width_map(map_uncompleted);
+    if (w_map < 3)
+	{
+		printf("w_map");
+        return (0);
+	}
+    matrix = matrix_creator(map_uncompleted, h_map, w_map);
+    if (matrix == NULL)
+	{
+		printf("matrix\n");
+        return (0);
+	}
+
+    if (parse_first_wall(matrix[0]) == 0)
+	{
+		printf("first wall\n");
+        return (0);
+	}
+
+    if (check_last_first_one(matrix) == 0)
+	{
+		printf("last first one\n");
+        return (0);
+	}
+    if (parse_first_wall(matrix[h_map - 1]) == 0)
+	{
+		printf("first wall\n");
+        return (0);
+	}
+    if (check_player(matrix) == 0)
+	{
+		printf("check_player\n");
+        return (0);
+	}
+    if (wall_inspector(matrix, h_map, w_map) == 0)
+	{
+		printf("wall_inspector\n");
+        return (0);
+	}
+    ft_free_tabs(map_uncompleted);
+	ft_free_tabs(matrix);
+
+    return (1);
+}

@@ -17,67 +17,60 @@ int hit_corner(t_general *general, int x, int y)
     return (0);
 }
 
-void draw_rays(t_general *general, t_vec position, int x1, int y1) 
+/*void draw_rays(t_general *general, t_coord position, int x1, int y1) 
 {
     t_mlib *mlib;
+    t_coord relative_pos;
 
     mlib = general->mlib;
 
-    t_coord relative_pos;
-    t_coord position_int;
 
-    position_int.x = (int) position.x;
-    position_int.y = (int) position.y;
-    
+    relative_pos.x = abs(x1 - position.x);
+    relative_pos.y = abs(y1 - position.y);
 
-    relative_pos.x = abs(x1 - position_int.x);
-    relative_pos.y = abs(y1 - position_int.y);
-
-    int sx = (position_int.x < x1) ? 1 : -1;
-    int sy = (position_int.y < y1) ? 1 : -1;
+    int sx = (position.x < x1) ? 1 : -1;
+    int sy = (position.y < y1) ? 1 : -1;
     int err = relative_pos.x - relative_pos.y;
 
 
     while (42) 
     {
         // Ensure the pixel coordinates are within window bounds
-        if (position_int.x >= 0 && position_int.x < WIDTH && position_int.y >= 0 && position_int.y < HEIGHT) 
+        if (position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT) 
         {
-            if (hit_a_wall(general,position_int.x, position_int.y) == 0)
-            {
-                my_mlx_pixel_put(&mlib->data, position_int.x, position_int.y, 0xFF0000);
-            }
+            if (hit_a_wall(general,position.x, position.y) == 0)
+                my_mlx_pixel_put(&mlib->data, position.x, position.y, 0xFF0000);
             else
-            {
                 break;
-            }
         }
         else
-        {
             break;
-        }
 
-        if (position_int.x == x1 && position_int.y == y1)   
-            break;
+        // if (position.x == x1 && position.y == y1)
+        // {
+        //     printf("third\n");
+        //     break;
+        // }
         int e2 = 2 * err;
         if (e2 > -relative_pos.y)
         {
             err -= relative_pos.y;
-            position_int.x += sx;
+            position.x += sx;
         }
         else if (e2 < relative_pos.x) 
         {
             err += relative_pos.x;
-            position_int.y += sy;
+            position.y += sy;
         }
     }
 
-}
+}*/
 
 void launch_mid_ray(t_general *general)
 {
-    t_vec   position;
+    t_coord   position;
     t_vec   direction;
+    t_coord   end_point;
 
     float   player_angle;
     float   fov_rad;
@@ -93,21 +86,26 @@ void launch_mid_ray(t_general *general)
     position = general->scene->player.pos;
     direction = general->scene->player.dir;
 
-    //size_wall = general->scene->map.size_wall;
-
 
     player_angle = atan2f(direction.y, direction.x);
+
+
     fov_rad = FOV * M_PI / 180;
     fov_start = player_angle - fov_rad / 2;
     fov_end = player_angle + fov_rad / 2;
-    angle_step = fov_rad / 100;
+    angle_step = fov_rad / WIDTH;
+
+    //printf("fov_start = %f player_angle = %f fov_end = %f\n", fov_start, player_angle, fov_end);
 
     for (angle = fov_start; angle <= fov_end; angle += angle_step)
     {
         cos_angle = cosf(angle);
         sin_angle = sinf(angle);
-        t_vec end_point = {position.x + cos_angle * (WIDTH), position.y + sin_angle * (WIDTH), 0.0f};
-        draw_rays(general, position, end_point.x, end_point.y);
+        end_point.x = position.x + cos_angle * 10000000;
+        end_point.y = position.y + sin_angle * 10000000;
+        end_point.z = 0.0f;
+        //draw_rays(general, position, end_point.x, end_point.y);
+        draw_ray2(general, position,(t_coord){end_point.x, end_point.y, 0}, 0xFF0000);
     }
 }
 
@@ -123,12 +121,15 @@ int render_mini_map(t_general *general)
     render_wall2D(general);
     draw_grid(general);
     move(general);
-    draw_player(general);
     launch_mid_ray(general);
+    //draw_ray2(general);
+    draw_player(general);
     
     //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, mlib->data.img_ptr);
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
     mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
+    //free(mlib->data.img_ptr);
+    //free(mlib->data.addr);
     //mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, mlib->data.img_ptr);
     return (0);
 }

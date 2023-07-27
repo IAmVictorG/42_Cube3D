@@ -12,6 +12,7 @@ void    printCoord(t_coord coord)
 {
     printf("Coord x = %d ", coord.x);
     printf("Coord y = %d", coord.y);
+    //printf("Coord z = %d", coord.z);
     printf("\n");
 }
 
@@ -20,12 +21,14 @@ void    print_player(t_player player)
     printf("----PLAYER----\n");
     printCoord(player.coord_ini);
     printf("pos : ");
-    printVec(player.pos);
+    printCoord(player.pos);
     printf("dir : ");
     printVec(player.dir);
     printf("speed = %f\n", player.speed);
     printf("\n");
 }
+
+
 
 /*void    print_scene(t_scene *scene)
 {

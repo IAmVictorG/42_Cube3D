@@ -2,18 +2,17 @@
 
 int key_pression(int keycode, t_general *general)
 {
-     printf("Key %d\n", keycode);
-    if (keycode == KEY_W || keycode == 119)
+    if (keycode == KEY_W)
         general->keys->w = 1;
-    else if (keycode == KEY_A || keycode == 97)
+    else if (keycode == KEY_A)
         general->keys->a = 1;
-    else if (keycode == KEY_S || keycode == 115)
+    else if (keycode == KEY_S)
         general->keys->s = 1;
-    else if (keycode == KEY_D || keycode == 100)
+    else if (keycode == KEY_D)
         general->keys->d = 1;
-    else if (keycode == KEY_Q || keycode == 113)
+    else if (keycode == KEY_Q)
         general->keys->q = 1;
-    else if (keycode == KEY_R || keycode == 114)
+    else if (keycode == KEY_R)
         general->keys->r = 1;
     else if (keycode == KEY_ARR_R)
         general->keys->arrow_r = 1;
@@ -28,19 +27,17 @@ int key_pression(int keycode, t_general *general)
 
 int key_release(int keycode, t_general *general)
 {
-    printf("keycode %d\n", keycode);
-
-    if (keycode == KEY_W || keycode == 119)
+    if (keycode == KEY_W)
         general->keys->w = 0;
-    else if (keycode == KEY_A || keycode == 97)
+    else if (keycode == KEY_A)
         general->keys->a = 0;
-    else if (keycode == KEY_S || keycode == 115)
+    else if (keycode == KEY_S)
         general->keys->s = 0;
-    else if (keycode == KEY_D || keycode == 100)
+    else if (keycode == KEY_D)
         general->keys->d = 0;
-    else if (keycode == KEY_Q || keycode == 113)
+    else if (keycode == KEY_Q)
         general->keys->q = 0;
-    else if (keycode == KEY_R || keycode == 114)
+    else if (keycode == KEY_R)
         general->keys->r = 0;
     else if (keycode == KEY_ARR_R)
         general->keys->arrow_r = 0;
@@ -53,8 +50,6 @@ int key_release(int keycode, t_general *general)
 // Fonction pour gérer les événements souris
 int mouse_press(int button, int x, int y, t_mlib *mlib)
 {
-    printf("keycode = %d\n", button);
-
     (void) button;
     (void) x;
     (void) y;
@@ -71,70 +66,134 @@ int close_window(t_mlib *mlib)
 int key_press_exit(int keycode, t_general *general)
 {
     key_pression(keycode, general);
-    printf("keycode = %d\n", keycode);
-    if (keycode == 53 || keycode == 65307)
+    //printf("keycode = %d\n", keycode);
+    if (keycode == 53)
     {
         exit(EXIT_FAILURE);
     }
     return (0);
 }
 
+/*
+t_coord get_new_postion_x (int prev_pos_x, float player_speed, )
+{
+    int new_pos_x;
+
+    new_pos_x = prev_pos_x -
+
+
+
+
+}
+*/
+
+
+
 void move(t_general *general)
 {
-    float pos_x;
-    float pos_y;
+    int pos_x;
+    int pos_y;
+    int size_wall;
+    int render_time;
+
+    render_time = (clock() - general->time) / 1000;
+    size_wall = general->scene->map.size_wall;
 
     if (general->keys->s == 1)
     {
-        pos_x = general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.x;
-        pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.y;
-        
+        pos_x = round(general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.x * size_wall);
+        pos_y = round(general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.y * size_wall);
         if (position_is_valid(general, pos_x, pos_y) == 1)
         {
             general->scene->player.pos.x = pos_x;
             general->scene->player.pos.y = pos_y;
         }
-        //print_player(general->scene->player);
+        else
+        {
+            if (position_is_valid(general, general->scene->player.pos.x, general->scene->player.pos.y - general->scene->player.dir.y * size_wall))
+            {
+                general->scene->player.pos.y = pos_y;
+            }
+            else if (position_is_valid(general, general->scene->player.pos.x - general->scene->player.dir.x * size_wall, general->scene->player.pos.y))
+            {
+                general->scene->player.pos.x = pos_x;
+            }
+        }
+        // print_player(general->scene->player);
     }
-    if (general->keys->w == 1)
+
+    if (general->keys->w == 1) /*z sur AZERTY*/
     {
-        pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.x;
-        pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.y;
+        pos_x = round(general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.x * size_wall);
+        pos_y = round(general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.y * size_wall);
+        if (position_is_valid(general, pos_x, pos_y) == 1)
+        {
+            general->scene->player.pos.x = pos_x;
+            general->scene->player.pos.y = pos_y;
+        }
+        else
+        {
+            if (position_is_valid(general, general->scene->player.pos.x, general->scene->player.pos.y + general->scene->player.dir.y * size_wall))
+            {
+                general->scene->player.pos.y = pos_y;
+            }
+            else if (position_is_valid(general, general->scene->player.pos.x + general->scene->player.dir.x * size_wall, general->scene->player.pos.y))
+            {
+                general->scene->player.pos.x = pos_x;
+            }
+        }
+    }
+
+
+    if (general->keys->a == 1) /*q sur AZERTY*/
+    {
+        pos_x = round(general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.y * size_wall);
+        pos_y = round(general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.x * size_wall);
+
 
         if (position_is_valid(general,pos_x, pos_y) == 1)
         {
             general->scene->player.pos.x = pos_x;
             general->scene->player.pos.y = pos_y;
         }
-        //print_player(general->scene->player);
-    }
-    if (general->keys->a == 1)
-    {
-        pos_x = general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.y * -1;
-        pos_y = general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.x;
-
-
-        if (position_is_valid(general,pos_x, pos_y) == 1)
+        else
         {
-            general->scene->player.pos.x = pos_x;
-            general->scene->player.pos.y = pos_y;
+            if (position_is_valid(general, general->scene->player.pos.x, general->scene->player.pos.y - general->scene->player.speed * general->scene->player.dir.x * size_wall))
+            {
+                general->scene->player.pos.y = pos_y;
+            }
+            else if (position_is_valid(general, general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.y * size_wall, general->scene->player.pos.y))
+            {
+                general->scene->player.pos.x = pos_x;
+            }
         }
 
-        //print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
     if (general->keys->d == 1)
     {
-        pos_y = general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.x;
-        pos_x = general->scene->player.pos.x + general->scene->player.speed * general->scene->player.dir.y * -1;
+        
+        pos_x = round(general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.y * size_wall);
+        pos_y = round(general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.x * size_wall);
 
         if (position_is_valid(general, pos_x, pos_y) == 1)
         {
             general->scene->player.pos.x = pos_x;
             general->scene->player.pos.y = pos_y;
         }
+        else
+        {
+            if (position_is_valid(general, general->scene->player.pos.x, general->scene->player.pos.y + general->scene->player.speed * general->scene->player.dir.x * size_wall))
+            {
+                general->scene->player.pos.y = pos_y;
+            }
+            else if (position_is_valid(general, general->scene->player.pos.x - general->scene->player.speed * general->scene->player.dir.y * size_wall, general->scene->player.pos.y))
+            {
+                general->scene->player.pos.x = pos_x;
+            }
+        }
 
-        //print_player(general->scene->player);
-
+        // print_player(general->scene->player);
     }
 
     //Changement de direction player
@@ -144,7 +203,7 @@ void move(t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        //print_player(general->scene->player);
+        // print_player(general->scene->player);
 
     }
     if (general->keys->r == 1)
@@ -153,7 +212,7 @@ void move(t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-       // print_player(general->scene->player);
+       // // print_player(general->scene->player);
 
     }
     if (general->keys->arrow_l == 1)
@@ -162,7 +221,7 @@ void move(t_general *general)
         angle -= ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        //print_player(general->scene->player);
+        // print_player(general->scene->player);
 
     }
     if (general->keys->arrow_r == 1)
@@ -171,21 +230,23 @@ void move(t_general *general)
         angle += ROTATION_SPEED;
         general->scene->player.dir.x = cosf(angle);
         general->scene->player.dir.y = sinf(angle);
-        //print_player(general->scene->player);
+        // print_player(general->scene->player);
     }
+    //printf("Player Position %d, %d\n", general->scene->player.pos.x, general->scene->player.pos.y);
 }
 
-int position_is_valid(t_general *general, float pos_x, float pos_y)
+int position_is_valid(t_general *general, int pos_x, int pos_y)
 {
     int player_size;
     int i;
     
     player_size = 1;
-    int corners[4][2] = {
-        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
-        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y - player_size) / general->scene->map.size_wall)},
-        {(int)((pos_x - player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)},
-        {(int)((pos_x + player_size) / general->scene->map.size_wall), (int)((pos_y + player_size) / general->scene->map.size_wall)}
+    int corners[4][2] = 
+    {
+        {((pos_x - player_size) / general->scene->map.size_wall), ((pos_y - player_size) / general->scene->map.size_wall)},
+        {((pos_x + player_size) / general->scene->map.size_wall), ((pos_y - player_size) / general->scene->map.size_wall)},
+        {((pos_x - player_size) / general->scene->map.size_wall), ((pos_y + player_size) / general->scene->map.size_wall)},
+        {((pos_x + player_size) / general->scene->map.size_wall), ((pos_y + player_size) / general->scene->map.size_wall)}
     };
 
     i = 0;
@@ -199,22 +260,32 @@ int position_is_valid(t_general *general, float pos_x, float pos_y)
         }
         i++;
     }
-    return 1;
+    /*if (general->scene->map.matrix[pos_x / general->scene->map.size_wall][pos_y / general->scene->map.size_wall] == '1')
+    {
+        return (0);
+    }*/
+    return (1);
 }
 
-void init_key(t_general *general)
+t_keys *init_key()
 {
-    general->keys = malloc(sizeof(t_keys));
-    if (general->keys == NULL)
+    t_keys *keys;
+
+
+    keys = (t_keys *) malloc(sizeof(t_keys));
+    if (keys == NULL)
     {
-        printf("Malloc ERROR KEYS\n");
-        exit(EXIT_FAILURE);
+        return (NULL);
+        //printf("Malloc ERROR KEYS\n");
+        //exit(EXIT_FAILURE);
     }
-    general->keys->w = 0;
-    general->keys->a = 0;
-    general->keys->s = 0;
-    general->keys->d = 0;
-    general->keys->arrow_l = 0;
-    general->keys->arrow_r = 0;
+    keys->w = 0;
+    keys->a = 0;
+    keys->s = 0;
+    keys->d = 0;
+    keys->arrow_l = 0;
+    keys->arrow_r = 0;
+
+    return (keys);
 
 }
