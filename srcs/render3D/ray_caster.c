@@ -376,7 +376,7 @@ void trace_ray(t_general *general)
         else
         {
 
-            wall_height = HEIGHT / dist;
+            wall_height = WIDTH / dist;
 
             display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
             display_floor(general->mlib, wall_height, imageincre);
