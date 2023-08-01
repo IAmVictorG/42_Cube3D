@@ -1,0 +1,6 @@
+srcs/*.o
+*/*.o
+cub3D
+*.o
+*.a
+/cub3d-tester
