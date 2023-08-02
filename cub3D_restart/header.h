@@ -16,6 +16,7 @@
 
 #define FOV 60
 #define SIZE_WALL 64
+#define SCALE_MINI_MAP 8
 
 #define MLX_SYNC_IMAGE_WRITABLE		1
 #define MLX_SYNC_WIN_FLUSH_CMD		2
@@ -150,9 +151,9 @@ typedef struct s_general
 
 } t_general;
 
-int		convert_coord_for_2D_X(int x, int width_map);
-int		convert_coord_for_2D_Y(int y, int heigth_map);
-t_coord	convert_coord_for_2D(t_coord pos, int width_map, int heigth_map);
+int		convert_coord_for_2D_X(int x);
+int		convert_coord_for_2D_Y(int y);
+t_coord	convert_coord_for_2D(t_coord pos);
 
 void move(t_general *general);
 
