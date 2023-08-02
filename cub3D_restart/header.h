@@ -165,6 +165,10 @@ void    printCoord(t_coord coord);
 int		key_pression(int keycode, t_general *general);
 int		key_release(int keycode, t_general *general);
 
+int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		hit_a_wall(t_general *general, int x, int y);
 
+int		load_texture_png(t_general *general);
 
+int 	render_game(t_general *general);
 #endif

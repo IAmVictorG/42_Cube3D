@@ -1,21 +1,6 @@
 #include "../header.h"
 
-
-int my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char *dst;
-
-    if (x >= 0 && x < WIDTH && y >= 0 && y <= HEIGHT)
-    {
-	    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	    *(unsigned int*)dst = color;
-        return (1);
-    }
-    else
-    {
-        return (-1);
-    }
-}
+void trace_ray(t_general *general);
 
 void    draw_grid(t_general *general)
 {
@@ -200,16 +185,6 @@ int	render_mini_map(t_general *general)
 
 
 }
-
-void	render_game(t_general *general)
-{
-
-	(void) general;
-
-
-
-}
-
 
 
 int render(t_general *general)

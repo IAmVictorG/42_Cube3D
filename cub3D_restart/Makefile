@@ -6,7 +6,9 @@ LINUX_FLAGS = -lm -lX11 -lXext -lpthread
 
 MAC_FLAGS = -framework OpenGL -framework AppKit
 
-SRCS =  $(addprefix srcs/, main.c init_window.c hook.c)
+SRCS =  $(addprefix srcs/, main.c init_window.c hook.c) \
+		$(addprefix srcs/game_tools/, utils.c draw_segment.c) \
+		$(addprefix srcs/render3D/, ray_caster.c get_color.c 3D_wall_render.c get_color_near.c 3D_wall_render_near.c find_pixel_screen.c) 
 
 LIBS 	= $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}

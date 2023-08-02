@@ -19,7 +19,7 @@ int key_pression(int keycode, t_general *general)
     else if (keycode == KEY_ARR_L)
         general->keys->arrow_l = 1;
     else if (keycode == KEY_M)
-        general->scene->mini_map = 1;
+        general->scene->mini_map ^= 1;
 	else if (keycode == 53)
 		exit(0);
 
@@ -92,19 +92,6 @@ void move(t_general *general)
     //current_pos2D = general->scene->player.pos2D;
     dir = general->scene->player.dir;
 
-    if (general->keys->w == 1) /*z sur AZERTY*/
-    {
-        next_pos.x = round(current_pos.x + SPEED * dir.x);
-        next_pos.y = round(current_pos.y + SPEED * dir.y);
-
-        if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
-        {
-            general->scene->player.pos2D = convert_coord_for_2D(next_pos, general->scene->map.width_map, general->scene->map.height_map);
-            general->scene->player.pos = next_pos;
-
-        }
-    }
-
 
     if (general->keys->s == 1)
     {
@@ -117,9 +104,23 @@ void move(t_general *general)
         {
             general->scene->player.pos2D = convert_coord_for_2D(next_pos, general->scene->map.width_map, general->scene->map.height_map);
             general->scene->player.pos = next_pos;
+            current_pos = next_pos;
         }
 
     }
+    if (general->keys->w == 1) /*z sur AZERTY*/
+    {
+        next_pos.x = round(current_pos.x + SPEED * dir.x);
+        next_pos.y = round(current_pos.y + SPEED * dir.y);
+
+        if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
+        {
+            general->scene->player.pos2D = convert_coord_for_2D(next_pos, general->scene->map.width_map, general->scene->map.height_map);
+            general->scene->player.pos = next_pos;
+            current_pos = next_pos;
+        }
+    }
+
 
     if (general->keys->d == 1) /*z sur AZERTY*/
     {
@@ -130,7 +131,7 @@ void move(t_general *general)
         {
             general->scene->player.pos2D = convert_coord_for_2D(next_pos, general->scene->map.width_map, general->scene->map.height_map);
             general->scene->player.pos = next_pos;
-
+            current_pos = next_pos;
         }
     }
 
@@ -143,7 +144,7 @@ void move(t_general *general)
         {
             general->scene->player.pos2D = convert_coord_for_2D(next_pos, general->scene->map.width_map, general->scene->map.height_map);
             general->scene->player.pos = next_pos;
-
+            current_pos = next_pos;
         }
     }
 
