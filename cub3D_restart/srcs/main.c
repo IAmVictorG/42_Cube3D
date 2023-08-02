@@ -111,6 +111,8 @@ void    print_player(t_player player)
     printCoord(player.coord_ini);
     printf("pos : ");
     printCoord(player.pos);
+    printf("pos2D : \n");
+    printCoord(player.pos2D);
     printf("dir : ");
     printVec(player.dir);
     printf("speed = %f\n", player.speed);
@@ -133,8 +135,8 @@ t_coord	get_player_coord(char **matrix)
 		{
 			if (matrix[lin][col] == 'N' || matrix[lin][col] == 'S' || matrix[lin][col] == 'E' || matrix[lin][col] == 'W')
 			{
-				coord_ini.y = lin * SIZE_WALL + 32;
-				coord_ini.x = col * SIZE_WALL + 32;
+				coord_ini.y = lin * SIZE_WALL + SIZE_WALL / 2;
+				coord_ini.x = col * SIZE_WALL + SIZE_WALL / 2;
 
 				return(coord_ini);	
 			}
@@ -202,20 +204,20 @@ t_vec	get_player_orientation(char **matrix)
 
 int convert_coord_for_2D_X(int x)
 {
-	return (x / SCALE_MINI_MAP);
+	return (x * SCALE_MINI_MAP) / SIZE_WALL ;
 }
 
 int convert_coord_for_2D_Y(int y)
 {
-	return (y / SCALE_MINI_MAP);
+	return (y * SCALE_MINI_MAP) / SIZE_WALL;
 }
 
 t_coord	convert_coord_for_2D(t_coord pos)
 {
     t_coord pos2D;
 
-	pos2D.x = pos.x / 8;
-	pos2D.y = pos.y / 8;
+	pos2D.x = (pos.x * SCALE_MINI_MAP) / SIZE_WALL;
+	pos2D.y = (pos.y * SCALE_MINI_MAP) / SIZE_WALL;
 
     return pos2D;
 }
@@ -319,7 +321,7 @@ int main ()
     if (keys == NULL)
         return (0);
 
-	sprites = init_sprites("textures/Wall_North.png", "textures/Wall_South.png","textures/Wall_West.png","textures/Wall_East.png");
+	sprites = init_sprites("textures/poivron.png", "textures/Wall_South.png","textures/Wall_West.png","textures/Wall_East.png");
     if (sprites == NULL)
     {
         printf("Error sprite\n");

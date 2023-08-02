@@ -3,19 +3,15 @@
 int hit_a_wall(t_general *general, int x, int y)
 {
     char **matrix = general->scene->map.matrix;
-    int size_wall = general->scene->map.size_wall;
-    int map_h = general->scene->map.height_map;
-    int map_w = general->scene->map.width_map;
+    int size_wall = SIZE_WALL;
+    /*int map_h = general->scene->map.height_map;
+    int map_w = general->scene->map.width_map;*/
 
 
     //printf("y = %d x = %d\n", y / size_wall, x / size_wall);
 
-    if (y / size_wall >= map_h || x / size_wall >= map_w)
-    {
-        return (0);
-    }
 
-
+   // printf("(%d, %d), matrix[%d][%d]\n", y, x, (y / size_wall), x / size_wall);
     return (matrix[y / size_wall][x / size_wall] == '1');
 
 }

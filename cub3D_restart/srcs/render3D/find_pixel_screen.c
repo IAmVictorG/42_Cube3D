@@ -4,12 +4,7 @@
 
 static int	should_stop(t_general *general, t_coord c0)
 {
-	if (c0.x >= 0 && c0.x < WIDTH && c0.y >= 0 && c0.y < HEIGHT)
-	{
-		if (hit_a_wall(general, c0.x, c0.y) != 0)
-			return (0);
-	}
-	else
+	if (hit_a_wall(general, c0.x, c0.y) != 0)
 		return (0);
 	return (1);
 }

@@ -190,25 +190,29 @@ void trace_ray(t_general *general)
     player_angle = atan2f(direction.y, direction.x);
 
 
-    float fov_rad = FOV * M_PI / 180;
+    float fov_rad = M_PI / 3;
     float fov_start = (player_angle - fov_rad / 2);
     float fov_end = (player_angle + fov_rad / 2);
 
 
 
 
-    float angle_step = fov_rad / WIDTH;
+   // double angle_step = fov_rad / WIDTH;
 
     //printf("fov_start = %f fov_end = %f player_angle = %f\n", fov_start, fov_end, player_angle);
 
 
-    for (double angle = fov_start; angle <= fov_end; angle += angle_step)
+    for (int i = 0; i < WIDTH; i++)
     {
+        double angle = fov_start + (fov_end - fov_start) * i / WIDTH;
         double cos_angle = cos(angle);
         double sin_angle = sin(angle);
-        t_vec end_point = {position.x + cos_angle * 2000000, position.y + sin_angle * 2000000, 0.0f}; // ?
+        t_vec end_point = {position.x + cos_angle * 200000, position.y + sin_angle * 200000, 0.0f}; // ?
+        
+        t_tab result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
 
-        t_tab result = find_point_on_screen(general, (t_coord){position.x, position.y, 0}, (t_coord){end_point.x, end_point.y, 0});
+        /*printf("Player position (%d, %d)\n", general->scene->player.pos.x, general->scene->player.pos.y);
+        printf("Wall at (%f, %f)\n", result.v2.x, result.v2.y);*/
 
 
         ray = result.v2;
@@ -216,298 +220,22 @@ void trace_ray(t_general *general)
         int wall_height;
         float dist;
 
-        dist = get_dist(position, result.v3, angle - player_angle, size_wall);
-        wall_height = WIDTH / dist;
-        if (dist <= 1.0f)
-        {
-  
-            draw_3D_line_south_near(general, result.v3, imageincre, dist);
-            /*if (pix_in_S(ray, size_wall) == 1)
-            {
-            }
+        dist = get_dist(position, result.v2, angle - player_angle, size_wall);
+        //printf(" i = %d Distance %f\n",imageincre, dist);
+        // printVec(result.v3);
 
-            if ((int) ray.y % size_wall == size_wall - 1)
-            {
-                draw_3D_line_north_near(general, result.v3, imageincre, dist);                 
-            }
+        wall_height = round((float)(WIDTH) / (float)dist);
+    
 
-            if ((int) ray.x % size_wall == 0)
-            {
-                draw_3D_line_east_near(general, result.v3, imageincre, dist);
-            }
+        display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
+        display_floor(general->mlib, wall_height, imageincre);
+       // t_vec test = (t_vec){roundf(result.v3.x), roundf(result.v3.y), 0};
+        draw_3D_line_north(general,  result.v2, wall_height, imageincre);
             
-            if ((int) ray.x % size_wall == size_wall - 1)
-            {
-                draw_3D_line_west_near(general, result.v3, imageincre, dist);
-            }  
-
-
-            if (pix_in_N(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == (int) (ray.x + 1) && ray_bef.y == (int) (ray.y + 1))
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int) ray.x && ray_bef.y == (int) (ray.y + 1))
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y + 1))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y - 1))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-
-
-            }
-
- 
-            if (pix_in_N(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_west_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_west_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-
-            }
-
-            if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-
-            }
-
-            if (pix_in_S(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_west_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_west_near(general, result.v3, imageincre, dist);
-                }
-
-            }*/
-
-        }
-        else
-        {
-
-            wall_height = WIDTH / dist;
-
-            display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
-            display_floor(general->mlib, wall_height, imageincre);
-            draw_3D_line_south(general, result.v3, wall_height, imageincre);
-            //draw_3D_line_south(general, result.v3, imageincre, wall_height);
-            //float angle_to_corner = atan2f(ray.y - position.y, ray.x - position.x);
-
-
-            /*if (pix_in_S(ray, size_wall) == 1)
-            {
-                //printf("S viewing_angle = %f\n", viewing_angle);
-
-                draw_3D_line_south(general, result.v3, wall_height, imageincre);
-            }
-            
-            if (pix_in_E(ray, size_wall) == 1)
-            {
-                //printf("E viewing_angle = %f\n", viewing_angle);
-
-                draw_3D_line_east(general, result.v3, wall_height, imageincre);
-            }
-            
-            if (pix_in_N(ray, size_wall) == 1)
-            {
-                //printf("N viewing_angle = %f\n", viewing_angle);
-
-
-                draw_3D_line_north(general, result.v3, wall_height, imageincre);                 
-            }
-
-            if (pix_in_W(ray, size_wall) == 1)
-            {
-
-
-                draw_3D_line_west(general, result.v3, wall_height, imageincre);
-            }
-
-
-
-
-            if (pix_in_N(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_east(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_east(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_east(general, result.v3, wall_height, imageincre);
-                }
-
-
-            }
-
- 
-            if (pix_in_N(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_west(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_west(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_north(general, result.v3, wall_height, imageincre);
-                }
-
-
-
-
-
-            }
-
-            if (pix_in_S(ray, size_wall) == 1 && pix_in_E(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_east(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_east(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-
-
-
-
-            }
-
-            if (pix_in_S(ray, size_wall) == 1 && pix_in_W(ray, size_wall) == 1)
-            {
-
-                if (ray_bef.x == ray.x - 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y - 1)
-                {
-                    draw_3D_line_south(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y)
-                {
-                    draw_3D_line_west(general, result.v3, wall_height, imageincre);
-                }
-                else if (ray_bef.x == ray.x + 1 && ray_bef.y == ray.y + 1)
-                {
-                    draw_3D_line_west(general, result.v3, wall_height, imageincre);
-                }
-            }*/
-        }
         imageincre++;
+
     }
-    //exit(42);dd
+
 }
 
 int render_game(t_general *general)
