@@ -114,36 +114,64 @@ void render_wall2D(t_general *general)
 
 }
 
-void draw_cross(t_general *general, int x, int y, int color) 
+void draw_player(t_general *general)
 {
     t_mlib  *mlib;
+    int		color;
+    int     size;
+    int     x;
+    int     y;
+
     mlib = general->mlib;
+    x = general->scene->player.pos2D.x;
+    y = general->scene->player.pos2D.y;
+    color = 0x00FF00;
+    size = 3;
 
-    // Taille de la croix
-    int size = 3;
-
-    for(int i = -size; i <= size; i++) {
+    for(int i = -size; i <= size; i++) 
+    {
         my_mlx_pixel_put(&mlib->data, x + i, y, color);
         my_mlx_pixel_put(&mlib->data, x, y + i, color);
     }
 }
 
-void draw_player(t_general *general)
+void draw_arrow(t_general *general, t_coord start_arrow, t_vec dir) 
 {
-    int		color;
-	t_coord	player_pos;
+
+    //t_mlib  *mlib;
+    //mlib = general->mlib;
+
+    int color = 0x00FF00;
+    t_coord end_arrow;
 
 
-    color = 0x00FF00;
-	player_pos.x = (general->scene->player.pos.x * WIDTH) / general->scene->map.width_map;
-	player_pos.y = (general->scene->player.pos.y * HEIGHT) / general->scene->map.height_map;
+    start_arrow = convert_coord_for_2D(start_arrow, general->scene->map.width_map, general->scene->map.height_map);
+    end_arrow.x = start_arrow.x + 10 * dir.x;
+    end_arrow.y = start_arrow.y + 10 * dir.y;
 
-	//printCoord(player_pos);
 
-    draw_cross(general, player_pos.x, player_pos.y, color);
+    // int x1 = start_arrow.x + end_arrow.x;
+    // int y1 = start_arrow.y + end_arrow.y;
 
+    //draw_line(general, x0, y0, x1, y1, color); // Draw the main line of the arrow
+
+    // Compute the direction of the arrow for the arrowhead
+    // float arrow_dir_x = end_arrow.x / sqrtf(end_arrow.x * end_arrow.x + end_arrow.y * end_arrow.y);
+    // float arrow_dir_y = end_arrow.y / sqrtf(end_arrow.x * end_arrow.x + end_arrow.y * end_arrow.y);
+
+    // Compute the perpendicular direction for the arrowhead
+    // float arrow_perp_x = -arrow_dir_y;
+    // float arrow_perp_y = arrow_dir_x;
+
+    // Length of the arrowhead
+    // float head_len = 7;
+
+    my_mlx_pixel_put(&general->mlib->data, end_arrow.x, end_arrow.y, color);
+
+    // Draw the two sides of the arrowhead
+    //draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x + arrow_perp_x), y1 - head_len * (arrow_dir_y + arrow_perp_y), color);
+    //draw_line(general, x1, y1, x1 - head_len * (arrow_dir_x - arrow_perp_x), y1 - head_len * (arrow_dir_y - arrow_perp_y), color);
 }
-
 
 
 int	render_mini_map(t_general *general)
@@ -156,10 +184,12 @@ int	render_mini_map(t_general *general)
 
     render_wall2D(general);
     draw_grid(general);
-    //move(general);
+    move(general);
     //launch_mid_ray(general);
 
     draw_player(general);
+
+    draw_arrow(general, general->scene->player.pos, general->scene->player.dir);
     
 
     mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);

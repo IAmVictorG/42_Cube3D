@@ -35,7 +35,8 @@
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x556B2F
 
-#define ROTATION_SPEED M_PI / 120
+#define ROTATION_SPEED M_PI / 60
+#define	SPEED 5
 
 typedef struct	s_utils 
 {
@@ -149,6 +150,11 @@ typedef struct s_general
 
 } t_general;
 
+int		convert_coord_for_2D_X(int x, int width_map);
+int		convert_coord_for_2D_Y(int y, int heigth_map);
+t_coord	convert_coord_for_2D(t_coord pos, int width_map, int heigth_map);
+
+void move(t_general *general);
 
 void	init_window(t_general *general, t_mlib *mlib);
 

@@ -236,11 +236,24 @@ t_vec	get_player_orientation(char **matrix)
 	return (orientation_ini);
 }
 
+int convert_coord_for_2D_X(int x, int width_map)
+{
+	return ((int) roundf((float) (x * WIDTH) / (float) width_map));
+}
+
+int convert_coord_for_2D_Y(int y, int heigth_map)
+{
+	return (int) roundf((float) (y * HEIGHT) / (float) heigth_map);
+}
+
 t_coord	convert_coord_for_2D(t_coord pos, int width_map, int heigth_map)
 {
-	scene->player.pos2D.x = (pos.x * WIDTH) / general->scene->map.width_map;
-	scene->player.pos2D.y = (pos.y * HEIGHT) / general->scene->map.height_map;
+    t_coord pos2D;
 
+	pos2D.x = (int) roundf((float) (pos.x * WIDTH) / (float) width_map);
+	pos2D.y = (int) roundf((float) (pos.y * HEIGHT) / (float) heigth_map);
+
+    return pos2D;
 }
 
 
@@ -268,7 +281,7 @@ int main ()
 	matrix[9]  = "1000000000000000000000000000000000000001";
 	matrix[10] = "1000000000000000000000000000000000000001";
 	matrix[11] = "1000000000000000000000000000000000000001";
-	matrix[12] = "1000000000000000000W00000000000000000001";
+	matrix[12] = "1000000000000100000W00010000000000000001";
 	matrix[13] = "1000000000000000000000000000000000000001";
 	matrix[14] = "1000000000000000000000000000000000000001";
 	matrix[15] = "1000000000000000000000000000000000000001";
@@ -277,7 +290,7 @@ int main ()
 	matrix[18] = "1000000000000000000000000000000000000001";
 	matrix[19] = "1111111111111111111111111111111111111111";
 	matrix[20] = NULL;
-
+    
 
 
     general = (t_general *) malloc (sizeof(t_general));
@@ -313,8 +326,7 @@ int main ()
 	scene->player.coord_ini = get_player_coord(matrix);
 	scene->player.pos = get_player_coord(matrix);
 
-	scene->player.pos2D.x = (general->scene->player.pos.x * WIDTH) / general->scene->map.width_map;
-	scene->player.pos2D.y = (general->scene->player.pos.y * HEIGHT) / general->scene->map.height_map;
+    scene->player.pos2D = convert_coord_for_2D(scene->player.pos, scene->map.width_map, scene->map.height_map);
 
 
 	scene->player.dir = get_player_orientation(matrix);
