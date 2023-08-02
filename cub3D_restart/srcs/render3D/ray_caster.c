@@ -206,7 +206,7 @@ void trace_ray(t_general *general)
     {
         double cos_angle = cos(angle);
         double sin_angle = sin(angle);
-        t_vec end_point = {position.x + cos_angle * 20000000, position.y + sin_angle * 20000000, 0.0f}; // ?
+        t_vec end_point = {position.x + cos_angle * 2000000, position.y + sin_angle * 2000000, 0.0f}; // ?
 
         t_tab result = find_point_on_screen(general, (t_coord){position.x, position.y, 0}, (t_coord){end_point.x, end_point.y, 0});
 
