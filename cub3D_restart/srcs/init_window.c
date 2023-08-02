@@ -4,31 +4,25 @@ void trace_ray(t_general *general);
 
 void    draw_grid(t_general *general)
 {
-	int		width_grid;
-	int		heigth_grid;
+
     t_mlib  *mlib;
 	int		i;
 	int		j;
 
-	width_grid = WIDTH / general->scene->map.width_matrix;
-	heigth_grid = HEIGHT / general->scene->map.height_matrix;
-
-
-
     mlib = general->mlib;
 
 	i = 0;
-	while (i < WIDTH)
+	while (i < general->scene->map.width_matrix * SCALE_MINI_MAP)
 	{
 		j = 0;
-		while (j < HEIGHT)
+		while (j < general->scene->map.height_matrix * SCALE_MINI_MAP)
 		{
-			if (i % width_grid == 0)
+			if (i % SCALE_MINI_MAP == 0)
 			{
 				my_mlx_pixel_put(&mlib->data, i, j, 0x00AA00);	
 			}
 
-			if (j % heigth_grid == 0)
+			if (j % SCALE_MINI_MAP == 0)
 			{
 				my_mlx_pixel_put(&mlib->data, i, j, 0x00AA00);
 			}
@@ -46,21 +40,16 @@ void    draw_wall(t_general *general, t_coord coord_wall)
     int 	x;
     int 	y;
 	t_mlib 	*mlib;
-	int		width_grid;
-	int		heigth_grid;
-
-	width_grid = WIDTH / general->scene->map.width_matrix;
-	heigth_grid = HEIGHT / general->scene->map.height_matrix;
     mlib = general->mlib;
 
 
     y = 0;
-    while (y < heigth_grid)
+    while (y < SCALE_MINI_MAP)
     {
         x = 0;
-        while (x < width_grid)
+        while (x < SCALE_MINI_MAP)
         {
-            my_mlx_pixel_put(&mlib->data, coord_wall.x * width_grid + x, coord_wall.y * heigth_grid + y, 0x1100FF);
+            my_mlx_pixel_put(&mlib->data, coord_wall.x * SCALE_MINI_MAP + x, coord_wall.y * SCALE_MINI_MAP + y, 0x1100FF);
             x++;
         }
         y++;
@@ -70,13 +59,10 @@ void    draw_wall(t_general *general, t_coord coord_wall)
 void render_wall2D(t_general *general)
 {
 	t_coord	coord_wall;
-	// int		width_grid;
-	// int		heigth_grid;
+
     int 	i;
     int 	j;
 
-	// width_grid = WIDTH / general->scene->map.width_matrix;
-	// heigth_grid = HEIGHT / general->scene->map.height_matrix;
 
     j = 0;
     while (j < general->scene->map.height_matrix)
@@ -90,6 +76,7 @@ void render_wall2D(t_general *general)
 				coord_wall.y = j;
 
 				//printCoord(coord_wall);
+                //printf("i = %d j = %d\n", i, j);
                 draw_wall(general, coord_wall);
             }
             i++;
@@ -130,7 +117,7 @@ void draw_arrow(t_general *general, t_coord start_arrow, t_vec dir)
     t_coord end_arrow;
 
 
-    start_arrow = convert_coord_for_2D(start_arrow, general->scene->map.width_map, general->scene->map.height_map);
+    start_arrow = convert_coord_for_2D(start_arrow);
     end_arrow.x = start_arrow.x + 10 * dir.x;
     end_arrow.y = start_arrow.y + 10 * dir.y;
 
