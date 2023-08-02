@@ -104,7 +104,7 @@ t_vec calculate_rays_bef(t_general *general, int x0, int y0, int x1, int y1, int
     return (r_temp);
 }
 
-float get_dist(t_coord pos, t_vec ray, float delta_angle, int size_wall)
+float get_dist(t_coord pos, t_coord ray, float delta_angle, int size_wall)
 {
     float dist;
     (void) delta_angle;
@@ -178,7 +178,7 @@ void trace_ray(t_general *general)
 {
     t_coord position = general->scene->player.pos;
     t_vec direction = general->scene->player.dir;
-    t_vec ray;
+    t_coord ray;
     t_vec ray_bef;
 
     int imageincre = 0;
@@ -229,7 +229,7 @@ void trace_ray(t_general *general)
 
         display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
         display_floor(general->mlib, wall_height, imageincre);
-       // t_vec test = (t_vec){roundf(result.v3.x), roundf(result.v3.y), 0};
+        //t_coord test = (t_coord){(int)(result.v3.x), (int)(result.v3.y), 0};
         draw_3D_line_north(general,  result.v2, wall_height, imageincre);
             
         imageincre++;

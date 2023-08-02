@@ -15,7 +15,7 @@
 #define HEIGHT 960
 
 #define FOV 60
-#define SIZE_WALL 100
+#define SIZE_WALL 400
 #define SCALE_MINI_MAP 8
 
 #define MLX_SYNC_IMAGE_WRITABLE		1
@@ -67,19 +67,19 @@ typedef struct s_vec
 	float z;
 } t_vec;
 
-typedef struct	s_tab_of_vec
-{
-	t_vec v1;
-	t_vec v2;
-	t_vec v3;
-} t_tab;
-
 typedef struct s_coord 
 {
 	int	x;
 	int	y;
 	int	z;
 } t_coord;
+
+typedef struct	s_tab_of_vec
+{
+	t_vec v1;
+	t_coord v2;
+	t_vec v3;
+} t_tab;
 
 typedef struct s_player 
 {

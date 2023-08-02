@@ -1,6 +1,6 @@
 #include "render3D.h"
 
-int get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h)
+int get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h)
 {
     t_sprites       *sprites;
     char            *pixel;
@@ -14,11 +14,14 @@ int get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h
     sprites = general->sprites;
 
 
-    x_pix = (int) roundf((((float)((int) x % size_wall) + (float)(x - (int) x)) / (float) size_wall) * (float) sprites->wall_north->sprite_w); 
+    //x_pix = (int) roundf((((float)((int) x % size_wall) + (float)(x - (int) x)) / (float) size_wall) * (float) sprites->wall_north->sprite_w); 
+    x_pix = (x % SIZE_WALL) * sprites->wall_north->sprite_w / SIZE_WALL;
+    //printf("SIZE_WALL %d\n", size_wall);
 
+    //x_pix = x % SIZE_WALL; /*arrondi ???*/
 
-
-    //x_pix = roundf(((int) x % size_wall)*general->sprites->wall_north->sprite_w/size_wall); /*arrondi ???*/
+   /// printf("x_pix = %d\n",);
+    
     y_pix = roundf(h_wall * general->sprites->wall_north->sprite_h/ max_wall_h);
 
     pixel = sprites->wall_north->data_spr.addr + (y_pix * sprites->wall_north->data_spr.line_length + x_pix * (sprites->wall_north->data_spr.bits_per_pixel / 8));

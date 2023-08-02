@@ -44,7 +44,7 @@ void draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imag
     } 
 }
 
-void draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imageincre)
+void draw_3D_line_north(t_general *general, t_coord ray, int wall_height, int imageincre)
 {
     int i;
     //int x_int;

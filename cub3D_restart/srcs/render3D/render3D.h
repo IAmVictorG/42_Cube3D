@@ -12,7 +12,7 @@ int 	render_game(t_general *general);
 void	draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_east(t_general *general, t_vec ray, int wall_height, int imageincre);
 void	draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imageincre);
-void	draw_3D_line_north(t_general *general, t_vec ray, int wall_height, int imageincre);
+void	draw_3D_line_north(t_general *general, t_coord ray, int wall_height, int imageincre);
 void 	draw_3D_line_color(t_general *general, t_vec ray, int wall_height, int imageincre, unsigned int color);
 
 
@@ -24,7 +24,7 @@ void	draw_3D_line_east_near(t_general *general, t_vec ray, int imageincre, float
 
 /* render3D/get_color.c */
 int		get_color_wall_south(t_general *general, float x, int h_wall, int max_wall_h);
-int		get_color_wall_north(t_general *general, float x, int h_wall, int max_wall_h);
+int		get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h);
 int		get_color_wall_west(t_general *general, float x, int h_wall, int max_wall_h);
 int		get_color_wall_east(t_general *general, float x, int h_wall, int max_wall_h);
 
