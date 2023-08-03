@@ -158,31 +158,6 @@ int pix_in_W (t_coord ray)
     return ray.x % SIZE_WALL == SIZE_WALL - 1;
 }
 
-/*
-                if (ray_bef.x == (int) (ray.x + 1) && ray_bef.y == (int) (ray.y + 1))
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int) ray.x && ray_bef.y == (int) (ray.y + 1))
-                {
-                    draw_3D_line_north_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y + 1))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-                else if (ray_bef.x == (int)(ray.x - 1) && ray_bef.y == (int)(ray.y - 1))
-                {
-                    draw_3D_line_east_near(general, result.v3, imageincre, dist);
-                }
-
-*/
-
-
 
 int text_in_N (t_coord ray, t_coord ray_bef)
 {
@@ -294,20 +269,6 @@ int text_in_S (t_coord ray, t_coord ray_bef)
 
 
     return ray.y % SIZE_WALL == 0;
-}
-
-int text_in_E (t_coord ray, t_coord ray_bef)
-{
-    (void) ray_bef;
-
-    return ray.x % SIZE_WALL == 0;
-}
-
-int text_in_W (t_coord ray, t_coord ray_bef)
-{
-    (void) ray_bef;
-
-    return ray.x % SIZE_WALL == SIZE_WALL - 1;
 }
 
 float    atan2f_to_ortho(t_vec  direction)

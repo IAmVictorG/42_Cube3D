@@ -151,6 +151,28 @@ typedef struct s_general
 
 } t_general;
 
+
+
+
+
+/* parsing/args_manager.c */
+char	*get_filename(const char *file_path);
+char    *get_extension(char *filename);
+int		filename_is_valid(const char *file_path);
+int		file_exists (char *filename);
+
+/* parsing/parsing.c */
+char	*get_wall (char **copy_file, char first, char second);
+
+
+
+
+/* parsing/copy_file_utils.c */
+char	**copy_file(char *filename, int size_file);
+int		get_size_file(char *filename);
+
+
+
 int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
 t_coord	convert_coord_for_2D(t_coord pos);
