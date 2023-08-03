@@ -138,9 +138,17 @@ void    display_floor(t_mlib *mlib, int wall_height, int imageincre)
     }
 }
 
-int pix_in_S (t_vec ray, int size_wall)
+// int pix_in_S (t_vec ray, int size_wall)
+// {
+//     return (int) ray.y % size_wall == 0;
+// }
+
+int pix_in_S (t_coord ray, t_coord ray_bef)
 {
-    return (int) ray.y % size_wall == 0;
+    (void) ray_bef;
+
+    return (int) ray.y % SIZE_WALL == 0;
+
 }
 
 int pix_in_N (t_vec ray, int size_wall)
@@ -177,9 +185,9 @@ float    atan2f_to_ortho(t_vec  direction)
 void trace_ray(t_general *general) 
 {
     t_coord position = general->scene->player.pos;
-    t_vec direction = general->scene->player.dir;
+    t_vec   direction = general->scene->player.dir;
     t_coord ray;
-    t_vec ray_bef;
+    t_coord ray_bef;
 
     int imageincre = 0;
     int size_wall = general->scene->map.size_wall;
@@ -230,7 +238,15 @@ void trace_ray(t_general *general)
         display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
         display_floor(general->mlib, wall_height, imageincre);
         //t_coord test = (t_coord){(int)(result.v3.x), (int)(result.v3.y), 0};
-        draw_3D_line_north(general,  result.v2, wall_height, imageincre);
+
+        //printCoord(ray_bef);
+        if (pix_in_S(ray, ray_bef))
+        {
+            draw_3D_line_south(general,  result.v2, wall_height, imageincre);
+        }
+
+        
+
             
         imageincre++;
 

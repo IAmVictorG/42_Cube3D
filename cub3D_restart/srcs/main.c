@@ -235,8 +235,6 @@ int main ()
 
     int         heigth_matrix = 20;
     int         width_matrix = 40;
-
-
 	char		*matrix[21];
 
 	matrix[0]  = "1111111111111111111111111111111111111111";
@@ -321,7 +319,7 @@ int main ()
     if (keys == NULL)
         return (0);
 
-	sprites = init_sprites("textures/poivron.png", "textures/Wall_South.png","textures/Wall_West.png","textures/Wall_East.png");
+	sprites = init_sprites("textures/Wall_North.png", "textures/Wall_South.png","textures/Wall_West.png","textures/Wall_East.png");
     if (sprites == NULL)
     {
         printf("Error sprite\n");

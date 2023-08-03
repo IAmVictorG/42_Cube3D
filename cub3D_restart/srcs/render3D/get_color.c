@@ -30,7 +30,7 @@ int get_color_wall_north(t_general *general, int x, int h_wall, int max_wall_h)
     return (color);
 }
 
-int get_color_wall_south(t_general *general, float x, int h_wall, int max_wall_h)
+int get_color_wall_south(t_general *general, int x, int h_wall, int max_wall_h)
 {
     t_sprites       *sprites;
     char            *pixel;
@@ -43,7 +43,8 @@ int get_color_wall_south(t_general *general, float x, int h_wall, int max_wall_h
     size_wall = general->scene->map.size_wall;
     sprites = general->sprites;
 
-    x_pix = (int) round((((float)((int) x % size_wall) + (float)(x - (int) x)) / (float) size_wall) * (float) sprites->wall_north->sprite_w); 
+    //x_pix = (int) round((((float)((int) x % size_wall) + (float)(x - (int) x)) / (float) size_wall) * (float) sprites->wall_north->sprite_w); 
+    x_pix = (x % SIZE_WALL) * sprites->wall_north->sprite_w / SIZE_WALL;
 
     
     //x_pix = roundf(((int)x % size_wall)*general->sprites->wall_south->sprite_w/size_wall);

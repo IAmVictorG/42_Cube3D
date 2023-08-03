@@ -95,7 +95,6 @@ void move(t_general *general)
 
     if (general->keys->s == 1)
     {
-
         next_pos.x = round(current_pos.x - SPEED * dir.x);
         next_pos.y = round(current_pos.y - SPEED * dir.y);
 

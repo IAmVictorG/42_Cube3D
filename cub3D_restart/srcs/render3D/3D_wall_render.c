@@ -28,7 +28,7 @@ void draw_3D_line_east(t_general *general, t_vec ray, int wall_height, int image
     } 
 }
 
-void draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imageincre)
+void draw_3D_line_south(t_general *general, t_coord ray, int wall_height, int imageincre)
 {
 
     int             i;
@@ -38,8 +38,8 @@ void draw_3D_line_south(t_general *general, t_vec ray, int wall_height, int imag
     for (i = 0; i < wall_height; i++)
     {
         //x_int = (int) roundf(ray.x);
-        color = 0xFF0000;
-        //color = get_color_wall_south(general, ray.x, i, wall_height);
+        //color = 0xFF0000;
+        color = get_color_wall_south(general, ray.x, i, wall_height);
         my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
     } 
 }
