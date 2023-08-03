@@ -99,7 +99,7 @@ typedef struct s_map
 	int		width_matrix;
 	int		height_map;
 	int		width_map;
-	int		size_wall;
+
 } t_map;
 
 typedef struct s_scene 

@@ -1,6 +1,6 @@
 #include "render3D.h"
 
-void draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int imageincre)
+void draw_3D_line_west(t_general *general, t_coord ray, int wall_height, int imageincre)
 {
     int             i;
     //int             x_int;
@@ -14,7 +14,7 @@ void draw_3D_line_west(t_general *general, t_vec ray, int wall_height, int image
     }
 }
 
-void draw_3D_line_east(t_general *general, t_vec ray, int wall_height, int imageincre)
+void draw_3D_line_east(t_general *general, t_coord ray, int wall_height, int imageincre)
 {
     int             i;
     //int             x_int;

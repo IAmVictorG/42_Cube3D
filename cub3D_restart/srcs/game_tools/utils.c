@@ -3,16 +3,9 @@
 int hit_a_wall(t_general *general, int x, int y)
 {
     char **matrix = general->scene->map.matrix;
-    int size_wall = SIZE_WALL;
-    /*int map_h = general->scene->map.height_map;
-    int map_w = general->scene->map.width_map;*/
 
 
-    //printf("y = %d x = %d\n", y / size_wall, x / size_wall);
-
-
-   // printf("(%d, %d), matrix[%d][%d]\n", y, x, (y / size_wall), x / size_wall);
-    return (matrix[y / size_wall][x / size_wall] == '1');
+    return (matrix[y / SIZE_WALL][x / SIZE_WALL] == '1');
 
 }
 
@@ -138,7 +131,7 @@ t_coord get_end_point(t_general *general, t_coord position, float angle)
 
     (void) general;
 
-    int size_wall = general->scene->map.size_wall;
+
 
     t_coord next_pix;
 
@@ -146,10 +139,10 @@ t_coord get_end_point(t_general *general, t_coord position, float angle)
     next_pix.y = position.y;
 
 
-    while (next_pix.x > size_wall && next_pix.y > size_wall)
+    while (next_pix.x > SIZE_WALL && next_pix.y > SIZE_WALL)
     {
-        next_pix.x = (int) ((float) next_pix.x + cosf(angle) * size_wall);
-        next_pix.y = (int) ((float) next_pix.y + sinf(angle) * size_wall);
+        next_pix.x = (int) ((float) next_pix.x + cosf(angle) * SIZE_WALL);
+        next_pix.y = (int) ((float) next_pix.y + sinf(angle) * SIZE_WALL);
     }
     next_pix.z = 0;
     //printCoord(next_pix);

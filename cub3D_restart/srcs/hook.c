@@ -74,10 +74,7 @@ int position_is_valid(t_general *general, int pos_x, int pos_y)
         }
         i++;
     }
-    /*if (general->scene->map.matrix[pos_x / general->scene->map.size_wall][pos_y / general->scene->map.size_wall] == '1')
-    {
-        return (0);
-    }*/
+
     return (1);
 }
 
