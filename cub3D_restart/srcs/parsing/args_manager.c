@@ -76,9 +76,10 @@ int file_exists (char *filename)
 
     fd = open(filename, O_RDONLY);
 
-
     if (fd == -1)
+    {
         return (0);
+    }
     else
     {
         close (fd);

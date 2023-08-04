@@ -163,6 +163,10 @@ int		file_exists (char *filename);
 
 /* parsing/parsing.c */
 char	*get_wall (char **copy_file, char first, char second);
+char	*get_floor_ceil (char **copy_of_file, char caract);
+t_coord	set_vector(char *str);
+
+
 
 
 

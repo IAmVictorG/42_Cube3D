@@ -100,9 +100,9 @@ void    printVec(t_vec vector)
 void    printCoord(t_coord coord)
 {
     printf("Coord x = %d ", coord.x);
-    printf("Coord y = %d", coord.y);
-    //printf("Coord z = %d", coord.z);
-    printf("\n");
+    printf("y = %d ", coord.y);
+    printf("z = %d\n", coord.z);
+    //printf("\n");
 }
 
 void    print_player(t_player player)
@@ -236,17 +236,11 @@ int arg_manager (char *file_path)
         printf("Error : Invalid file.\n");
         return (0);
     }
-    file_name = get_filename(file_path);
-    extension = get_extension(file_name);
     if (file_exists(file_path) == 0)
     {
-        printf("Error : Impossible to open file : %s.", file_name);
-        free (file_name);
-        free (extension);
+        printf("Error : Impossible to open file : %s.", file_path);
         return (0);
     }
-    free (file_name);
-    free (extension);
     return (1);
 }
 
@@ -281,12 +275,12 @@ char **walls_manager (char **copy_of_file)
 {
     char    **walls;
 
-    walls = (char **) malloc(5 * sizeof(char *));
-    walls[0] = NULL;
-    walls[1] = NULL;
-    walls[2] = NULL;
-    walls[3] = NULL;
-    walls[4] = NULL;
+    walls = (char **) ft_calloc(5, sizeof(char *)); // malloc(5 * sizeof(char *));
+    // walls[0] = NULL;
+    // walls[1] = NULL;
+    // walls[2] = NULL;
+    // walls[3] = NULL;
+    // walls[4] = NULL;
 
     walls[0] = get_wall(copy_of_file, 'N', 'O');
     if (walls[0] == NULL)
@@ -316,7 +310,7 @@ char **walls_manager (char **copy_of_file)
         ft_free_tabs(walls);
         return (NULL);
     }
-    print_tab(walls);
+    //print_tab(walls);
     return (walls);
 }
 
@@ -329,7 +323,7 @@ int walls_manager_exists (char **walls)
     {
         if (file_exists(walls[i]) == 0)
         {
-            printf("Error : Impossible to open %s\n", walls[0]);
+            printf("Error : Impossible to open %s\n", walls[i]);
             return (0);
         }
         i++;
@@ -343,11 +337,14 @@ int main (int argc, char *argv[])
     char    **copy_of_file;
     char    **walls;
 
-    // time_t start;
+    char    *floor_s;
+    char    *ceil_s;
 
-    // start = clock();
+    t_coord floor;
+    t_coord ceil;
 
-    
+    // int     floor_i;
+    // int     ceil_i;
 
     if (argc != 2)
     {
@@ -371,6 +368,20 @@ int main (int argc, char *argv[])
     {
         return (0);
     }
+
+
+    floor_s = get_floor_ceil(copy_of_file, 'F');
+    ceil_s = get_floor_ceil(copy_of_file, 'C');
+
+    // printf("F = (%s)\n", floor_s);
+    // printf("C = (%s)\n", ceil_s);
+
+
+    floor = set_vector(floor_s);
+    ceil = set_vector(ceil_s);
+
+    printCoord(floor);
+    printCoord(ceil);
 
 
     //ft_free_tabs(walls_manager);

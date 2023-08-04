@@ -337,8 +337,14 @@ void trace_ray(t_general *general)
         //printf(" i = %d Distance %f\n",imageincre, dist);
         // printVec(result.v3);
 
+        time_t  start;
+        time_t  end;
+
+        start = clock();
         wall_height = round((float)(WIDTH) / (float)dist);
-    
+        end = start - clock();
+        if ((int) dist <= 1)
+            printf("wall_height = %d dist = %f time = %ld\n", wall_height, dist ,end);
 
         display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
         display_floor(general->mlib, wall_height, imageincre);

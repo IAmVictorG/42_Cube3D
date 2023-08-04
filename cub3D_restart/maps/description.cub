@@ -10,12 +10,14 @@ EA			   ./textures/poivron.png
 NO   ./textures/poivron.png
 
 
-SO			./textures/texture3.xpm
+SO			./textures/Wall_South.png
 
 
-WE	./textures/texture4.xpm
+WE	./textures/Wall_West.png
 
-F   0,0,0
+
+
+F   0,89,45
 
 C	  255,255,255
 
