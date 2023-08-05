@@ -63,7 +63,6 @@ void render_wall2D(t_general *general)
     int 	i;
     int 	j;
 
-
     j = 0;
     while (j < general->scene->map.height_matrix)
     {
@@ -193,9 +192,6 @@ int render(t_general *general)
 
 void init_window(t_general *general, t_mlib *mlib)
 {
-
-	(void) general;
-
 
     mlib->utils.win = mlx_new_window(mlib->utils.mlx, WIDTH, HEIGHT, "Cube3D");
 

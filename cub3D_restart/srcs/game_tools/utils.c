@@ -21,7 +21,11 @@ int my_mlx_pixel_put(t_data *data, int x, int y, int color)
     }
     else
     {
-        //printf("Pixel pas dans la fenetre\n");
+        if (y > WIDTH)
+        {
+            printf("Pixel inconnu : x = %d y = %d\n", x, y);
+
+        }
         return (-1);
     }
 }
@@ -161,3 +165,48 @@ float   deg_to_rad(float angle)
     return ((angle * M_PI) / 180);
 }
 
+int	size_tab(char **tab)
+{
+	int	count;
+
+	count = 0;
+	while (tab[count] != NULL)
+		count++;
+	return (count);
+}
+
+void	ft_free_tabs(char **tab)
+{
+	int	i;
+	int	h;
+
+	h = size_tab(tab);
+	i = 0;
+	while (i <= h)
+	{
+        if (tab[i] != NULL)
+		    free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+int convert_coord_for_2D_X(int x)
+{
+	return (x * SCALE_MINI_MAP) / SIZE_WALL ;
+}
+
+int convert_coord_for_2D_Y(int y)
+{
+	return (y * SCALE_MINI_MAP) / SIZE_WALL;
+}
+
+t_coord	convert_coord_for_2D(t_coord pos)
+{
+    t_coord pos2D;
+
+	pos2D.x = (pos.x * SCALE_MINI_MAP) / SIZE_WALL;
+	pos2D.y = (pos.y * SCALE_MINI_MAP) / SIZE_WALL;
+
+    return pos2D;
+}

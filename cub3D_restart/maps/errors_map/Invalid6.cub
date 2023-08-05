@@ -1,8 +1,8 @@
-NO ./textures/texture1.xpm
-SO ./textures/texture2.xpm
-WE ./textures/texture3.xpm
-EA ./textures/texture4.xpm
-F 139, 140, 198
+EA ./textures/Wall_East.png			    
+NO ./textures/Wall_North.png
+SO ./textures/Wall_South.png
+WE ./textures/Wall_West.png
+F 139,140,198
 C 101, 210, 93
 
         1111111111111111111111111

@@ -88,3 +88,23 @@ int file_exists (char *filename)
 
 }
 
+int arg_manager (char *file_path)
+{
+    char    *file_name;
+    char    *extension;
+
+    file_name = NULL;
+    extension = NULL;
+
+    if (filename_is_valid(file_path) == 0)
+    {
+        printf("Error : Invalid file.\n");
+        return (0);
+    }
+    if (file_exists(file_path) == 0)
+    {
+        printf("Error : Impossible to open file : %s.", file_path);
+        return (0);
+    }
+    return (1);
+}

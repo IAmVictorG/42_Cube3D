@@ -11,6 +11,7 @@
 #include "includes/libft/libft.h"
 #include "includes/mlx/mlx.h"
 
+
 #define WIDTH 1600
 #define HEIGHT 960
 
@@ -151,31 +152,77 @@ typedef struct s_general
 
 } t_general;
 
-
-
-
-
 /* parsing/args_manager.c */
 char	*get_filename(const char *file_path);
 char    *get_extension(char *filename);
 int		filename_is_valid(const char *file_path);
 int		file_exists (char *filename);
-
-/* parsing/parsing.c */
-char	*get_wall (char **copy_file, char first, char second);
-char	*get_floor_ceil (char **copy_of_file, char caract);
-t_coord	set_vector(char *str);
-
-
-
-
-
+int		arg_manager (char *file_path);
 
 /* parsing/copy_file_utils.c */
-char	**copy_file(char *filename, int size_file);
+int hit_a_wall(t_general *general, int x, int y);
+
 int		get_size_file(char *filename);
+char	**copy_file(char *filename, int size_file);
 
 
+/* parsing/parsing.c */
+int		is_space(char c);
+int		string_is_only_space(char *str);
+char	*go_to_next_and_get_arg(char *line);
+int		is_numeric(char *str);
+t_coord	set_vector(char *str);
+int		check_coord_color (t_coord color);
+char	*get_floor_ceil (char **copy_of_file, char caract);
+int		parser(char **copy);
+
+
+
+
+/* parsing/map_parser.c */
+t_coord	get_player_coord(char **matrix);
+char	get_letter_oreintation(char **matrix);
+t_vec	get_player_orientation(char **matrix);
+int parse_first_wall(char *line);
+int	find_map(char **copy_file, int end_part_1);
+int get_height_map(char **copy_file, int ind_map);
+int	get_width_map(char **map);
+int check_EOF(char **copy_file, int ind_map, int h_map);
+char **map_creator(char **copy_file, int h_map, int ind_map);
+int	check_caract_line(char *line);
+int	check_caract_map(char **map_unc);
+char *line_matrix_creator(char *line, int w_matrix);
+char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
+int	check_first_one(char *line);
+int check_last_one(char *line);
+int	check_last_first_one(char **matrix);
+int check_right(char **matrix, int lin, int col, t_coord size_matrix);
+int	check_top(char **matrix, int lin, int col, t_coord size_matrix);
+int	check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
+int	check_left(char **matrix, int lin, int col, t_coord size_matrix);
+int	caract_ONEWS (char c);
+int	wall_inspector(char **matrix, int h_matrix, int w_matrix);
+int	check_player(char **matrix);
+t_coord	get_player_position(t_coord coord_ini, int size_wall);
+int init_map(t_map *map, char **copy, int end_parse_1);
+int map_parser(char **copy, int end_parse_1);
+
+
+
+/* parsing/wall_manager.c */
+char	*get_wall (char **copy_of_file, char first, char second);
+char **walls_manager (char **copy_of_file);
+int walls_manager_exists (char **walls);
+
+
+/* srcs/game_tools/utils.c */
+int hit_a_wall(t_general *general, int x, int y);
+int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		load_texture_png(t_general *general);
+
+int		create_trgb(int t, int r, int g, int b);
+int		size_tab(char **tab);
+void	ft_free_tabs(char **tab);
 
 int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
@@ -185,17 +232,24 @@ void move(t_general *general);
 
 void	init_window(t_general *general, t_mlib *mlib);
 
+
+/* display.c */
+void	print_tab(char **tab);
+void    printMap(t_map  map);
 void    printVec(t_vec vector);
 void    printCoord(t_coord coord);
+void    print_player(t_player player);
+void    print_sprite(t_sprite *sprite);
+void    print_sprites(t_sprites *sprites);
+
+void    print_scene (t_scene *scene);
+
 
 /* hook.c */
 int		key_pression(int keycode, t_general *general);
 int		key_release(int keycode, t_general *general);
 
-int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		hit_a_wall(t_general *general, int x, int y);
 
-int		load_texture_png(t_general *general);
 
 int 	render_game(t_general *general);
 #endif
