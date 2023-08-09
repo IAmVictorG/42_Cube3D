@@ -356,19 +356,21 @@ void trace_ray(t_general *general)
         //     printf("- ");
         // }
 
-        //printf(" i = %d Distance %f\n",imageincre, dist);
-        // printVec(result.v3);
-
         
+        // if (imageincre == 800)        
+        //     printf("Distance = %f\n", dist);
 
-        if (dist > 1.0f)
+
+    
+        //if (dist > 1.5f)
             wall_height = round((float)(WIDTH) / (float)dist);
-        else
-            wall_height = HEIGHT;
+        // else
+        //     wall_height = HEIGHT;
 
 
 
-        //printf("w_h = %d\n", wall_height);
+        // if (imageincre == 800)
+        //     printf("w_h = %d\n", wall_height);
 
 
         display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);

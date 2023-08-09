@@ -13,19 +13,31 @@ int my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char *dst;
 
-    if (x >= 0 && x < WIDTH && y >= 0 && y <= HEIGHT)
+    if (color < 0)
     {
+        printf("\n\nPixel : x = %d y = %d\n", x, y);
+        printf("Attention la segfault\n\n");
+    }
+
+    // printf("data line length = %d\n", data->bits_per_pixel);
+    // exit(42);
+
+    //data->line_length = 6400;
+    //data->bit_per_pixel = 32;
+
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+    {
+        //y = HEIGHT;
 	    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+
 	    *(unsigned int*)dst = color;
         return (1);
     }
     else
     {
-        if (y > WIDTH)
-        {
-            printf("Pixel inconnu : x = %d y = %d\n", x, y);
 
-        }
+        printf("Pixel inconnu : x = %d y = %d\n", x, y);
+
         return (-1);
     }
 }
@@ -33,6 +45,18 @@ int my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+t_coord create_trgb_reverse(unsigned int color) 
+{
+    t_coord color_vec;
+
+    color_vec.x = (color >> 16) & 0xFF;
+    color_vec.y = (color >> 8) & 0xFF;
+    color_vec.z = color & 0xFF;
+
+    return (color_vec);
+
 }
 
 t_vec vec_normalize(t_vec v)

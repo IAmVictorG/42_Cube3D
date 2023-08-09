@@ -12,7 +12,7 @@
 #include "includes/mlx/mlx.h"
 
 
-#define WIDTH 1600
+#define WIDTH 1440
 #define HEIGHT 960
 
 #define FOV 60
@@ -221,6 +221,10 @@ int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		load_texture_png(t_general *general);
 
 int		create_trgb(int t, int r, int g, int b);
+t_coord create_trgb_reverse(unsigned int color);
+
+
+
 int		size_tab(char **tab);
 void	ft_free_tabs(char **tab);
 
