@@ -104,7 +104,7 @@ int	get_width_map(char **map)
 		}
 		while (map[i][j] != '\0')
 		{
-			if (map[i][j] == '1' ||  caract_ONEWS(map[i][j]) == 1)
+			if (map[i][j] == '1' ||  caract_ONEWS(map[i][j]) == 1 || map[i][j] == ' ')
 			{
 				size_current_line++;
 			}

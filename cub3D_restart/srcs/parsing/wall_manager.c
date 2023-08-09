@@ -62,8 +62,6 @@ char **walls_manager (char **copy_of_file)
     walls[4] = NULL;
     
     
-    
-
     walls[0] = get_wall(copy_of_file, 'N', 'O');
     if (walls[0] == NULL)
     {

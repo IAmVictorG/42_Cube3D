@@ -363,7 +363,7 @@ void trace_ray(t_general *general)
 
     
         //if (dist > 1.5f)
-            wall_height = round((float)(WIDTH) / (float)dist);
+        wall_height = round((float)(WIDTH) / (float)dist);
         // else
         //     wall_height = HEIGHT;
 

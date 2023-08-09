@@ -112,13 +112,13 @@ void draw_arrow(t_general *general, t_coord start_arrow, t_vec dir)
     //t_mlib  *mlib;
     //mlib = general->mlib;
 
-    int color = 0x00FF00;
+    int color = 0xFF0000;
     t_coord end_arrow;
 
 
     start_arrow = convert_coord_for_2D(start_arrow);
-    end_arrow.x = start_arrow.x + 10 * dir.x;
-    end_arrow.y = start_arrow.y + 10 * dir.y;
+    end_arrow.x = start_arrow.x + 8 * dir.x;
+    end_arrow.y = start_arrow.y + 8 * dir.y;
 
 
     // int x1 = start_arrow.x + end_arrow.x;
