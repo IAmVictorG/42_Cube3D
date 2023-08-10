@@ -373,7 +373,7 @@ void trace_ray(t_general *general)
         //     printf("w_h = %d\n", wall_height);
 
 
-        display_sky(general->mlib, wall_height, imageincre, SKY_COLOR);
+        display_sky(general->mlib, wall_height, imageincre, general->scene->sky_color);
         display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
         //t_coord test = (t_coord){(int)(result.v3.x), (int)(result.v3.y), 0};
 

@@ -41,7 +41,6 @@ char *go_to_next_and_get_arg(char *line)
 	return (ft_substr(line, 0, i));
 }
 
-
 int is_numeric(char *str) 
 {
     if (!str || *str == '\0') 
@@ -57,10 +56,8 @@ int is_numeric(char *str)
         }
         str++;
     }
-
     return 1;
 }
-
 
 t_coord	set_vector(char *str)
 {
@@ -152,9 +149,9 @@ char	*get_floor_ceil (char **copy_of_file, char caract)
         	i++;
         }
     }
+    printf("Error : Floor color not found.\n");
     return (NULL);
 }
-
 
 static int check_if_is_wall(char *line)
 {
@@ -216,8 +213,6 @@ static int parse_line(char *line)
     return (1);
 }
 
-
-
 int parser(char **copy)
 {
     int i;
@@ -244,68 +239,3 @@ int parser(char **copy)
     }
     return (end);
 }
-
-// static void parse_wall(t_sprites *sprites, char *line)
-// {
-//     char *r;
-
-//     if (line[0] == 'N' && line[1] == 'O' && is_space(line[2]))
-//     {
-//         r = go_to_next_and_get_arg(&line);
-//         sprites->wall_north->path = r;
-//     }
-//     else if (line[0] == 'S' && line[1] == 'O' && is_space(line[2]))
-//     {
-//         r = go_to_next_and_get_arg(&line);
-//         sprites->wall_south->path = r;
-//     }
-//     else if (line[0] == 'W' && line[1] == 'E' && is_space(line[2]))
-//     {
-//         r = go_to_next_and_get_arg(&line);
-//         sprites->wall_west->path = r;
-//     }
-//     else if (line[0] == 'E' && line[1] == 'A' && is_space(line[2]))
-//     {
-//         r = go_to_next_and_get_arg(&line);
-//         sprites->wall_east->path = r;
-//     }
-//     r = go_to_next_and_get_arg(&line);
-//     if (ft_strlen(r) != 0 && string_is_only_space(r) == 0)
-//     {
-//         printf("R = %s\n", r);
-//         printf("Error\n Too many arguments on line\n");
-//     }
-
-//     free (r);
-// }
-
-
-
-
-
-
-
-
-
-
-
-// static void parse_floor(t_scene *scene, char *line)
-// {
-//     char *r;
-//     t_coord vector;
-//     (void) scene;
-
-//     r = go_to_next_and_get_arg(&line);
-//     set_vector(r, &vector);
-//     free(r);
-// }
-
-// static void parse_ceiling(t_scene *scene, char *line)
-// {
-//     char *r;
-
-//     (void) scene;
-//     r = go_to_next_and_get_arg(&line);
-//     set_vector(r, &scene->sky_color);
-//     free(r);
-// }

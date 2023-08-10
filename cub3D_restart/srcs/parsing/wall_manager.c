@@ -55,6 +55,11 @@ char **walls_manager (char **copy_of_file)
     {
         return (NULL);
     }
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "walls", walls, (5 * sizeof(char *)));
+    }
+
     walls[0] = NULL;
     walls[1] = NULL;
     walls[2] = NULL;
@@ -66,6 +71,7 @@ char **walls_manager (char **copy_of_file)
     if (walls[0] == NULL)
     {
         printf("Error : No Wall North.\n");
+        ft_free_tabs(copy_of_file);
         free(walls);
         return (NULL);
     }
@@ -73,6 +79,7 @@ char **walls_manager (char **copy_of_file)
     if (walls[1] == NULL)
     {
         printf("Error : No Wall South.\n");
+        ft_free_tabs(copy_of_file);
         ft_free_tabs(walls);
         return (NULL);
     }    
@@ -80,6 +87,7 @@ char **walls_manager (char **copy_of_file)
     if (walls[2] == NULL)
     {
         printf("Error : No Wall East.\n");
+        ft_free_tabs(copy_of_file);
         ft_free_tabs(walls);
         return (NULL);
     }    
@@ -87,8 +95,18 @@ char **walls_manager (char **copy_of_file)
     if (walls[3] == NULL)
     {
         printf("Error : No Wall West.\n");
+        ft_free_tabs(copy_of_file);
         ft_free_tabs(walls);
         return (NULL);
+    }
+
+    if (walls_manager_exists(walls) == 0)
+    {
+        ft_free_tabs(copy_of_file);
+        ft_free_tabs(walls);
+        printf("Error : Issue with wall file.\n");
+        return (NULL);
+
     }
     //print_tab(walls);
     return (walls);

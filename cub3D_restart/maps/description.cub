@@ -3,7 +3,7 @@ NO ./textures/Wall_North.png
 SO ./textures/Wall_South.png
 WE ./textures/Wall_West.png
 
-F 255,0,0
+F 50,222,120
 
 C 255,205,255
 

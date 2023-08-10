@@ -160,11 +160,9 @@ int		file_exists (char *filename);
 int		arg_manager (char *file_path);
 
 /* parsing/copy_file_utils.c */
-int hit_a_wall(t_general *general, int x, int y);
-
+int		hit_a_wall(t_general *general, int x, int y);
 int		get_size_file(char *filename);
-char	**copy_file(char *filename, int size_file);
-
+char	**copy_file(char *filename);
 
 /* parsing/parsing.c */
 int		is_space(char c);
@@ -177,35 +175,52 @@ char	*get_floor_ceil (char **copy_of_file, char caract);
 int		parser(char **copy);
 
 
+/* parsing.c/initializer.c */
+t_mlib		*init_mlib();
+t_keys		*init_key();
+t_sprite 	*init_sprite(char *path);
+t_sprites	*init_sprites(char *wall_north, char *wall_south, char *wall_west, char *wall_east);
 
 
 /* parsing/map_parser.c */
 t_coord	get_player_coord(char **matrix);
 char	get_letter_oreintation(char **matrix);
 t_vec	get_player_orientation(char **matrix);
-int parse_first_wall(char *line);
-int	find_map(char **copy_file, int end_part_1);
-int get_height_map(char **copy_file, int ind_map);
-int	get_width_map(char **map);
-int check_EOF(char **copy_file, int ind_map, int h_map);
-char **map_creator(char **copy_file, int h_map, int ind_map);
-int	check_caract_line(char *line);
-int	check_caract_map(char **map_unc);
-char *line_matrix_creator(char *line, int w_matrix);
+int		parse_first_wall(char *line);
+int		find_map(char **copy_file, int end_part_1);
+int		get_height_map(char **copy_file, int ind_map);
+int		get_width_map(char **map);
+int 	check_EOF(char **copy_file, int ind_map, int h_map);
+char	**map_creator(char **copy_file, int h_map, int ind_map);
+int		check_caract_line(char *line);
+int		check_caract_map(char **map_unc);
+char	*line_matrix_creator(char *line, int w_matrix);
 char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
-int	check_first_one(char *line);
-int check_last_one(char *line);
-int	check_last_first_one(char **matrix);
-int check_right(char **matrix, int lin, int col, t_coord size_matrix);
-int	check_top(char **matrix, int lin, int col, t_coord size_matrix);
-int	check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
-int	check_left(char **matrix, int lin, int col, t_coord size_matrix);
-int	caract_ONEWS (char c);
-int	wall_inspector(char **matrix, int h_matrix, int w_matrix);
-int	check_player(char **matrix);
+int		check_first_one(char *line);
+int		check_last_one(char *line);
+int		check_last_first_one(char **matrix);
+int		check_right(char **matrix, int lin, int col, t_coord size_matrix);
+int		check_top(char **matrix, int lin, int col, t_coord size_matrix);
+int		check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
+int		check_left(char **matrix, int lin, int col, t_coord size_matrix);
+int		caract_ONEWS (char c);
+int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
+int		check_player(char **matrix);
 t_coord	get_player_position(t_coord coord_ini, int size_wall);
-int init_map(t_map *map, char **copy, int end_parse_1);
-int map_parser(char **copy, int end_parse_1);
+int		init_map(t_map *map, char **copy, int end_parse_1);
+int		map_parser(char **copy, int end_parse_1);
+
+
+/* srcs/render2D/minimap.c */
+void    draw_grid(t_general *general);
+void    draw_wall(t_general *general, t_coord coord_wall);
+void	render_wall2D(t_general *general);
+void	draw_player(t_general *general);
+void	draw_arrow(t_general *general, t_coord start_arrow, t_vec dir);
+int		render_mini_map(t_general *general);
+
+
+
 
 
 
@@ -234,7 +249,7 @@ t_coord	convert_coord_for_2D(t_coord pos);
 
 void move(t_general *general);
 
-void	init_window(t_general *general, t_mlib *mlib);
+void	init_window(t_general *general);
 
 
 /* display.c */

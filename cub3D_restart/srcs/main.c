@@ -1,78 +1,77 @@
 #include "../header.h"
 
-t_mlib  *init_mlib()
+
+t_general    *create_general (char **walls)
 {
-    t_mlib  *mlib;
+    t_general   *general;
 
-    mlib = (t_mlib *) malloc(sizeof(t_mlib));
-    if (mlib == NULL)
-        return (NULL);
-    
-    mlib->utils.mlx = mlx_init();
-
-
-    return (mlib);
-}
-
-t_keys *init_key()
-{
-    t_keys *keys;
-
-
-    keys = (t_keys *) malloc(sizeof(t_keys));
-    if (keys == NULL)
+    general = (t_general *) malloc (sizeof(t_general));
+    if (general == NULL)
     {
-        return (NULL);
+        printf("Error : malloc allocation.\n");
+        return (0);
     }
-    keys->w = 0;
-    keys->a = 0;
-    keys->s = 0;
-    keys->d = 0;
-    keys->arrow_l = 0;
-    keys->arrow_r = 0;
-
-    return (keys);
-
-}
-
-t_sprite *init_sprite(char *path)
-{
-
-    //printf("path = %s\n", path);
-    t_sprite    *wall;
-
-    wall = (t_sprite *) malloc(sizeof(t_sprite));
-    if (wall == NULL)
+    else
     {
-        return (NULL);
+        printf("%s : %p (%lu bytes)\n", "general", general, sizeof(t_general));
     }
-    wall->path = path;
-
-    //print_sprite(wall);
-    //printf("%s\n", wall->path);
-    return (wall);
+    general->scene = malloc(sizeof(t_scene));
+    if (general->scene == NULL)
+        return (0);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "scene", general->scene, sizeof(t_scene));
+    }
+    general->mlib = init_mlib();
+    if (general->mlib == NULL)
+        return (0);
+    general->keys = init_key();
+    if (general->keys == NULL)
+        return (0);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "keys", general->keys, sizeof(t_keys));
+    }
+	general->sprites = init_sprites(walls[0], walls[1], walls[3], walls[2]);
+    if (general->sprites == NULL)
+    {
+        printf("Error sprite\n");
+        return (0);
+    } 
+    return general;
 }
 
-t_sprites   *init_sprites(char *wall_north, char *wall_south, char *wall_west, char *wall_east)
+int feed_the_scene (t_general *general, char **copy_of_file, t_coord floor, t_coord ceil)
 {
+    int end;
+
+    end = parser(copy_of_file);
+
+    if (init_map(&general->scene->map, copy_of_file, end) == 0)
+    {
+        printf("Error init_map\n");
+        return (0);
+    }    
+
+    general->scene->floor_color = create_trgb(0, floor.x, floor.y, floor.z);
+    general->scene->sky_color = create_trgb(0, ceil.x, ceil.y, ceil.z);
 
 
-    t_sprites *sprites;
+    general->scene->player.coord_ini = get_player_coord(general->scene->map.matrix);
+	general->scene->player.pos = get_player_coord(general->scene->map.matrix);
+    general->scene->player.pos2D = convert_coord_for_2D(general->scene->player.pos);
+	general->scene->player.dir = get_player_orientation(general->scene->map.matrix);
 
-    sprites = (t_sprites *) malloc(sizeof(t_sprites));
-    if (sprites == NULL)
-        return (NULL);
+    general->scene->player.speed = 0.1f;
+    general->scene->mini_map = 1;
 
-    sprites->wall_east = init_sprite(wall_east);
-    sprites->wall_west = init_sprite(wall_west);
-    sprites->wall_south = init_sprite(wall_south);
-    sprites->wall_north = init_sprite(wall_north);
+    return (1);
 
-    return sprites;
 }
 
 void    free_general(t_general *general)
 {
+    ft_free_tabs(general->scene->map.matrix);
     free(general->sprites->wall_east);
     free(general->sprites->wall_north);
     free(general->sprites->wall_south);
@@ -82,13 +81,30 @@ void    free_general(t_general *general)
     free(general->mlib);
     free(general->scene);
     free(general);
+}
 
+void chk_file (int argc, char *argv[])
+{
+    int size_file;
+
+    if (argc != 2)
+    {
+        printf("Error : Invalid number of arguments.\n");
+        exit (0);
+    }
+    if (arg_manager(argv[1]) == 0)
+        exit (0);
+    size_file = get_size_file(argv[1]);
+    if (size_file <= 0)
+    {
+        printf("Error : File is empty or not a text file.\n");
+        exit (0);
+    }
 }
 
 
 int main (int argc, char *argv[])
 {
-    int     size_file;
     char    **copy_of_file;
     char    **walls;
 
@@ -102,56 +118,23 @@ int main (int argc, char *argv[])
 
     t_general   *general;
 
-    t_scene     *scene;
-    t_mlib      *mlib;
-    t_sprites   *sprites;
-    t_keys      *keys;
 
-    if (argc != 2)
-    {
-        printf("Error : Invalid number of arguments.\n");
-        return (0);
-    }
-    if (arg_manager(argv[1]) == 0)
-        return (0);
+    chk_file(argc, argv);
 
-    size_file = get_size_file(argv[1]);
-    if (size_file <= 0)
-    {
-        printf("Error : File is empty or not a text file.\n");
-        return (0);
-    }
-    copy_of_file = copy_file(argv[1], size_file);
+    copy_of_file = copy_file(argv[1]);
     if (copy_of_file == NULL)
-    {
-        printf("Error : Error with configuration file.\n");
         return (0);
-    }
 
     end = parser(copy_of_file);
-
     walls = walls_manager(copy_of_file);
     if (walls == NULL)
-    {
-        ft_free_tabs(copy_of_file);
-        printf("Error : Walls management issue.");
         return (0);
-    }
-
-    if (walls_manager_exists(walls) == 0)
-    {
-        ft_free_tabs(copy_of_file);
-        ft_free_tabs(walls);
-        printf("Error : Issue with wall file.\n");
-        return (0);
-    }
 
     floor_s = get_floor_ceil(copy_of_file, 'F');
     if (floor_s == NULL)
     {
         ft_free_tabs(copy_of_file);
         ft_free_tabs(walls);
-        printf("Error : Floor color not found.\n");
         return (0);
     }
 
@@ -199,54 +182,21 @@ int main (int argc, char *argv[])
 
     /*LEAKS PROOF UNTIL HERE*/
 
-    general = (t_general *) malloc (sizeof(t_general));
+    general = create_general(walls);
+
     if (general == NULL)
         return (0);
 
-    scene = malloc(sizeof(t_scene));
-    if (scene == NULL)
-        return (0);
 
-    mlib = init_mlib();
-    if (mlib == NULL)
-        return (0);
 
-    keys = init_key();
-    if (keys == NULL)
-        return (0);
 
-	sprites = init_sprites(walls[0], walls[1], walls[3], walls[2]);
-
-    if (sprites == NULL)
+    if (feed_the_scene(general, copy_of_file, floor, ceil) == 0)
     {
-        printf("Error sprite\n");
+        //printf("Error : impossible to initialize map.\n");
         return (0);
-    }  
-
-    if (init_map(&scene->map, copy_of_file, end) == 0)
-    {
-        printf("Error init_map\n");
-        return (0);
-
     }
 
-    scene->floor_color = create_trgb(0, floor.x, floor.y, floor.z);
-    scene->sky_color = create_trgb(0, ceil.x, ceil.y, ceil.z);
 
-    scene->player.coord_ini = get_player_coord(scene->map.matrix);
-	scene->player.pos = get_player_coord(scene->map.matrix);
-    scene->player.pos2D = convert_coord_for_2D(scene->player.pos);
-	scene->player.dir = get_player_orientation(scene->map.matrix);
-
-    scene->player.speed = 0.1f;
-    scene->mini_map = 1;
-
-
-
-    general->keys = keys;
-    general->mlib = mlib;
-    general->scene = scene;
-    general->sprites = sprites;
 
     if (load_texture_png(general) == 0)
     {
@@ -255,20 +205,20 @@ int main (int argc, char *argv[])
     }
 
 
-    //printf("ICI %c\n", general->scene->map.matrix[0][0]);
+
 
     print_scene(general->scene);
     print_sprites(general->sprites);
 
 
 
-	init_window(general, mlib);
+	init_window(general);
 
     ft_free_tabs(copy_of_file);
     ft_free_tabs(walls);
     free(floor_s);
     free(ceil_s);
-    ft_free_tabs(general->scene->map.matrix);
+    
     free_general(general);
 
 	return (0);
