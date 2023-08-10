@@ -148,17 +148,25 @@ void draw_arrow(t_general *general, t_coord start_arrow, t_vec dir)
 int	render_mini_map(t_general *general)
 {
     t_mlib  *mlib = general->mlib;
-
-
+    //clock_t time = clock();
+    
     mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
     mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
+
+    //printf("Time delay %ld\n", clock() - time);
     render_wall2D(general);
+    //printf("Time after render_wall %ld\n", clock() - time);
+
     draw_grid(general);
+    //printf("Time after draw_grid %ld\n", clock() - time);
+
     move(general);
+    //printf("Time after move %ld\n", clock() - time);
     //launch_mid_ray(general);
 
     draw_player(general);
+    //printf("Time after move %ld\n", clock() - time);
 
     draw_arrow(general, general->scene->player.pos, general->scene->player.dir);
     

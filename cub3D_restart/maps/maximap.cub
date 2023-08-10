@@ -1,4 +1,4 @@
-EA ./textures/Wall_East.png			    
+EA ./textures/poivron.png			    
 NO ./textures/Wall_North.png
 SO ./textures/Wall_South.png
 WE ./textures/Wall_West.png

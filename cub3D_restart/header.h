@@ -16,7 +16,7 @@
 #define HEIGHT 960
 
 #define FOV 60
-#define SIZE_WALL 64
+#define SIZE_WALL 200
 #define SCALE_MINI_MAP 8
 
 #define MLX_SYNC_IMAGE_WRITABLE		1

@@ -4,9 +4,7 @@ int hit_a_wall(t_general *general, int x, int y)
 {
     char **matrix = general->scene->map.matrix;
 
-
     return (matrix[y / SIZE_WALL][x / SIZE_WALL] == '1');
-
 }
 
 int my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -153,31 +151,31 @@ int load_texture_png(t_general *general)
     return (1);
 }
 
-t_coord get_end_point(t_general *general, t_coord position, float angle)
-{
-    //t_matrix matrix = general->scene->matrix;
+// t_coord get_end_point(t_general *general, t_coord position, float angle)
+// {
+//     //t_matrix matrix = general->scene->matrix;
 
-    (void) general;
-
-
-
-    t_coord next_pix;
-
-    next_pix.x = position.x;
-    next_pix.y = position.y;
+//     (void) general;
 
 
-    while (next_pix.x > SIZE_WALL && next_pix.y > SIZE_WALL)
-    {
-        next_pix.x = (int) ((float) next_pix.x + cosf(angle) * SIZE_WALL);
-        next_pix.y = (int) ((float) next_pix.y + sinf(angle) * SIZE_WALL);
-    }
-    next_pix.z = 0;
-    //printCoord(next_pix);
-    //printf("\n");
-    return next_pix;
 
-}
+//     t_coord next_pix;
+
+//     next_pix.x = position.x;
+//     next_pix.y = position.y;
+
+
+//     while (next_pix.x > SIZE_WALL && next_pix.y > SIZE_WALL)
+//     {
+//         next_pix.x = (int) ((float) next_pix.x + cosf(angle) * SIZE_WALL);
+//         next_pix.y = (int) ((float) next_pix.y + sinf(angle) * SIZE_WALL);
+//     }
+//     next_pix.z = 0;
+//     //printCoord(next_pix);
+//     //printf("\n");
+//     return next_pix;
+
+// }
 
 float   rad_to_deg(float angle)
 {

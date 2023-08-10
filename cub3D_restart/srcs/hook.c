@@ -92,8 +92,8 @@ void move(t_general *general)
 
     if (general->keys->s == 1)
     {
-        next_pos.x = round(current_pos.x - SPEED * dir.x);
-        next_pos.y = round(current_pos.y - SPEED * dir.y);
+        next_pos.x = round(current_pos.x - general->scene->player.speed * dir.x);
+        next_pos.y = round(current_pos.y - general->scene->player.speed * dir.y);
 
 
         if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
@@ -106,8 +106,8 @@ void move(t_general *general)
     }
     if (general->keys->w == 1) /*z sur AZERTY*/
     {
-        next_pos.x = round(current_pos.x + SPEED * dir.x);
-        next_pos.y = round(current_pos.y + SPEED * dir.y);
+        next_pos.x = round(current_pos.x + general->scene->player.speed * dir.x);
+        next_pos.y = round(current_pos.y + general->scene->player.speed * dir.y);
 
         if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
         {
@@ -120,8 +120,8 @@ void move(t_general *general)
 
     if (general->keys->d == 1) /*z sur AZERTY*/
     {
-        next_pos.x = round(current_pos.x - SPEED * dir.y);
-        next_pos.y = round(current_pos.y + SPEED * dir.x);
+        next_pos.x = round(current_pos.x - general->scene->player.speed * dir.y);
+        next_pos.y = round(current_pos.y + general->scene->player.speed * dir.x);
 
         if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
         {
@@ -133,8 +133,8 @@ void move(t_general *general)
 
     if (general->keys->a == 1) /*z sur AZERTY*/
     {
-        next_pos.x = round(current_pos.x + SPEED * dir.y);
-        next_pos.y = round(current_pos.y - SPEED * dir.x);
+        next_pos.x = round(current_pos.x + general->scene->player.speed * dir.y);
+        next_pos.y = round(current_pos.y - general->scene->player.speed * dir.x);
 
         if (position_is_valid(general, next_pos.x, next_pos.y) == 1)
         {

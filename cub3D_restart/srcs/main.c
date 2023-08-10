@@ -238,7 +238,7 @@ int main (int argc, char *argv[])
     scene->player.pos2D = convert_coord_for_2D(scene->player.pos);
 	scene->player.dir = get_player_orientation(scene->map.matrix);
 
-    scene->player.speed = 0.1f;
+    scene->player.speed = 0.1f * SIZE_WALL;
     scene->mini_map = 1;
 
 

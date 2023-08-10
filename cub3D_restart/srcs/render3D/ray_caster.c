@@ -158,7 +158,6 @@ int pix_in_W (t_coord ray)
     return ray.x % SIZE_WALL == SIZE_WALL - 1;
 }
 
-
 int text_in_N (t_coord ray, t_coord ray_bef)
 {
     //(void) ray_bef;
@@ -286,7 +285,6 @@ float    atan2f_to_ortho(t_vec  direction)
 
 }
 
-
 void trace_ray(t_general *general) 
 {
     t_coord position = general->scene->player.pos;
@@ -324,12 +322,6 @@ void trace_ray(t_general *general)
         
         t_tab result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
 
-        /*printf("Player position (%d, %d)\n", general->scene->player.pos.x, general->scene->player.pos.y);
-        printf("Wall at (%f, %f)\n", result.v2.x, result.v2.y);*/
-        /* h = 768 w = 1280 
-        Coord x = 1216 y = 564 z = 0
-        Coord x = 1216 y = 569 z = 0
-        */
 
         ray = result.v2;
         ray_bef = result.v1;
@@ -343,26 +335,7 @@ void trace_ray(t_general *general)
 
         dist = get_dist(position, result.v2, angle - player_angle);
 
-        // if ((int) (prec_dist * 100) > (int) (dist * 100))
-        // {
-        //     printf("+ ");
-        // }
-        // else if ((int) (prec_dist * 100) == (int) (dist * 100))
-        // {
-        //     printf("= ");
-        // }
-        // else
-        // {
-        //     printf("- ");
-        // }
-
-        
-        // if (imageincre == 800)        
-        //     printf("Distance = %f\n", dist);
-
-
-    
-        //if (dist > 1.5f)
+ 
         wall_height = round((float)(WIDTH) / (float)dist);
         // else
         //     wall_height = HEIGHT;

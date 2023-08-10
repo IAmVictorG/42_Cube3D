@@ -32,7 +32,7 @@ void draw_3D_line_east(t_general *general, t_coord ray, int wall_height, int ima
     unsigned int    color;
         
     i = 0;
-    if ((HEIGHT - wall_height) / 2 > 0)
+    if ((HEIGHT - wall_height) > 0)
     {
         while (i < wall_height)
         {
