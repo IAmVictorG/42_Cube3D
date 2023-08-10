@@ -62,7 +62,7 @@ int feed_the_scene (t_general *general, char **copy_of_file, t_coord floor, t_co
     general->scene->player.pos2D = convert_coord_for_2D(general->scene->player.pos);
 	general->scene->player.dir = get_player_orientation(general->scene->map.matrix);
 
-    general->scene->player.speed = 0.1f;
+    general->scene->player.speed = 0.1f * SIZE_WALL;
     general->scene->mini_map = 1;
 
     return (1);

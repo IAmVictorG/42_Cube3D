@@ -54,10 +54,10 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
 
 	dx = c1.x - c0.x;
 	dy = c1.y - c0.y;
-	if (dx == 0)
-		slope = 1;
-	else
-		slope = (float) dy / dx;
+	result.v2.x = 0;
+	result.v2.y = 0;
+
+	slope = (float) dy / dx;
 	pos.x = c0.x;
 	pos.y = c0.y;
 
@@ -68,8 +68,42 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
 		printf("PROBELE EEMEFE\n");
 	while(42)
 	{
-		if (should_stop(general, (t_coord) {(int)pos.x, (int)pos.y, 0}) == 0)
-			break ;
+		if (dx > 0)
+		{
+			if (dy > 0)
+			{
+				if (should_stop(general, (t_coord) {(int)pos.x, (int)pos.y, 0}) == 0)
+					break ;
+			}
+			else
+			{
+				if (should_stop(general, (t_coord) {(int)pos.x, (int)pos.y - 1, 0}) == 0)
+				{
+					pos.y -= 1;
+					break ;
+				}
+			}
+		}
+		else
+		{
+			if (dy > 0)
+			{
+				if (should_stop(general, (t_coord) {(int)pos.x - 1, (int)pos.y, 0}) == 0)
+				{
+					pos.x -= 1;
+					break ;
+				}
+			}
+			else
+			{
+				if (should_stop(general, (t_coord) {(int)pos.x - 1, (int)pos.y - 1, 0}) == 0)
+				{
+					pos.x -= 1;
+					pos.y -= 1;
+					break ;
+				}
+			}
+		}
 
 		if (pos.x < 0 || pos.y < 0)
 			break ;
@@ -78,13 +112,13 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
         {
             if (pos.x > c1.x)
                 break ;
-			adv_x = SIZE_WALL - (int) pos.x % SIZE_WALL ;
+			adv_x = SIZE_WALL - (int) pos.x % SIZE_WALL;
         }
 		else
         {
             if (pos.x < c1.x)
                 break ;
-			adv_x = (int) - pos.x % SIZE_WALL ;
+			adv_x = (int) - pos.x % SIZE_WALL;
         }
 		if (dy > 0)
         {
@@ -116,13 +150,13 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
         //printf("(%f, %f), adv (%d, %d) slope %f\n", pos.x, pos.y, adv_x, adv_y, slope);
 		if (fabsf(adv_x * slope) < abs(adv_y))
 		{
-			pos.x = roundf(pos.x + adv_x);
+			pos.x = (pos.x + adv_x);
 			pos.y += (float) adv_x * slope;
 		}
 		else
 		{
 			pos.x += (float) adv_y / slope;
-			pos.y = roundf(pos.y + adv_y);
+			pos.y = (pos.y + adv_y);
 		}
 		//printf("(%f, %f), adv (%d, %d) slope %f\n", pos.x, pos.y, adv_x, adv_y, slope);
 	}
@@ -133,7 +167,7 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
 }
 
 
-static t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
+t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
 {
 	int		dx;
 	int		dy;
@@ -153,10 +187,8 @@ static t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
 			err -= 1.0f;
 			r.v1.x = r.v2.x;
 			r.v1.y = r.v2.y;
-			r.v1.z = 0;
 			r.v2.x = c0.x;
 			r.v2.y = c0.y;
-			r.v2.z = 0;
 			if (should_stop(general, c0) == 0)
 				break ;
 		}
@@ -167,10 +199,8 @@ static t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
 			c0.x--;
         r.v1.x = r.v2.x;
         r.v1.y = r.v2.y;
-        r.v1.z = 0;
         r.v2.x = c0.x;
         r.v2.y = c0.y;
-        r.v2.z = 0;
 		if (should_stop(general, c0) == 0)
 			break ;
 	}
@@ -179,7 +209,7 @@ static t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
     return (r);
 }
 
-static t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
+t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
 {
 	int		dx;
 	int		dy;
@@ -200,10 +230,8 @@ static t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
 			err -= 1.0f;
 			r.v1.x = r.v2.x;
 			r.v1.y = r.v2.y;
-			r.v1.z = 0;
 			r.v2.x = c0.x;
 			r.v2.y = c0.y;
-			r.v2.z = 0;
 			if (should_stop(general, c0) == 0)
 				break ;
 		}
@@ -214,10 +242,8 @@ static t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
 			c0.y--;
         r.v1.x = r.v2.x;
         r.v1.y = r.v2.y;
-        r.v1.z = 0;
         r.v2.x = c0.x;
         r.v2.y = c0.y;
-        r.v2.z = 0;
 		if (should_stop(general, c0) == 0)
 			break ;
 	}
@@ -233,12 +259,13 @@ t_tab find_point_on_screen(t_general *general, t_coord c0, t_coord c1)
 
 	dx = c1.x - c0.x;
 	dy = c1.y - c0.x;
-	if (abs(dx) >= abs(dy))
-	{
-		return (p1ew(general, c0, c1));
-	}
-	else
-	{
-		return (p2sn(general, c0, c1));
-	}
+	return (DDA_boosted(general, c0, c1));
+	// if (abs(dx) >= abs(dy))
+	// {
+	// 	return (p1ew(general, c0, c1));
+	// }
+	// else
+	// {
+	// 	return (p2sn(general, c0, c1));
+	// }
 }
