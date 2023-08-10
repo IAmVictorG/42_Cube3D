@@ -24,20 +24,32 @@ int get_size_file(char *filename)
 }
 
 /* Copie le fichier a parser dans un tableau 2D de char */
-char **copy_file(char *filename, int size_file)
+char **copy_file(char *filename)
 {
     int     fd;
     char    *line = NULL;
     char    **copy;
     int     i;
+    int     size_file;
 
+    size_file = get_size_file(filename);
     copy = (char **) malloc(sizeof(char *) * (size_file + 1));
     if (copy == NULL)
+    {
         return (NULL);
+    }
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "copy", copy, (sizeof(char *) * (size_file + 1)));
+    }
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
+    {
+        printf("Error : Error with configuration file.\n");
+        free(copy);
         return (NULL);
+    }
     i = 0;
     while ((line = get_next_line(fd)) != NULL)
     {

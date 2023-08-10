@@ -148,6 +148,10 @@ char **map_creator(char **copy_file, int h_map, int ind_map)
 	map = (char **) malloc(sizeof(char *) * (h_map + 1));
 	if (map == NULL)
 		return (NULL);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "map", map, (sizeof(char *) * (h_map + 1)));
+    }
 
 	i = 0;
 	//printf("i = %d\n", i);
@@ -213,6 +217,10 @@ char *line_matrix_creator(char *line, int w_matrix)
 	copy_line = (char *) malloc(sizeof(char) * (w_matrix + 1));
 	if (copy_line == NULL)
 		return (NULL);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "copy_line", copy_line, (sizeof(char) * (w_matrix + 1)));
+    }
 
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0' && i < w_matrix)
@@ -240,6 +248,12 @@ char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix)
 	matrix = (char **) malloc(sizeof(char *) * (h_matrix + 1));
 	if (matrix == NULL)
 		return (NULL);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "matrix", matrix, (sizeof(char *) * (h_matrix + 1)));
+    }
+
+
 
 	i = 0;
 	while (map_unc[i] != NULL)
@@ -599,6 +613,10 @@ int init_map(t_map *map, char **copy, int end_parse_1)
     map_uncompleted = map_creator(copy, h_map, ind_map);
     if (map_uncompleted == NULL)
         return (0);
+    else
+    {
+        printf("%s : %p (%lu bytes)\n", "map_uncompleted", map_uncompleted, sizeof(map_uncompleted));
+    }
 
     w_map = get_width_map(map_uncompleted);
 
@@ -657,7 +675,7 @@ int map_parser(char **copy, int end_parse_1)
     if (check_caract_map(map_uncompleted) == 0)
 	{
 		ft_free_tabs(map_uncompleted);
-		printf("caract_map\n");
+		printf("Error : character in map not authorized.\n");
         return (0);
 	}
 

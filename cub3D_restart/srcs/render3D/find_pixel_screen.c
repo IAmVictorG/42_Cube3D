@@ -133,7 +133,7 @@ t_tab DDA_boosted(t_general *general, t_coord c0, t_coord c1)
 }
 
 
-t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
+static t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
 {
 	int		dx;
 	int		dy;
@@ -179,7 +179,7 @@ t_tab    p1ew(t_general *general, t_coord c0, t_coord c1)
     return (r);
 }
 
-t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
+static t_tab	p2sn(t_general *general, t_coord c0, t_coord c1)
 {
 	int		dx;
 	int		dy;
@@ -233,13 +233,12 @@ t_tab find_point_on_screen(t_general *general, t_coord c0, t_coord c1)
 
 	dx = c1.x - c0.x;
 	dy = c1.y - c0.x;
-	return (DDA_boosted(general, c0, c1));
-	/*if (abs(dx) >= abs(dy))
+	if (abs(dx) >= abs(dy))
 	{
 		return (p1ew(general, c0, c1));
 	}
 	else
 	{
 		return (p2sn(general, c0, c1));
-	}*/
+	}
 }
