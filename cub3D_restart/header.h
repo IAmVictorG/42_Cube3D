@@ -176,16 +176,15 @@ int		parser(char **copy);
 
 
 /* parsing.c/initializer.c */
-t_mlib		*init_mlib();
-t_keys		*init_key();
+t_mlib		*init_mlib(t_general *general);
+t_keys		*init_key(t_general *general);
 t_sprite 	*init_sprite(char *path);
-t_sprites	*init_sprites(char *wall_north, char *wall_south, char *wall_west, char *wall_east);
-
+t_sprites	*init_sprites(char **walls, t_general *general);
 
 /* parsing/map_parser.c */
 t_coord	get_player_coord(char **matrix);
 char	get_letter_oreintation(char **matrix);
-t_vec	get_player_orientation(char **matrix);
+t_vec	get_player_orient(char **matrix);
 int		parse_first_wall(char *line, char **matrix, char **map_uncompelted);
 int		find_map(char **copy_file, int end_part_1);
 int		get_height_map(char **copy_file, int ind_map);
@@ -248,7 +247,7 @@ void	ft_free_tabs(char **tab);
 
 int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
-t_coord	convert_coord_for_2D(t_coord pos);
+t_coord	convertCoord2D(t_coord pos);
 
 void move(t_general *general);
 

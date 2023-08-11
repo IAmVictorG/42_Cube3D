@@ -223,7 +223,7 @@ int convert_coord_for_2D_Y(int y)
 	return (y * SCALE_MINI_MAP) / SIZE_WALL;
 }
 
-t_coord	convert_coord_for_2D(t_coord pos)
+t_coord	convertCoord2D(t_coord pos)
 {
     t_coord pos2D;
 

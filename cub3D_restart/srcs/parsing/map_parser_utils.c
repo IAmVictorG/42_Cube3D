@@ -549,7 +549,7 @@ t_coord	get_player_coord(char **matrix)
 	return (coord_ini);
 }
 
-t_vec	get_player_orientation(char **matrix)
+t_vec	get_player_orient(char **matrix)
 {
 	char	orientation;
 	t_vec	orientation_ini;

@@ -1,31 +1,31 @@
 #include "../../header.h"
 
 
-t_mlib  *init_mlib()
+t_mlib  *init_mlib(t_general *general)
 {
     t_mlib  *mlib;
 
     mlib = (t_mlib *) malloc(sizeof(t_mlib));
     if (mlib == NULL)
-        return (NULL);
-    else
     {
-        printf("%s : %p (%lu bytes)\n", "mlib", mlib, sizeof(t_mlib));
+        free (general->scene);
+        free (general);
+        return NULL;
     }
-    
     mlib->utils.mlx = mlx_init();
-
-
     return (mlib);
 }
 
-t_keys *init_key()
+t_keys *init_key(t_general *general)
 {
     t_keys *keys;
 
     keys = (t_keys *) malloc(sizeof(t_keys));
     if (keys == NULL)
     {
+        free(general->mlib);
+        free (general->scene);
+        free (general);
         return (NULL);
     }
     else
@@ -67,7 +67,7 @@ t_sprite *init_sprite(char *path)
     return (wall);
 }
 
-t_sprites   *init_sprites(char *wall_north, char *wall_south, char *wall_west, char *wall_east)
+t_sprites   *init_sprites(char **walls, t_general *general)
 {
 
 
@@ -75,16 +75,22 @@ t_sprites   *init_sprites(char *wall_north, char *wall_south, char *wall_west, c
 
     sprites = (t_sprites *) malloc(sizeof(t_sprites));
     if (sprites == NULL)
+    {
+        free(general->keys);
+        free(general->mlib);
+        free (general->scene);
+        free (general);
         return (NULL);
+    }
     else
     {
         printf("%s : %p (%lu bytes)\n", "sprites", sprites, sizeof(t_sprites));
     }
 
-    sprites->wall_east = init_sprite(wall_east);
-    sprites->wall_west = init_sprite(wall_west);
-    sprites->wall_south = init_sprite(wall_south);
-    sprites->wall_north = init_sprite(wall_north);
+    sprites->wall_east = init_sprite(walls[2]);
+    sprites->wall_west = init_sprite(walls[3]);
+    sprites->wall_south = init_sprite(walls[1]);
+    sprites->wall_north = init_sprite(walls[0]);
 
     return sprites;
 }

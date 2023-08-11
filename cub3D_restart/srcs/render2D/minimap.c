@@ -114,7 +114,7 @@ void draw_arrow(t_general *general, t_coord start_arrow, t_vec dir)
     t_coord end_arrow;
 
 
-    start_arrow = convert_coord_for_2D(start_arrow);
+    start_arrow = convertCoord2D(start_arrow);
     end_arrow.x = start_arrow.x + 8 * dir.x;
     end_arrow.y = start_arrow.y + 8 * dir.y;
 
