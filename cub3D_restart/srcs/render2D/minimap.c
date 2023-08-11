@@ -72,7 +72,7 @@ void render_wall2D(t_general *general)
 				coord_wall.x = i;
 				coord_wall.y = j;
 
-				//printCoord(coord_wall);
+				//print_coord(coord_wall);
                 //printf("i = %d j = %d\n", i, j);
                 draw_wall(general, coord_wall);
             }

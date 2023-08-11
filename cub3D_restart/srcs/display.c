@@ -1,6 +1,6 @@
 #include "../header.h"
 
-void	printVec(t_vec vector)
+void	print_vec(t_vec vector)
 {
 	printf("x = %f, ", vector.x);
 	printf("y = %f, ", vector.y);
@@ -8,7 +8,7 @@ void	printVec(t_vec vector)
 	printf("\n");
 }
 
-void	printCoord(t_coord coord)
+void	print_coord(t_coord coord)
 {
 	printf("Coord x = %d ", coord.x);
 	printf("y = %d ", coord.y);
@@ -17,19 +17,19 @@ void	printCoord(t_coord coord)
 
 void	print_tab(char **tab)
 {
-	int i;
-	
+	int	i;
+
 	printf("--------------------------------\n\n");
 	i = 0;
 	while (tab[i] != NULL)
 	{
-		printf("[%s] (%d)\n", tab[i],i);
+		printf("[%s] (%d)\n", tab[i], i);
 		i++;
 	}
 	printf("\n---------------------------------\n");
 }
 
-void	printMap(t_map  map)
+void	print_map(t_map map)
 {
 	printf("----MAP----\n");
 	print_tab(map.matrix);
@@ -39,19 +39,18 @@ void	printMap(t_map  map)
 	printf(" width_matrix = %d\n", map.width_matrix);
 	printf("    size_wall = %d\n", SIZE_WALL);
 	printf("\n");
-
 }
 
 void	print_player(t_player player)
 {
 	printf("----PLAYER----\n");
-	printCoord(player.coord_ini);
+	print_coord(player.coord_ini);
 	printf("pos : ");
-	printCoord(player.pos);
+	print_coord(player.pos);
 	printf("pos2D : \n");
-	printCoord(player.pos2D);
+	print_coord(player.pos2D);
 	printf("dir : ");
-	printVec(player.dir);
+	print_vec(player.dir);
 	printf("speed = %f\n", player.speed);
 	printf("\n");
 }
@@ -79,13 +78,13 @@ void	print_sprites(t_sprites *sprites)
 	printf("\n");
 }
 
-void	print_scene (t_scene *scene)
+void	print_scene(t_scene *scene)
 {
 	printf("----SCENE----\n");
 	printf("button minimap = %d\n", scene->mini_map);
 	printf("    ceil_color = %X\n", scene->sky_color);
 	printf("   floor_color = %X\n", scene->floor_color);
 	printf("\n");
-	printMap(scene->map);
+	print_map(scene->map);
 	print_player(scene->player);
 }

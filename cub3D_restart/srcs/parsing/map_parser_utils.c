@@ -613,7 +613,7 @@ t_coord	get_player_position(t_coord coord_ini, int size_wall)
 	position.x = (int)(coord_ini.x * size_wall + size_wall_f * 0.5);
 	//position.z = .5f;
 
-	//printCoord(position);
+	//print_coord(position);
 
 	return (position);
 }

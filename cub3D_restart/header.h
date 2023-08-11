@@ -256,9 +256,9 @@ void	init_window(t_general *general);
 
 /* display.c */
 void	print_tab(char **tab);
-void    printMap(t_map  map);
-void    printVec(t_vec vector);
-void    printCoord(t_coord coord);
+void    print_map(t_map  map);
+void    print_vec(t_vec vector);
+void    print_coord(t_coord coord);
 void    print_player(t_player player);
 void    print_sprite(t_sprite *sprite);
 void    print_sprites(t_sprites *sprites);

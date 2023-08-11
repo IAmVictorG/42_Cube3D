@@ -71,7 +71,7 @@ int get_color_wall_south(t_general *general, int x, int h_wall, int max_wall_h)
     pixel = sprites->wall_south->data_spr.addr + (y_pix * sprites->wall_south->data_spr.line_length + x_pix * (sprites->wall_south->data_spr.bits_per_pixel / 8));
     color = *(unsigned int *)pixel;
 
-    //printCoord(create_trgb_reverse(color));
+    //print_coord(create_trgb_reverse(color));
 
     return (color);
 }

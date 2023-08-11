@@ -331,7 +331,7 @@ void trace_ray(t_general *general)
 
         prec_dist = dist;
         
-        //printCoord(ray);
+        //print_coord(ray);
 
         dist = get_dist(position, result.v2, angle - player_angle);
 
@@ -350,7 +350,7 @@ void trace_ray(t_general *general)
         display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
         //t_coord test = (t_coord){(int)(result.v3.x), (int)(result.v3.y), 0};
 
-        //printCoord(ray_bef);
+        //print_coord(ray_bef);
         if (text_in_S(ray, ray_bef))
         {
             draw_3D_line_south(general,  result.v2, wall_height, imageincre);

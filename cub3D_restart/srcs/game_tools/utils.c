@@ -171,7 +171,7 @@ int load_texture_png(t_general *general)
 //         next_pix.y = (int) ((float) next_pix.y + sinf(angle) * SIZE_WALL);
 //     }
 //     next_pix.z = 0;
-//     //printCoord(next_pix);
+//     //print_coord(next_pix);
 //     //printf("\n");
 //     return next_pix;
 
