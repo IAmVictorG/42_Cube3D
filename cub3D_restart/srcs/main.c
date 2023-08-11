@@ -9,7 +9,7 @@ t_general    *create_general (char **walls)
     if (general == NULL)
     {
         printf("Error : malloc allocation.\n");
-        return (0);
+        return NULL;
     }
     else
     {
@@ -17,17 +17,29 @@ t_general    *create_general (char **walls)
     }
     general->scene = malloc(sizeof(t_scene));
     if (general->scene == NULL)
-        return (0);
+    {
+        free(general);
+        return NULL;
+    }
     else
     {
         printf("%s : %p (%lu bytes)\n", "scene", general->scene, sizeof(t_scene));
     }
     general->mlib = init_mlib();
     if (general->mlib == NULL)
-        return (0);
+    {
+        free (general->scene);
+        free (general);
+        return NULL;
+    }
     general->keys = init_key();
     if (general->keys == NULL)
-        return (0);
+    {
+        free(general->mlib);
+        free (general->scene);
+        free (general);
+        return NULL;
+    }
     else
     {
         printf("%s : %p (%lu bytes)\n", "keys", general->keys, sizeof(t_keys));
@@ -35,8 +47,12 @@ t_general    *create_general (char **walls)
 	general->sprites = init_sprites(walls[0], walls[1], walls[3], walls[2]);
     if (general->sprites == NULL)
     {
+        free(general->keys);
+        free(general->mlib);
+        free (general->scene);
+        free (general);
         printf("Error sprite\n");
-        return (0);
+        return NULL;
     } 
     return general;
 }
