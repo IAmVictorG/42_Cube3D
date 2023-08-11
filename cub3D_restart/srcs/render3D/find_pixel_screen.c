@@ -1,6 +1,4 @@
-
 #include "render3D.h"
-
 
 static int	should_stop(t_general *general, t_coord c0)
 {

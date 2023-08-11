@@ -47,7 +47,6 @@ t_vec calculate_rays(t_general *general, int x0, int y0, int x1, int y1, int siz
     }
     r.x = x0;
     r.y = y0;
-    r.z = 0;
     return (r);
 }
 
@@ -321,7 +320,8 @@ void trace_ray(t_general *general)
         t_vec end_point = {position.x + cos_angle * 200000, position.y + sin_angle * 200000, 0.0f}; // ?
         
         t_tab result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
-
+        //printCoord(result.v1);
+        //printCoord(result.v2);
 
         ray = result.v2;
         ray_bef = result.v1;

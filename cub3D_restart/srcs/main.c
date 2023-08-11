@@ -51,6 +51,7 @@ int	feed_scene(t_general *general, char **copy, t_coord floor, t_coord ceil)
 	print_scene(general->scene);
 	print_sprites(general->sprites);
 	return (1);
+
 }
 
 void	free_general(t_general *general)
