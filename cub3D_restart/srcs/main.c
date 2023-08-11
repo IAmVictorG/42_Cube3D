@@ -64,6 +64,8 @@ int feed_the_scene (t_general *general, char **copy_of_file, t_coord floor, t_co
 		printf("Error : Imposible to load textures\n");
         return (0);
     }
+    print_scene(general->scene);
+    print_sprites(general->sprites);
     return (1);
 }
 
@@ -111,7 +113,6 @@ void    free_main(char **copy_of_file, char **walls, char *ceil_s, char *floor_s
 
 void    get_ce_fl_colors(char **copy_of_file, char **walls, char **ce_fl_colors)
 {
-
     ce_fl_colors[1] = get_floor_ceil(copy_of_file, 'F');
     if (ce_fl_colors[1] == NULL)
     {
@@ -119,7 +120,6 @@ void    get_ce_fl_colors(char **copy_of_file, char **walls, char **ce_fl_colors)
         ft_free_tabs(walls);
         exit (0);
     }
-
     ce_fl_colors[0] = get_floor_ceil(copy_of_file, 'C');
     if (ce_fl_colors[0] == NULL)
     {
@@ -129,81 +129,61 @@ void    get_ce_fl_colors(char **copy_of_file, char **walls, char **ce_fl_colors)
         printf("Error : Invalid ceil color.\n");
         exit (0);
     }
-
 }
 
-// void    get_ceil_color_vec (char **copy_of_file, char **walls, char **ce_fl_colors, t_coord *ceil_coord_vec)
-// {
-//     t_coord ceil_vec;
-//     ceil_vec = set_vector(ce_fl_colors[0]);
-//     if (check_coord_color(ceil_vec) == 0)
-//     {
-//         ft_free_tabs(copy_of_file);
-//         ft_free_tabs(walls);
-//         free(ce_fl_colors[0]);
-//         free(ce_fl_colors[1]);
-//         printf ("Error : Invalid floor color vector.\n");
-//         return (0);
-//     }
+t_coord    set_color_vec(char **copy_of_file, char **walls, char **colors, char *color)
+{
+    t_coord color_vec;
 
-//     return (ceil_vec);
-// }
+    color_vec = set_vector(color);
+    if (check_coord_color(color_vec) == 0)
+    {
+        ft_free_tabs(copy_of_file);
+        ft_free_tabs(walls);
+        free(colors[1]);
+        free(colors[0]);
+        printf ("Error : Invalid color.\n");
+        exit (0);
+    }
+    return (color_vec);
+}
+
+void    parse_the_map(char **copy_of_file, char **walls, char **ce_fl_colors)
+{
+    if (map_parser(copy_of_file, parser(copy_of_file)) == 0)
+    {
+        ft_free_tabs(copy_of_file);
+        ft_free_tabs(walls);
+        free(ce_fl_colors[1]);
+        free(ce_fl_colors[0]);
+        exit (0);
+    }
+}
 
 
 int main (int argc, char *argv[])
 {
-    char    **copy_of_file;
-    char    **walls;
-    char    *ce_fl_colors[2];
-    t_coord ce_fl_colors_vec[2];
-    int     end;
+    char        **copy_of_file;
+    char        **walls;
+    char        *ce_fl_colors[2];
+    t_coord     ce_fl_colors_vec[2];
     t_general   *general;
 
     chk_file(argc, argv);
     copy_of_file = copy_file(argv[1]);
-    if (copy_of_file == NULL)
-        return (0);
-    end = parser(copy_of_file);
+    parser(copy_of_file);
     walls = walls_manager(copy_of_file);
     if (walls == NULL)
         return (0);
     get_ce_fl_colors(copy_of_file, walls, ce_fl_colors);
-    ce_fl_colors_vec[1]= set_vector(ce_fl_colors[1]);
-    if (check_coord_color(ce_fl_colors_vec[1]) == 0)
-    {
-        ft_free_tabs(copy_of_file);
-        ft_free_tabs(walls);
-        free(ce_fl_colors[1]);
-        free(ce_fl_colors[0]);
-        printf ("Error : Invalid floor color vector.\n");
-        return (0);
-    }
-    ce_fl_colors_vec[0]= set_vector(ce_fl_colors[0]);
-    if (check_coord_color(ce_fl_colors_vec[0]) == 0)
-    {
-        ft_free_tabs(copy_of_file);
-        ft_free_tabs(walls);
-        free(ce_fl_colors[1]);
-        free(ce_fl_colors[0]);
-        printf ("Error : Invalid ceil color vector.\n");
-        return (0);
-    }
-    if (map_parser(copy_of_file, end) == 0)
-    {
-        ft_free_tabs(copy_of_file);
-        ft_free_tabs(walls);
-        free(ce_fl_colors[1]);
-        free(ce_fl_colors[0]);
-        //printf("Error : map_parser.\n");
-        return (0);
-    }
+    ce_fl_colors_vec[1] = set_color_vec(copy_of_file, walls, ce_fl_colors, ce_fl_colors[1]);
+    ce_fl_colors_vec[0] = set_color_vec(copy_of_file, walls, ce_fl_colors, ce_fl_colors[0]);
+    parse_the_map(copy_of_file, walls, ce_fl_colors);
     general = create_general(walls);
     if (general == NULL)
         return (0);
     if (feed_the_scene(general, copy_of_file, ce_fl_colors_vec[1], ce_fl_colors_vec[0]) == 0)
         return (0);
-    print_scene(general->scene);
-    print_sprites(general->sprites);
 	init_window(general);
     free_main(copy_of_file, walls, ce_fl_colors[1], ce_fl_colors[0]);
     free_general(general);

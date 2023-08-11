@@ -186,7 +186,7 @@ t_sprites	*init_sprites(char *wall_north, char *wall_south, char *wall_west, cha
 t_coord	get_player_coord(char **matrix);
 char	get_letter_oreintation(char **matrix);
 t_vec	get_player_orientation(char **matrix);
-int		parse_first_wall(char *line);
+int		parse_first_wall(char *line, char **matrix, char **map_uncompelted);
 int		find_map(char **copy_file, int end_part_1);
 int		get_height_map(char **copy_file, int ind_map);
 int		get_width_map(char **map);
@@ -198,14 +198,17 @@ char	*line_matrix_creator(char *line, int w_matrix);
 char	**matrix_creator(char **map_unc, int h_matrix, int w_matrix);
 int		check_first_one(char *line);
 int		check_last_one(char *line);
-int		check_last_first_one(char **matrix);
+int		check_last_first_one(char **matrix, char **map_uncompleted);
 int		check_right(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_top(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_left(char **matrix, int lin, int col, t_coord size_matrix);
 int		caract_ONEWS (char c);
-int		wall_inspector(char **matrix, int h_matrix, int w_matrix);
-int		check_player(char **matrix);
+int		wall_inspector(char **map_uncompleted, char **matrix, t_coord size_matrix);
+
+
+int		check_player(char **matrix, char **map_uncompleted);
+
 t_coord	get_player_position(t_coord coord_ini, int size_wall);
 int		init_map(t_map *map, char **copy, int end_parse_1);
 int		map_parser(char **copy, int end_parse_1);

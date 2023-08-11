@@ -36,7 +36,7 @@ char **copy_file(char *filename)
     copy = (char **) malloc(sizeof(char *) * (size_file + 1));
     if (copy == NULL)
     {
-        return (NULL);
+        exit (0);
     }
     else
     {
@@ -48,7 +48,7 @@ char **copy_file(char *filename)
     {
         printf("Error : Error with configuration file.\n");
         free(copy);
-        return (NULL);
+        exit (0);
     }
     i = 0;
     while ((line = get_next_line(fd)) != NULL)

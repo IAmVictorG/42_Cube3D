@@ -1,107 +1,131 @@
 echo "----------------FILENAME---------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/dossier.cub
-
+./cub3D maps/errors_filename/dossier.cub
+sleep 2
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/.cub
-
+./cub3D maps/errors_filename/.cub
+sleep 2
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/name.cu
-
+./cub3D maps/errors_filename/name.cu
+sleep 2
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/name..cub
-
+./cub3D maps/errors_filename/name..cub
+sleep 2
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/name.cubbbb
-
+./cub3D maps/errors_filename/name.cubbbb
+sleep 2
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_filename/name.txt
-
+./cub3D maps/errors_filename/name.txt
+sleep 2
 
 
 
 echo "--------------INITIALIZATION------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid_ceil.cub
+
+./cub3D maps/errors_init/Invalid0.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid00.cub
+./cub3D maps/errors_init/Invalid1.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid10.cub
+./cub3D maps/errors_init/Invalid2.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid11.cub
+./cub3D maps/errors_init/Invalid3.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid12.cub
+./cub3D maps/errors_init/Invalid4.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid14.cub
+./cub3D maps/errors_init/Invalid5.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid16.cub
+./cub3D maps/errors_init/Invalid6.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid17.cub
+./cub3D maps/errors_init/Invalid7.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid18.cub
+./cub3D maps/errors_init/Invalid8.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid19.cub
+./cub3D maps/errors_init/Invalid9.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid20.cub
+./cub3D maps/errors_init/Invalid10.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid22.cub
+./cub3D maps/errors_init/Invalid11.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid25.cub
+./cub3D maps/errors_init/Invalid12.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_init/Invalid25.cub
-
-
+./cub3D maps/errors_init/Invalid13.cub
+sleep 2
 
 echo "--------------------MAPS----------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid1.cub
+./cub3D maps/errors_map/Invalid1.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid2.cub
+./cub3D maps/errors_map/Invalid2.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid3.cub
+./cub3D maps/errors_map/Invalid3.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid4.cub
+./cub3D maps/errors_map/Invalid4.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid5.cub
+./cub3D maps/errors_map/Invalid5.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid6.cub
+./cub3D maps/errors_map/Invalid6.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid7.cub
+./cub3D maps/errors_map/Invalid7.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid8.cub
+./cub3D maps/errors_map/Invalid8.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid9.cub
+./cub3D maps/errors_map/Invalid9.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid10.cub
+./cub3D maps/errors_map/Invalid10.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid13.cub
+./cub3D maps/errors_map/Invalid11.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid21.cub
+./cub3D maps/errors_map/Invalid12.cub
+sleep 2
 
 echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid23.cub
+./cub3D maps/errors_map/Invalid13.cub
+sleep 2
 
-echo "---------------------------------------------"
-leaks -atExit -- ./cub3D maps/errors_map/Invalid24.cub
 

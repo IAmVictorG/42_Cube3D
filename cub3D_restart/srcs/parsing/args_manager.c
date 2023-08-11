@@ -103,7 +103,7 @@ int arg_manager (char *file_path)
     }
     if (file_exists(file_path) == 0)
     {
-        printf("Error : Impossible to open file : %s.", file_path);
+        printf("Error : Impossible to open file : %s.\n", file_path);
         return (0);
     }
     return (1);
