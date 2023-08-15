@@ -1,17 +1,17 @@
 #include "render3D.h"
 
-void draw_3D_line_west(t_general *general, t_coord ray, int wall_height, int imageincre)
+void	draw_3d_line_west(t_general *g, t_coord ray, int w_h, int imi)
 {
 	int				i;
-	unsigned int	color;
-		
+	unsigned int	clr;
+
 	i = 0;
-	if ((HEIGHT - wall_height) / 2 > 0)
+	if ((HEIGHT - w_h) / 2 > 0)
 	{
-		while (i < wall_height)
+		while (i < w_h)
 		{
-			color = get_color_wall_west(general, ray.y, i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+			clr = get_color_wall_west(g, ray.y, i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, (HEIGHT - w_h) / 2 + i, clr);
 			i++;
 		}
 	}
@@ -19,25 +19,25 @@ void draw_3D_line_west(t_general *general, t_coord ray, int wall_height, int ima
 	{
 		while (i < HEIGHT)
 		{
-			color = get_color_wall_west(general, ray.y, (wall_height - HEIGHT) / 2 + i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+			clr = get_color_wall_west(g, ray.y, (w_h - HEIGHT) / 2 + i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, i, clr);
 			i++;
 		}
 	}
 }
 
-void draw_3D_line_east(t_general *general, t_coord ray, int wall_height, int imageincre)
+void	draw_3d_line_east(t_general *g, t_coord ray, int w_h, int imi)
 {
 	int				i;
-	unsigned int	color;
-		
+	unsigned int	clr;
+
 	i = 0;
-	if ((HEIGHT - wall_height) > 0)
+	if ((HEIGHT - w_h) > 0)
 	{
-		while (i < wall_height)
+		while (i < w_h)
 		{
-			color = get_color_wall_east(general, ray.y, i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+			clr = get_color_wall_east(g, ray.y, i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, (HEIGHT - w_h) / 2 + i, clr);
 			i++;
 		}
 	}
@@ -45,25 +45,25 @@ void draw_3D_line_east(t_general *general, t_coord ray, int wall_height, int ima
 	{
 		while (i < HEIGHT)
 		{
-			color = get_color_wall_east(general, ray.y, (wall_height - HEIGHT) / 2 + i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+			clr = get_color_wall_east(g, ray.y, (w_h - HEIGHT) / 2 + i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, i, clr);
 			i++;
 		}
 	}
 }
 
-void draw_3D_line_south(t_general *general, t_coord ray, int wall_height, int imageincre)
+void	draw_3d_line_south(t_general *g, t_coord ray, int w_h, int imi)
 {
 	int				i;
-	unsigned int	color;
-		
+	unsigned int	clr;
+
 	i = 0;
-	if ((HEIGHT - wall_height) / 2 > 0)
+	if ((HEIGHT - w_h) / 2 > 0)
 	{
-		while (i < wall_height)
+		while (i < w_h)
 		{
-			color = get_color_wall_south(general, ray.x, i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+			clr = get_color_wall_south(g, ray.x, i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, (HEIGHT - w_h) / 2 + i, clr);
 			i++;
 		}
 	}
@@ -71,26 +71,25 @@ void draw_3D_line_south(t_general *general, t_coord ray, int wall_height, int im
 	{
 		while (i < HEIGHT)
 		{
-			color = get_color_wall_south(general, ray.x, (wall_height - HEIGHT) / 2 + i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+			clr = get_color_wall_south(g, ray.x, (w_h - HEIGHT) / 2 + i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, i, clr);
 			i++;
 		}
 	}
 }
 
-
-void draw_3D_line_north(t_general *general, t_coord ray, int wall_height, int imageincre)
+void	draw_3d_line_north(t_general *g, t_coord ray, int w_h, int imi)
 {
 	int				i;
-	unsigned int	color;
-		
+	unsigned int	clr;
+
 	i = 0;
-	if ((HEIGHT - wall_height) / 2 > 0)
+	if ((HEIGHT - w_h) / 2 > 0)
 	{
-		while (i < wall_height)
+		while (i < w_h)
 		{
-			color = get_color_wall_north(general, ray.x, i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, (HEIGHT - wall_height) / 2 + i, color);
+			clr = get_color_wall_north(g, ray.x, i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, (HEIGHT - w_h) / 2 + i, clr);
 			i++;
 		}
 	}
@@ -98,8 +97,8 @@ void draw_3D_line_north(t_general *general, t_coord ray, int wall_height, int im
 	{
 		while (i < HEIGHT)
 		{
-			color = get_color_wall_north(general, ray.x, (wall_height - HEIGHT) / 2 + i, wall_height);
-			my_mlx_pixel_put(&general->mlib->data, imageincre, i, color);
+			clr = get_color_wall_north(g, ray.x, (w_h - HEIGHT) / 2 + i, w_h);
+			my_mlx_pixel_put(&g->mlib->data, imi, i, clr);
 			i++;
 		}
 	}

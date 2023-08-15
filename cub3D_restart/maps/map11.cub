@@ -3,7 +3,7 @@ NO ./textures/Wall_North.png
 SO ./textures/Wall_South.png
 WE ./textures/Wall_West.png
 C 139,140,198
-F 101,210,93
+F 0,200,100
 
         1111111111111111111111111
         1000000000110000000000001
