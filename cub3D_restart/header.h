@@ -216,7 +216,7 @@ int		map_parser(char **copy, int end_parse_1);
 /* srcs/render2D/minimap.c */
 void    draw_grid(t_general *general);
 void    draw_wall(t_general *general, t_coord coord_wall);
-void	render_wall2D(t_general *general);
+void	render_wall2d(t_general *general);
 void	draw_player(t_general *general);
 void	draw_arrow(t_general *general, t_coord start_arrow, t_vec dir);
 int		render_mini_map(t_general *general);
@@ -247,7 +247,7 @@ void	ft_free_tabs(char **tab);
 
 int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
-t_coord	convertCoord2D(t_coord pos);
+t_coord	convertcoord2d(t_coord pos);
 
 void move(t_general *general);
 

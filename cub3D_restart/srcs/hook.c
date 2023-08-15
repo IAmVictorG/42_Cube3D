@@ -81,7 +81,7 @@ void	s_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y - general->scene->player.speed * (*dir).y);
 		if (position_is_valid(general, (*n_p).x, (*n_p).y) == 1)
 		{
-			general->scene->player.pos2D = convertCoord2D(*n_p);
+			general->scene->player.pos2D = convertcoord2d(*n_p);
 			general->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -96,7 +96,7 @@ void	w_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y + general->scene->player.speed * (*dir).y);
 		if (position_is_valid(general, (*n_p).x, (*n_p).y) == 1)
 		{
-			general->scene->player.pos2D = convertCoord2D(*n_p);
+			general->scene->player.pos2D = convertcoord2d(*n_p);
 			general->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -111,7 +111,7 @@ void	d_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y + general->scene->player.speed * (*dir).x);
 		if (position_is_valid(general, (*n_p).x, (*n_p).y) == 1)
 		{
-			general->scene->player.pos2D = convertCoord2D(*n_p);
+			general->scene->player.pos2D = convertcoord2d(*n_p);
 			general->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -126,7 +126,7 @@ void	a_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y - general->scene->player.speed * (*dir).x);
 		if (position_is_valid(general, (*n_p).x, (*n_p).y) == 1)
 		{
-			general->scene->player.pos2D = convertCoord2D(*n_p);
+			general->scene->player.pos2D = convertcoord2d(*n_p);
 			general->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}

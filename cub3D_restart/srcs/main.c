@@ -39,7 +39,7 @@ int	feed_scene(t_general *general, char **copy, t_coord floor, t_coord ceil)
 	general->scene->sky_color = create_trgb(0, ceil.x, ceil.y, ceil.z);
 	general->scene->player.pos = get_player_coord(general->scene->map.matrix);
 	general->scene->player.coord_ini = general->scene->player.pos;
-	general->scene->player.pos2D = convertCoord2D(general->scene->player.pos);
+	general->scene->player.pos2D = convertcoord2d(general->scene->player.pos);
 	general->scene->player.dir = get_player_orient(general->scene->map.matrix);
 	general->scene->player.speed = 0.1f * SIZE_WALL;
 	general->scene->mini_map = 1;
