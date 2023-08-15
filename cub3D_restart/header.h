@@ -249,7 +249,7 @@ int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
 t_coord	convertcoord2d(t_coord pos);
 
-void move(t_general *general);
+int move(t_general *general);
 
 void	init_window(t_general *general);
 

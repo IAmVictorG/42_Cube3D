@@ -133,7 +133,7 @@ void	a_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir)
 	}
 }
 
-void	move(t_general *general)
+int	move(t_general *general)
 {
 	t_coord	n_p;
 	t_coord	c_p;
@@ -160,4 +160,5 @@ void	move(t_general *general)
 		general->scene->player.dir.x = cosf(a);
 		general->scene->player.dir.y = sinf(a);
 	}
+	return (1);
 }

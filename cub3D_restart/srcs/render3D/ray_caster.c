@@ -205,30 +205,54 @@ float    atan2f_to_ortho(t_vec  direction)
 
 }
 
+float	get_fov_start(t_general *general)
+{
+	float	player_angle;
+	t_vec	direction;
+
+	direction = general->scene->player.dir;
+	player_angle = atan2f(direction.y, direction.x);
+	return player_angle - ((M_PI / 3) / 2);
+}
+
+float	get_fov_end(t_general *general)
+{
+	float	player_angle;
+	t_vec	direction;
+
+	direction = general->scene->player.dir;
+	player_angle = atan2f(direction.y, direction.x);
+	return player_angle + ((M_PI / 3) / 2);
+}
+
 void trace_ray(t_general *general) 
 {
-	t_coord position = general->scene->player.pos;
-	t_vec   direction = general->scene->player.dir;
+	t_coord position;
+	t_vec   direction;
 	t_coord ray;
 	t_coord ray_bef;
-	float dist = 0;
-	int imageincre = 0;
-
-
-	
+	float dist;
+	int imageincre;
 	float player_angle;
+	float	fov_start;
+	float	fov_end;
+	double	angle;
 
+
+	position = general->scene->player.pos;
+	direction = general->scene->player.dir;
+	dist = 0;
+	imageincre = 0;
 	player_angle = atan2f(direction.y, direction.x);
 
 
-	float fov_rad = M_PI / 3;
-	float fov_start = (player_angle - fov_rad / 2);
-	float fov_end = (player_angle + fov_rad / 2);
+	fov_start = get_fov_start(general);
+	fov_end = get_fov_end(general);
 
 
 	for (int i = 0; i < WIDTH; i++)
 	{
-		double angle = fov_start + (fov_end - fov_start) * i / WIDTH;
+		angle = fov_start + (fov_end - fov_start) * i / WIDTH;
 		double cos_angle = cos(angle);
 		double sin_angle = sin(angle);
 		t_vec end_point = {position.x + cos_angle * 200000, position.y + sin_angle * 200000, 0.0f}; // ?
@@ -240,10 +264,6 @@ void trace_ray(t_general *general)
 		ray_bef = result.v1;
 		int wall_height;
 
-		float prec_dist;
-
-		prec_dist = dist;
-		
 
 
 		dist = get_dist(position, result.v2, angle - player_angle);
@@ -279,12 +299,13 @@ int render_game(t_general *general)
 {
 	t_mlib  *mlib = general->mlib;
 
+
 	mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
 	mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
 
 
-	trace_ray(general);
 	move(general);
+	trace_ray(general);
 
 	mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
 	mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
