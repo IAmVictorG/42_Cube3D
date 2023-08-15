@@ -106,5 +106,9 @@ leaks -atExit -- ./cub3D maps/errors_init/Invalid12.cub
 echo "---------------------------------------------"
 leaks -atExit -- ./cub3D maps/errors_init/Invalid13.cub
 
+echo "---------------------------------------------"
+leaks -atExit -- ./cub3D maps/errors_init/Invalid14.cub
 
+echo "---------------------------------------------"
+leaks -atExit -- ./cub3D maps/errors_init/Invalid15.cub
 

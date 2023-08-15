@@ -189,7 +189,7 @@ int		parse_first_wall(char *line, char **matrix, char **map_uncompelted);
 int		find_map(char **copy_file, int end_part_1);
 int		get_height_map(char **copy_file, int ind_map);
 int		get_width_map(char **map);
-int 	check_EOF(char **copy_file, int ind_map, int h_map);
+int 	check_eof(char **copy_file, int ind_map, int h_map);
 char	**map_creator(char **copy_file, int h_map, int ind_map);
 int		check_caract_line(char *line);
 int		check_caract_map(char **map_unc);
@@ -202,7 +202,7 @@ int		check_right(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_top(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_left(char **matrix, int lin, int col, t_coord size_matrix);
-int		caract_ONEWS (char c);
+int		onews (char c);
 int		wall_inspector(char **map_uncompleted, char **matrix, t_coord size_matrix);
 
 

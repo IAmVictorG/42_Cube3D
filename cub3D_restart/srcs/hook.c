@@ -52,7 +52,7 @@ int	position_is_valid(t_general *general, int pos_x, int pos_y)
 	int	i;
 	int	corners[4][2];
 
-	plyr_size = SIZE_WALL * 0.1f;
+	plyr_size = SIZE_WALL * 0.05f;
 	corners[0][0] = (pos_x - plyr_size) / SIZE_WALL;
 	corners[0][1] = (pos_y - plyr_size) / SIZE_WALL;
 	corners[1][0] = (pos_x + plyr_size) / SIZE_WALL;
