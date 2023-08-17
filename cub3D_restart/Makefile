@@ -11,7 +11,7 @@ SRCS =  $(addprefix includes/get_next_line/, get_next_line.c get_next_line_utils
 		$(addprefix srcs/render2D/, minimap.c render_wall.c) \
 		$(addprefix srcs/parsing/, initializer.c args_manager.c copy_file_utils.c parsing.c wall_manager.c map_parser.c map_parser_utils.c) \
 		$(addprefix srcs/game_tools/, utils.c utils2.c utils3.c draw_segment.c key_moves.c) \
-		$(addprefix srcs/render3D/, ray_caster.c get_color.c 3D_wall_render.c find_pixel_screen.c utils.c) 
+		$(addprefix srcs/render3D/, ray_caster.c DDA.c get_color.c 3D_wall_render.c find_pixel_screen.c utils.c) 
 
 LIBS 	= $(addprefix includes/, libft/libft.a)
 OBJS	= ${SRCS:.c=.o}

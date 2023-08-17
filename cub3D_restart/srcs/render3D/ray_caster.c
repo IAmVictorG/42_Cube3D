@@ -250,9 +250,65 @@ void	color_img(t_general *general, int imi, int w_h, t_tab result)
 	{
 		draw_3d_line_west(general, result.v2, w_h, imi);
 	}
-
 }
 
+t_coord findv1(t_vec p0, t_vec p1)
+{
+    t_vec  temp = p0;
+
+    p1.x = (p1.x);
+    p1.y = (p1.y);
+    float dx = p1.x - p0.x;
+    float dy = p1.y - p0.y;
+
+    // Normalize the direction vector
+    float n = sqrtf(dx * dx + dy * dy);
+    float sx = fabs(dx) / n;
+    float sy = fabs(dy) / n;
+
+    //printf("p0 (%f, %f) temp (%f, %f)\n", p0.x, p0.y, temp.x, temp.y);
+    int distance_y;
+    int distance_x;
+
+    if (dx >= 0)
+    {
+        distance_x = fabs(1.0f - (p0.x - (int) p0.x));
+    }
+    else
+    {
+        distance_x = fabs(p0.x - (int) p0.x);
+    }
+
+    if (dy >= 0)
+    {
+        distance_y = fabs(1.0f - (p0.y - (int) p0.y));
+    }
+    else
+    {
+        distance_y = fabs(p0.y - (int) p0.y);
+    }
+
+    if (distance_x / sx < distance_x / sy)
+    {
+        if (dx < 0.0)
+            temp.x--;
+        else
+            temp.x++;
+    }
+    else
+    {
+        if (dy < 0.0)
+            temp.y--;
+        else
+            temp.y++;
+    }
+
+
+
+   // printf("p0 (%f, %f) temp (%f, %f)\n", p0.x, p0.y, temp.x, temp.y);
+
+    return (t_coord) {(int)temp.x, (int)temp.y, 0};
+}
 
 void trace_ray(t_general *general) 
 {
@@ -261,7 +317,6 @@ void trace_ray(t_general *general)
 	double	angle;
 	t_tab	result;
 	int wall_height;
-
 
 	imageincre = 0;
 	pl_st_end[0] = atan2f(general->scene->player.dir.y,
@@ -274,6 +329,9 @@ void trace_ray(t_general *general)
 			(pl_st_end[2] - pl_st_end[1]) * imageincre / WIDTH;
 		result = find_point_on_screen(general,
 				general->scene->player.pos, angle);
+		// result.v1 = findv1(result.v3, (t_vec) {general->scene->player.pos.x, general->scene->player.pos.y, 0});
+		// printf("V1 %d, %d\n", result.v1.x, result.v1.y);
+		// printf("V2 %d, %d\n\n", result.v2.x, result.v2.y);
 		wall_height = round((float)(WIDTH) /
 				get_dist(general->scene->player.pos,
 					result.v2, angle - pl_st_end[0]));
@@ -286,20 +344,15 @@ int render_game(t_general *general)
 {
 	t_mlib  *mlib = general->mlib;
 
-
 	mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
 	mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr,
 			&mlib->data.bits_per_pixel,
 			&mlib->data.line_length,
 			&mlib->data.endian);
-
-
 	move(general);
 	trace_ray(general);
-
 	mlx_put_image_to_window(mlib->utils.mlx,
 			mlib->utils.win, mlib->data.img_ptr, 0, 0);
 	mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
 	return (0);
 }
-

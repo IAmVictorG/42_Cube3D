@@ -6,11 +6,13 @@
 /*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 10:39:52 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 11:16:34 by vgiordan         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:32:39 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render3D.h"
+
+t_tab DDA_boosted(t_general *general, t_coord c0, t_vec c1);
 
 static void	increment_or_decrement(int *n, int dn)
 {
@@ -39,7 +41,7 @@ static t_tab	p_ew(t_general *general, t_coord c0, t_coord c1)
 			if (should_stop(general, c0) == 0)
 				break ;
 		}
-		err += fabs((float) dy / (float)dx);
+		err += fabs((float) dy / (float) dx);
 		increment_or_decrement(&c0.x, dx);
 		set_var(&r.v1, &r.v2, c0);
 		if (should_stop(general, c0) == 0)
@@ -80,18 +82,19 @@ t_tab	find_point_on_screen(t_general *general, t_coord c0, float angle)
 {
 	int		dx;
 	int		dy;
-	t_coord	c1;
+	t_vec	c1;
 
-	c1.x = round(c0.x + cos(angle) * 200000);
-	c1.y = round(c0.y + sin(angle) * 200000);
+	c1.x = ((float)c0.x + cos(angle) * 2000000);
+	c1.y = ((float)c0.y + sin(angle) * 2000000);
 	dx = c1.x - c0.x;
 	dy = c1.y - c0.x;
+	//return (DDA_boosted(general, c0, c1));
 	if (abs(dx) >= abs(dy))
 	{
-		return (p_ew(general, c0, c1));
+		return (p_ew(general, c0, (t_coord) {round(c1.x), round(c1.y), 0}));
 	}
 	else
 	{
-		return (p_sn(general, c0, c1));
+		return (p_sn(general, c0, (t_coord) {round(c1.x), round(c1.y), 0}));
 	}
 }

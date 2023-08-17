@@ -16,7 +16,7 @@
 #define HEIGHT 960
 
 #define FOV 60
-#define SIZE_WALL 64
+#define SIZE_WALL 100
 #define SCALE_MINI_MAP 8
 
 #define MLX_SYNC_IMAGE_WRITABLE		1
@@ -37,7 +37,7 @@
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x556B2F
 
-#define R_SPEED M_PI / 60
+#define R_SPEED M_PI / 40
 #define	SPEED 5
 
 typedef struct	s_utils 
@@ -86,9 +86,7 @@ typedef struct s_player
 {
 	t_coord	coord_ini;
 	t_coord	pos;
-	t_coord pos2d;
-
-
+	t_coord pos2D;
 	t_vec	dir;
 	float	speed;
 } t_player;
