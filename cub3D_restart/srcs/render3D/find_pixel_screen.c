@@ -6,13 +6,11 @@
 /*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 10:39:52 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 14:32:39 by vgiordan         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:03:58 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render3D.h"
-
-t_tab DDA_boosted(t_general *general, t_coord c0, t_vec c1);
 
 static void	increment_or_decrement(int *n, int dn)
 {
@@ -88,13 +86,12 @@ t_tab	find_point_on_screen(t_general *general, t_coord c0, float angle)
 	c1.y = ((float)c0.y + sin(angle) * 2000000);
 	dx = c1.x - c0.x;
 	dy = c1.y - c0.x;
-	//return (DDA_boosted(general, c0, c1));
 	if (abs(dx) >= abs(dy))
 	{
-		return (p_ew(general, c0, (t_coord) {round(c1.x), round(c1.y), 0}));
+		return (p_ew(general, c0, (t_coord){round(c1.x), round(c1.y), 0}));
 	}
 	else
 	{
-		return (p_sn(general, c0, (t_coord) {round(c1.x), round(c1.y), 0}));
+		return (p_sn(general, c0, (t_coord){round(c1.x), round(c1.y), 0}));
 	}
 }

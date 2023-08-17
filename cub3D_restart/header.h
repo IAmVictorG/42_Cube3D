@@ -1,44 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/17 16:05:27 by vgiordan          #+#    #+#             */
+/*   Updated: 2023/08/17 16:06:29 by vgiordan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef HEADER_H
 # define HEADER_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <fcntl.h>
-#include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
+# include <fcntl.h>
+# include <pthread.h>
 
-#include "includes/get_next_line/get_next_line.h"
-#include "includes/libft/libft.h"
-#include "includes/mlx/mlx.h"
+# include "includes/get_next_line/get_next_line.h"
+# include "includes/libft/libft.h"
+# include "includes/mlx/mlx.h"
 
+# define WIDTH 1440
+# define HEIGHT 960
 
-#define WIDTH 1440
-#define HEIGHT 960
+# define FOV 60
+# define SIZE_WALL 100
+# define SCALE_MINI_MAP 8
 
-#define FOV 60
-#define SIZE_WALL 100
-#define SCALE_MINI_MAP 8
+# define MLX_SYNC_IMAGE_WRITABLE		1
+# define MLX_SYNC_WIN_FLUSH_CMD		2
+# define MLX_SYNC_WIN_CMD_COMPLETED	3
 
-#define MLX_SYNC_IMAGE_WRITABLE		1
-#define MLX_SYNC_WIN_FLUSH_CMD		2
-#define MLX_SYNC_WIN_CMD_COMPLETED	3
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_Q 12
+# define KEY_W 13
+# define KEY_R 15
+# define KEY_M 46
+# define KEY_ESC 53
+# define KEY_ARR_R 124
+# define KEY_ARR_L 123
 
-#define KEY_A 0
-#define KEY_S 1
-#define KEY_D 2
-#define KEY_Q 12
-#define KEY_W 13
-#define KEY_R 15
-#define KEY_M 46
-#define KEY_ESC 53
-#define	KEY_ARR_R 124
-#define	KEY_ARR_L 123
+# define SKY_COLOR 0x2211FF
+# define FLOOR_COLOR 0x556B2F
 
-#define SKY_COLOR 0x2211FF
-#define FLOOR_COLOR 0x556B2F
-
-#define R_SPEED M_PI / 40
-#define	SPEED 5
+# define R_SPEED M_PI / 40
+# define SPEED 5
 
 typedef struct	s_utils 
 {
@@ -113,12 +124,12 @@ typedef struct s_scene
 
 typedef struct s_keys 
 {
-    int w;
-    int a;
-    int s;
-    int d;
+	int w;
+	int a;
+	int s;
+	int d;
 
-    int q;
+	int q;
 	int r;
 	int	arrow_r;
 	int	arrow_l;
@@ -270,4 +281,4 @@ void	s_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
 void	d_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
 void	w_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
 int 	render_game(t_general *general);
-#endif
+# endif
