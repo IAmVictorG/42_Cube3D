@@ -152,6 +152,11 @@ typedef struct s_general
 
 } t_general;
 
+/* main.c */
+void	free_general(t_general *general);
+
+
+
 /* parsing/args_manager.c */
 char	*get_filename(const char *file_path);
 char    *get_extension(char *filename);
