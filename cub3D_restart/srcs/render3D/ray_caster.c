@@ -237,6 +237,10 @@ void trace_ray(t_general *general)
 	float	fov_start;
 	float	fov_end;
 	double	angle;
+	t_vec	end_point;
+	t_tab	result;
+	int wall_height;
+	int	i;
 
 
 	position = general->scene->player.pos;
@@ -250,19 +254,21 @@ void trace_ray(t_general *general)
 	fov_end = get_fov_end(general);
 
 
-	for (int i = 0; i < WIDTH; i++)
+	i = 0;
+	while (i < WIDTH)
 	{
 		angle = fov_start + (fov_end - fov_start) * i / WIDTH;
-		double cos_angle = cos(angle);
-		double sin_angle = sin(angle);
-		t_vec end_point = {position.x + cos_angle * 200000, position.y + sin_angle * 200000, 0.0f}; // ?
 		
-		t_tab result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
+		end_point.x = position.x + cos(angle) * 200000;
+		end_point.y = position.y + sin(angle) * 200000;
+		end_point.z = 0.0f;
+
+
+		result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
 
 
 		ray = result.v2;
 		ray_bef = result.v1;
-		int wall_height;
 
 
 
@@ -271,9 +277,13 @@ void trace_ray(t_general *general)
  
 		wall_height = round((float)(WIDTH) / (float)dist);
 
-		display_sky(general->mlib, wall_height, imageincre, general->scene->sky_color);
-		display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
 
+
+		if (wall_height < WIDTH)
+		{
+			display_sky(general->mlib, wall_height, imageincre, general->scene->sky_color);
+			display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
+		}
 
 		if (text_in_S(ray, ray_bef))
 		{
@@ -292,7 +302,66 @@ void trace_ray(t_general *general)
 			draw_3d_line_west(general, result.v2, wall_height, imageincre);
 		}
 		imageincre++;
+
+		i++;
+		//printf("i = %d imageincre = %d\n", i , imageincre);
+
+
 	}
+
+
+
+
+	// for (int i = 0; i < WIDTH; i++)
+	// {
+	// 	angle = fov_start + (fov_end - fov_start) * i / WIDTH;
+		
+	// 	end_point.x = position.x + cos(angle) * 200000;
+	// 	end_point.y = position.y + sin(angle) * 200000;
+	// 	end_point.z = 0.0f;
+
+
+	// 	result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
+
+
+	// 	ray = result.v2;
+	// 	ray_bef = result.v1;
+
+
+
+	// 	dist = get_dist(position, result.v2, angle - player_angle);
+
+ 
+	// 	wall_height = round((float)(WIDTH) / (float)dist);
+
+
+
+	// 	if (wall_height < WIDTH)
+	// 	{
+	// 		display_sky(general->mlib, wall_height, imageincre, general->scene->sky_color);
+	// 		display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
+	// 	}
+
+	// 	if (text_in_S(ray, ray_bef))
+	// 	{
+	// 		draw_3d_line_south(general,  result.v2, wall_height, imageincre);
+	// 	}
+	// 	else if (text_in_N (ray, ray_bef))
+	// 	{
+	// 		draw_3d_line_north(general,  result.v2, wall_height, imageincre);
+	// 	}
+	// 	else if (pix_in_E(ray))
+	// 	{
+	// 		draw_3d_line_east(general, result.v2, wall_height, imageincre);
+	// 	}
+	// 	else if (pix_in_W(ray))
+	// 	{
+	// 		draw_3d_line_west(general, result.v2, wall_height, imageincre);
+	// 	}
+	// 	imageincre++;
+
+	// 	printf("i = %d imageincre = %d\n", i , imageincre);
+	// }
 }
 
 int render_game(t_general *general)

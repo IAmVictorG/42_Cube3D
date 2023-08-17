@@ -2,8 +2,9 @@ EA ./textures/Wall_East.png
 NO ./textures/Wall_North.png
 SO ./textures/Wall_South.png
 WE ./textures/Wall_West.png
-F 0,0,0
-C 255,255,255
+F 25,125,50
+C 50,125,255
+
 
 1111111111
 1000000001
