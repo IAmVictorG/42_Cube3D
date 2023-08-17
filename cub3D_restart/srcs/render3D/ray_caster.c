@@ -18,7 +18,7 @@ void	display_sky(t_mlib *mlib, int w_h, int imi, unsigned int ceil)
 	i = 0;
 	while (i < (HEIGHT - w_h) / 2)
 	{
-		if (imi < WIDTH && i < HEIGHT) 
+		if (imi < WIDTH && i < HEIGHT)
 		{
 			my_mlx_pixel_put(&mlib->data, imi, i, ceil);
 		}
@@ -26,52 +26,48 @@ void	display_sky(t_mlib *mlib, int w_h, int imi, unsigned int ceil)
 	}
 }
 
-void    display_floor(t_mlib *mlib, int w_h, int imi, unsigned int floor)
+void	display_floor(t_mlib *mlib, int w_h, int imi, unsigned int floor)
 {
-	int i;
-
+	int	i;
 
 	i = (HEIGHT + w_h) / 2;
 	while (i < HEIGHT)
 	{
-		if (imi < WIDTH && i < HEIGHT) 
+		if (imi < WIDTH && i < HEIGHT)
 		{
 			my_mlx_pixel_put(&mlib->data, imi, i, floor);
 		}
 		i++;
-	}
-	
+	}	
 }
 
-int	pix_in_s (t_coord ray)
+int	pix_in_s(t_coord ray)
 {
-	return ray.y % SIZE_WALL == 0;
+	return (ray.y % SIZE_WALL == 0);
 }
 
-int	pix_in_n (t_coord ray)
+int	pix_in_n(t_coord ray)
 {
-	return ray.y % SIZE_WALL == SIZE_WALL - 1;
+	return (ray.y % SIZE_WALL == SIZE_WALL - 1);
 }
 
-int	pix_in_e (t_coord ray)
+int	pix_in_e(t_coord ray)
 {
-	return ray.x % SIZE_WALL == 0;
+	return (ray.x % SIZE_WALL == 0);
 }
 
-int	pix_in_w (t_coord ray)
+int	pix_in_w(t_coord ray)
 {
-	return ray.x % SIZE_WALL == SIZE_WALL - 1;
+	return (ray.x % SIZE_WALL == SIZE_WALL - 1);
 }
-
 
 int	pix_in_n_e(t_coord ray, t_coord ray_bef)
 {
-
-	if (ray_bef.x == (int) (ray.x + 1) && ray_bef.y == (int) (ray.y + 1))
+	if (ray_bef.x == (int)(ray.x + 1) && ray_bef.y == (int)(ray.y + 1))
 	{
 		return (1);
 	}
-	else if (ray_bef.x == (int) ray.x && ray_bef.y == (int) (ray.y + 1))
+	else if (ray_bef.x == (int)ray.x && ray_bef.y == (int)(ray.y + 1))
 	{
 		return (1);
 	}
@@ -115,8 +111,7 @@ int	pix_in_n_w(t_coord ray, t_coord ray_bef)
 	return (0);
 }
 
-
-int	text_in_n (t_coord ray, t_coord ray_bef)
+int	text_in_n(t_coord ray, t_coord ray_bef)
 {
 	if (pix_in_n(ray) == 1 && pix_in_e(ray) == 1)
 		return (pix_in_n_e(ray, ray_bef));
@@ -124,7 +119,6 @@ int	text_in_n (t_coord ray, t_coord ray_bef)
 		return (pix_in_n_w(ray, ray_bef));
 	return (pix_in_n(ray));
 }
-
 
 int	pix_in_s_e(t_coord ray, t_coord ray_bef)
 {
@@ -176,34 +170,27 @@ int	pix_in_s_w(t_coord ray, t_coord ray_bef)
 	return (1);
 }
 
-int text_in_s (t_coord ray, t_coord ray_bef)
+int	text_in_s(t_coord ray, t_coord ray_bef)
 {
-
 	if (pix_in_s(ray) == 1 && pix_in_e(ray) == 1)
 		return (pix_in_s_e(ray, ray_bef));
-
 	if (pix_in_s(ray) == 1 && pix_in_w(ray) == 1)
 	{
 		return (pix_in_s_w(ray, ray_bef));
 	}
-
-
-	return ray.y % SIZE_WALL == 0;
+	return (ray.y % SIZE_WALL == 0);
 }
 
-float    atan2f_to_ortho(t_vec  direction)
+float	atan2f_to_ortho(t_vec direction)
 {
-	float angle_relative;
+	float	angle_relative;
 
 	angle_relative = atan2f(direction.y, direction.x);
-
 	if (angle_relative < 0)
 	{
 		return (angle_relative * (-1));
 	}
-
 	return (2 * M_PI - angle_relative);
-
 }
 
 float	get_fov_start(t_general *general)
@@ -213,7 +200,7 @@ float	get_fov_start(t_general *general)
 
 	direction = general->scene->player.dir;
 	player_angle = atan2f(direction.y, direction.x);
-	return player_angle - ((M_PI / 3) / 2);
+	return (player_angle - ((M_PI / 3) / 2));
 }
 
 float	get_fov_end(t_general *general)
@@ -223,12 +210,11 @@ float	get_fov_end(t_general *general)
 
 	direction = general->scene->player.dir;
 	player_angle = atan2f(direction.y, direction.x);
-	return player_angle + ((M_PI / 3) / 2);
+	return (player_angle + ((M_PI / 3) / 2));
 }
 
 void	color_img(t_general *general, int imi, int w_h, t_tab result)
 {
-
 	if (w_h < WIDTH)
 	{
 		display_sky(general->mlib, w_h, imi, general->scene->sky_color);
@@ -236,11 +222,11 @@ void	color_img(t_general *general, int imi, int w_h, t_tab result)
 	}
 	if (text_in_s(result.v2, result.v1))
 	{
-		draw_3d_line_south(general,  result.v2, w_h, imi);
+		draw_3d_line_south(general, result.v2, w_h, imi);
 	}
 	else if (text_in_n (result.v2, result.v1))
 	{
-		draw_3d_line_north(general,  result.v2, w_h, imi);
+		draw_3d_line_north(general, result.v2, w_h, imi);
 	}
 	else if (pix_in_e(result.v2))
 	{
@@ -252,71 +238,14 @@ void	color_img(t_general *general, int imi, int w_h, t_tab result)
 	}
 }
 
-t_coord findv1(t_vec p0, t_vec p1)
+void	trace_ray(t_general *general)
 {
-    t_vec  temp = p0;
-
-    p1.x = (p1.x);
-    p1.y = (p1.y);
-    float dx = p1.x - p0.x;
-    float dy = p1.y - p0.y;
-
-    // Normalize the direction vector
-    float n = sqrtf(dx * dx + dy * dy);
-    float sx = fabs(dx) / n;
-    float sy = fabs(dy) / n;
-
-    //printf("p0 (%f, %f) temp (%f, %f)\n", p0.x, p0.y, temp.x, temp.y);
-    int distance_y;
-    int distance_x;
-
-    if (dx >= 0)
-    {
-        distance_x = fabs(1.0f - (p0.x - (int) p0.x));
-    }
-    else
-    {
-        distance_x = fabs(p0.x - (int) p0.x);
-    }
-
-    if (dy >= 0)
-    {
-        distance_y = fabs(1.0f - (p0.y - (int) p0.y));
-    }
-    else
-    {
-        distance_y = fabs(p0.y - (int) p0.y);
-    }
-
-    if (distance_x / sx < distance_x / sy)
-    {
-        if (dx < 0.0)
-            temp.x--;
-        else
-            temp.x++;
-    }
-    else
-    {
-        if (dy < 0.0)
-            temp.y--;
-        else
-            temp.y++;
-    }
-
-
-
-   // printf("p0 (%f, %f) temp (%f, %f)\n", p0.x, p0.y, temp.x, temp.y);
-
-    return (t_coord) {(int)temp.x, (int)temp.y, 0};
-}
-
-void trace_ray(t_general *general) 
-{
-	int imageincre;
+	int		imageincre;
 	float	pl_st_end[3];
 	double	angle;
 	t_tab	result;
-	int wall_height;
+
+	int		wall_height;
 
 	imageincre = 0;
 	pl_st_end[0] = atan2f(general->scene->player.dir.y,
@@ -325,25 +254,24 @@ void trace_ray(t_general *general)
 	pl_st_end[2] = get_fov_end(general);
 	while (imageincre < WIDTH)
 	{
-		angle = pl_st_end[1] +
-			(pl_st_end[2] - pl_st_end[1]) * imageincre / WIDTH;
+		angle = pl_st_end[1]
+			+ (pl_st_end[2] - pl_st_end[1]) * imageincre / WIDTH;
 		result = find_point_on_screen(general,
 				general->scene->player.pos, angle);
-		// result.v1 = findv1(result.v3, (t_vec) {general->scene->player.pos.x, general->scene->player.pos.y, 0});
-		// printf("V1 %d, %d\n", result.v1.x, result.v1.y);
-		// printf("V2 %d, %d\n\n", result.v2.x, result.v2.y);
-		wall_height = round((float)(WIDTH) /
-				get_dist(general->scene->player.pos,
+
+		wall_height = round((float)(WIDTH)
+				/ get_dist(general->scene->player.pos,
 					result.v2, angle - pl_st_end[0]));
-		color_img(general , imageincre, wall_height, result);
+		color_img(general, imageincre, wall_height, result);
 		imageincre++;
 	}
 }
 
-int render_game(t_general *general)
+int	render_game(t_general *general)
 {
-	t_mlib  *mlib = general->mlib;
+	t_mlib	*mlib;
 
+	mlib = general->mlib;
 	mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
 	mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr,
 			&mlib->data.bits_per_pixel,
@@ -352,7 +280,7 @@ int render_game(t_general *general)
 	move(general);
 	trace_ray(general);
 	mlx_put_image_to_window(mlib->utils.mlx,
-			mlib->utils.win, mlib->data.img_ptr, 0, 0);
+		mlib->utils.win, mlib->data.img_ptr, 0, 0);
 	mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
 	return (0);
 }
