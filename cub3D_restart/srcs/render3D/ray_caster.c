@@ -237,7 +237,6 @@ void trace_ray(t_general *general)
 	float	fov_start;
 	float	fov_end;
 	double	angle;
-	t_vec	end_point;
 	t_tab	result;
 	int wall_height;
 	int	i;
@@ -258,19 +257,11 @@ void trace_ray(t_general *general)
 	while (i < WIDTH)
 	{
 		angle = fov_start + (fov_end - fov_start) * i / WIDTH;
-		
-		end_point.x = position.x + cos(angle) * 200000;
-		end_point.y = position.y + sin(angle) * 200000;
-		end_point.z = 0.0f;
 
-
-		result = find_point_on_screen(general, position, (t_coord){round(end_point.x), round(end_point.y), 0});
-
+		result = find_point_on_screen(general, position, angle);
 
 		ray = result.v2;
 		ray_bef = result.v1;
-
-
 
 		dist = get_dist(position, result.v2, angle - player_angle);
 
@@ -304,9 +295,6 @@ void trace_ray(t_general *general)
 		imageincre++;
 
 		i++;
-		//printf("i = %d imageincre = %d\n", i , imageincre);
-
-
 	}
 
 
