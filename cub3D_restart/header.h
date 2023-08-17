@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcoindre <fcoindre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:05:27 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 16:06:29 by vgiordan         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:31:03 by fcoindre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define HEIGHT 960
 
 # define FOV 60
-# define SIZE_WALL 100
+# define SIZE_WALL 64
 # define SCALE_MINI_MAP 8
 
 # define MLX_SYNC_IMAGE_WRITABLE		1

@@ -1,7 +1,7 @@
-EA ./textures/Wall_East.png			    
-NO ./textures/Wall_North.png
-SO ./textures/Wall_South.png
-WE ./textures/Wall_West.png
+EA ./textures/maison1.png			    
+NO ./textures/maison2.png
+SO ./textures/maison3.png
+WE ./textures/maison4.png
 C 139,140,198
 F 0,200,100
 

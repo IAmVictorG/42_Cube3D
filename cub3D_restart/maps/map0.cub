@@ -1,7 +1,7 @@
-EA ./textures/legende.png			    
-NO ./textures/Wall_North.png
-SO ./textures/Wall_South.png
-WE ./textures/Wall_West.png
+EA ./textures/Wall_East2.png			    
+NO ./textures/Wall_North2.png
+SO ./textures/Wall_South2.png
+WE ./textures/Wall_West2.png
 
 F 50,222,120
 
