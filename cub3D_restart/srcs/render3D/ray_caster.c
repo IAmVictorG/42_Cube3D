@@ -43,22 +43,22 @@ void    display_floor(t_mlib *mlib, int w_h, int imi, unsigned int floor)
 	
 }
 
-int	pix_in_S (t_coord ray)
+int	pix_in_s (t_coord ray)
 {
 	return ray.y % SIZE_WALL == 0;
 }
 
-int	pix_in_N (t_coord ray)
+int	pix_in_n (t_coord ray)
 {
 	return ray.y % SIZE_WALL == SIZE_WALL - 1;
 }
 
-int	pix_in_E (t_coord ray)
+int	pix_in_e (t_coord ray)
 {
 	return ray.x % SIZE_WALL == 0;
 }
 
-int	pix_in_W (t_coord ray)
+int	pix_in_w (t_coord ray)
 {
 	return ray.x % SIZE_WALL == SIZE_WALL - 1;
 }
@@ -116,13 +116,13 @@ int	pix_in_n_w(t_coord ray, t_coord ray_bef)
 }
 
 
-int	text_in_N (t_coord ray, t_coord ray_bef)
+int	text_in_n (t_coord ray, t_coord ray_bef)
 {
-	if (pix_in_N(ray) == 1 && pix_in_E(ray) == 1)
+	if (pix_in_n(ray) == 1 && pix_in_e(ray) == 1)
 		return (pix_in_n_e(ray, ray_bef));
-	if (pix_in_N(ray) == 1 && pix_in_W(ray) == 1)
+	if (pix_in_n(ray) == 1 && pix_in_w(ray) == 1)
 		return (pix_in_n_w(ray, ray_bef));
-	return (pix_in_N(ray));
+	return (pix_in_n(ray));
 }
 
 
@@ -176,13 +176,13 @@ int	pix_in_s_w(t_coord ray, t_coord ray_bef)
 	return (1);
 }
 
-int text_in_S (t_coord ray, t_coord ray_bef)
+int text_in_s (t_coord ray, t_coord ray_bef)
 {
 
-	if (pix_in_S(ray) == 1 && pix_in_E(ray) == 1)
+	if (pix_in_s(ray) == 1 && pix_in_e(ray) == 1)
 		return (pix_in_s_e(ray, ray_bef));
 
-	if (pix_in_S(ray) == 1 && pix_in_W(ray) == 1)
+	if (pix_in_s(ray) == 1 && pix_in_w(ray) == 1)
 	{
 		return (pix_in_s_w(ray, ray_bef));
 	}
@@ -234,19 +234,19 @@ void	color_img(t_general *general, int imi, int w_h, t_tab result)
 		display_sky(general->mlib, w_h, imi, general->scene->sky_color);
 		display_floor(general->mlib, w_h, imi, general->scene->floor_color);
 	}
-	if (text_in_S(result.v2, result.v1))
+	if (text_in_s(result.v2, result.v1))
 	{
 		draw_3d_line_south(general,  result.v2, w_h, imi);
 	}
-	else if (text_in_N (result.v2, result.v1))
+	else if (text_in_n (result.v2, result.v1))
 	{
 		draw_3d_line_north(general,  result.v2, w_h, imi);
 	}
-	else if (pix_in_E(result.v2))
+	else if (pix_in_e(result.v2))
 	{
 		draw_3d_line_east(general, result.v2, w_h, imi);
 	}
-	else if (pix_in_W(result.v2))
+	else if (pix_in_w(result.v2))
 	{
 		draw_3d_line_west(general, result.v2, w_h, imi);
 	}
