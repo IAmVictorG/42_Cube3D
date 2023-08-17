@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"__node_handle": "c",
-		"render3d.h": "c"
+		"render3d.h": "c",
+		"header.h": "c"
 	}
 }
