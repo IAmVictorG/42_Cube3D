@@ -37,7 +37,7 @@
 #define SKY_COLOR 0x2211FF
 #define FLOOR_COLOR 0x556B2F
 
-#define ROTATION_SPEED M_PI / 60
+#define R_SPEED M_PI / 60
 #define	SPEED 5
 
 typedef struct	s_utils 
@@ -86,7 +86,7 @@ typedef struct s_player
 {
 	t_coord	coord_ini;
 	t_coord	pos;
-	t_coord pos2D;
+	t_coord pos2d;
 
 
 	t_vec	dir;
@@ -179,7 +179,6 @@ int		check_coord_color (t_coord color);
 char	*get_floor_ceil (char **copy_of_file, char caract);
 int		parser(char **copy);
 
-
 /* parsing.c/initializer.c */
 t_mlib		*init_mlib(t_general *general);
 t_keys		*init_key(t_general *general);
@@ -209,14 +208,10 @@ int		check_bottom(char **matrix, int lin, int col, t_coord size_matrix);
 int		check_left(char **matrix, int lin, int col, t_coord size_matrix);
 int		onews (char c);
 int		wall_inspector(char **map_uncompleted, char **matrix, t_coord size_matrix);
-
-
 int		check_player(char **matrix, char **map_uncompleted);
-
 t_coord	get_player_position(t_coord coord_ini, int size_wall);
 int		init_map(t_map *map, char **copy, int end_parse_1);
 int		map_parser(char **copy, int end_parse_1);
-
 
 /* srcs/render2D/minimap.c */
 void    draw_grid(t_general *general);
@@ -226,38 +221,24 @@ void	draw_player(t_general *general);
 void	draw_arrow(t_general *general, t_coord start_arrow, t_vec dir);
 int		render_mini_map(t_general *general);
 
-
-
-
-
-
 /* parsing/wall_manager.c */
 char	*get_wall (char **copy_of_file, char first, char second);
 char **walls_manager (char **copy_of_file);
 int walls_manager_exists (char **walls);
 
-
 /* srcs/game_tools/utils.c */
-int hit_a_wall(t_general *general, int x, int y);
+int		hit_a_wall(t_general *general, int x, int y);
 int		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		load_texture_png(t_general *general);
-
 int		create_trgb(int t, int r, int g, int b);
 t_coord create_trgb_reverse(unsigned int color);
-
-
-
 int		size_tab(char **tab);
 void	ft_free_tabs(char **tab);
-
 int		convert_coord_for_2D_X(int x);
 int		convert_coord_for_2D_Y(int y);
 t_coord	convertcoord2d(t_coord pos);
-
 int move(t_general *general);
-
 void	init_window(t_general *general);
-
 
 /* display.c */
 void	print_tab(char **tab);
@@ -267,15 +248,16 @@ void    print_coord(t_coord coord);
 void    print_player(t_player player);
 void    print_sprite(t_sprite *sprite);
 void    print_sprites(t_sprites *sprites);
-
 void    print_scene (t_scene *scene);
-
 
 /* hook.c */
 int		key_pression(int keycode, t_general *general);
 int		key_release(int keycode, t_general *general);
 
-
-
+/* keys_moves.c */
+void	a_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
+void	s_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
+void	d_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
+void	w_key(t_general *general, t_coord *c_p, t_coord *n_p, t_vec *dir);
 int 	render_game(t_general *general);
 #endif

@@ -6,11 +6,19 @@
 /*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 10:39:52 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 11:03:10 by vgiordan         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:16:34 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render3D.h"
+
+static void	increment_or_decrement(int *n, int dn)
+{
+	if (dn > 0)
+		(*n)++;
+	else
+		(*n)--;
+}
 
 static t_tab	p_ew(t_general *general, t_coord c0, t_coord c1)
 {
@@ -25,20 +33,14 @@ static t_tab	p_ew(t_general *general, t_coord c0, t_coord c1)
 	{
 		if (err > 1.001f)
 		{
-			if (dy > 0)
-				c0.y++;
-			else
-				c0.y--;
+			increment_or_decrement(&c0.y, dy);
 			err -= 1.0f;
 			set_var(&r.v1, &r.v2, c0);
 			if (should_stop(general, c0) == 0)
 				break ;
 		}
 		err += fabs((float) dy / (float)dx);
-		if (dx > 0)
-			c0.x++;
-		else
-			c0.x--;
+		increment_or_decrement(&c0.x, dx);
 		set_var(&r.v1, &r.v2, c0);
 		if (should_stop(general, c0) == 0)
 			break ;
@@ -59,20 +61,14 @@ static t_tab	p_sn(t_general *general, t_coord c0, t_coord c1)
 	{
 		if (err > 1.001f)
 		{
-			if (dx > 0)
-				c0.x++;
-			else
-				c0.x--;
+			increment_or_decrement(&c0.x, dx);
 			err -= 1.0f;
 			set_var(&r.v1, &r.v2, c0);
 			if (should_stop(general, c0) == 0)
 				break ;
 		}
 		err += fabs((float) dx / (float) dy);
-		if (dy > 0)
-			c0.y++;
-		else
-			c0.y--;
+		increment_or_decrement(&c0.y, dy);
 		set_var(&r.v1, &r.v2, c0);
 		if (should_stop(general, c0) == 0)
 			break ;
