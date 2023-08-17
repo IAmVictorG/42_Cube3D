@@ -155,7 +155,12 @@ typedef struct s_general
 /* main.c */
 void	free_general(t_general *general);
 
-
+/* main_utils.c */
+t_general	*create_general(char **walls);
+int	feed_scene(t_general *general, char **copy, t_coord floor, t_coord ceil);
+void	chk_file(int argc, char *argv[]);
+void	get_ceil_floo(char **copy, char **walls, char **ceil_floo);
+t_coord	set_color_vec(char **copy, char **w, char **clrs, char *clr);
 
 /* parsing/args_manager.c */
 char	*get_filename(const char *file_path);
