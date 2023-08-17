@@ -4,38 +4,39 @@ float get_dist(t_coord pos, t_coord ray, float delta_angle)
 {
 	float	dist;
 
-	dist = sqrtf((ray.x - pos.x)*(ray.x - pos.x) + (ray.y - pos.y)*(ray.y - pos.y));
+	dist = sqrtf((ray.x - pos.x) * (ray.x - pos.x)
+			+ (ray.y - pos.y)*(ray.y - pos.y));
 	dist /= SIZE_WALL;
 	dist *= cos(delta_angle);
 	return (dist);
 }
 
-void	display_sky(t_mlib *mlib, int wall_height, int imageincre, unsigned int sky_color)
+void	display_sky(t_mlib *mlib, int w_h, int imi, unsigned int ceil)
 {
 	int i;
 
 	i = 0;
-	while (i < (HEIGHT - wall_height) / 2)
+	while (i < (HEIGHT - w_h) / 2)
 	{
-		if (imageincre < WIDTH && i < HEIGHT) 
+		if (imi < WIDTH && i < HEIGHT) 
 		{
-			my_mlx_pixel_put(&mlib->data, imageincre, i, sky_color);
+			my_mlx_pixel_put(&mlib->data, imi, i, ceil);
 		}
 		i++;
 	}
 }
 
-void    display_floor(t_mlib *mlib, int wall_height, int imageincre, unsigned int floor_color)
+void    display_floor(t_mlib *mlib, int w_h, int imi, unsigned int floor)
 {
 	int i;
 
 
-	i = (HEIGHT + wall_height) / 2;
+	i = (HEIGHT + w_h) / 2;
 	while (i < HEIGHT)
 	{
-		if (imageincre < WIDTH && i < HEIGHT) 
+		if (imi < WIDTH && i < HEIGHT) 
 		{
-			my_mlx_pixel_put(&mlib->data, imageincre, i, floor_color);
+			my_mlx_pixel_put(&mlib->data, imi, i, floor);
 		}
 		i++;
 	}
@@ -225,72 +226,60 @@ float	get_fov_end(t_general *general)
 	return player_angle + ((M_PI / 3) / 2);
 }
 
-void trace_ray(t_general *general) 
+void	color_img(t_general *general, int imi, int w_h, t_tab result)
 {
 
+	if (w_h < WIDTH)
+	{
+		display_sky(general->mlib, w_h, imi, general->scene->sky_color);
+		display_floor(general->mlib, w_h, imi, general->scene->floor_color);
+	}
+	if (text_in_S(result.v2, result.v1))
+	{
+		draw_3d_line_south(general,  result.v2, w_h, imi);
+	}
+	else if (text_in_N (result.v2, result.v1))
+	{
+		draw_3d_line_north(general,  result.v2, w_h, imi);
+	}
+	else if (pix_in_E(result.v2))
+	{
+		draw_3d_line_east(general, result.v2, w_h, imi);
+	}
+	else if (pix_in_W(result.v2))
+	{
+		draw_3d_line_west(general, result.v2, w_h, imi);
+	}
+
+}
+
+
+void trace_ray(t_general *general) 
+{
 	int imageincre;
-	float player_angle;
-	float	fov_start;
-	float	fov_end;
-	
+	float	pl_st_end[3];
 	double	angle;
-	t_vec	end_point;
 	t_tab	result;
 	int wall_height;
 
 
 	imageincre = 0;
-	player_angle = atan2f(general->scene->player.dir.y, general->scene->player.dir.x);
-
-
-	fov_start = get_fov_start(general);
-	fov_end = get_fov_end(general);
-
-
-
+	pl_st_end[0] = atan2f(general->scene->player.dir.y,
+			general->scene->player.dir.x);
+	pl_st_end[1] = get_fov_start(general);
+	pl_st_end[2] = get_fov_end(general);
 	while (imageincre < WIDTH)
 	{
-		angle = fov_start + (fov_end - fov_start) * imageincre / WIDTH;
-		
-		end_point.x = general->scene->player.pos.x + cos(angle) * 200000;
-		end_point.y = general->scene->player.pos.y + sin(angle) * 200000;
-		end_point.z = 0.0f;
-
-
-		result = find_point_on_screen(general, general->scene->player.pos, (t_coord){round(end_point.x), round(end_point.y), 0});
-
-
- 
-		wall_height = round((float)(WIDTH) / (float) get_dist(general->scene->player.pos, result.v2, angle - player_angle));
-
-
-
-		if (wall_height < WIDTH)
-		{
-			display_sky(general->mlib, wall_height, imageincre, general->scene->sky_color);
-			display_floor(general->mlib, wall_height, imageincre, general->scene->floor_color);
-		}
-
-		if (text_in_S(result.v2, result.v1))
-		{
-			draw_3d_line_south(general,  result.v2, wall_height, imageincre);
-		}
-		else if (text_in_N (result.v2, result.v1))
-		{
-			draw_3d_line_north(general,  result.v2, wall_height, imageincre);
-		}
-		else if (pix_in_E(result.v2))
-		{
-			draw_3d_line_east(general, result.v2, wall_height, imageincre);
-		}
-		else if (pix_in_W(result.v2))
-		{
-			draw_3d_line_west(general, result.v2, wall_height, imageincre);
-		}
+		angle = pl_st_end[1] +
+			(pl_st_end[2] - pl_st_end[1]) * imageincre / WIDTH;
+		result = find_point_on_screen(general,
+				general->scene->player.pos, angle);
+		wall_height = round((float)(WIDTH) /
+				get_dist(general->scene->player.pos,
+					result.v2, angle - pl_st_end[0]));
+		color_img(general , imageincre, wall_height, result);
 		imageincre++;
-
 	}
-
 }
 
 int render_game(t_general *general)
@@ -299,13 +288,17 @@ int render_game(t_general *general)
 
 
 	mlib->data.img_ptr = mlx_new_image(mlib->utils.mlx, WIDTH, HEIGHT);
-	mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr, &mlib->data.bits_per_pixel, &mlib->data.line_length, &mlib->data.endian);
+	mlib->data.addr = mlx_get_data_addr(mlib->data.img_ptr,
+			&mlib->data.bits_per_pixel,
+			&mlib->data.line_length,
+			&mlib->data.endian);
 
 
 	move(general);
 	trace_ray(general);
 
-	mlx_put_image_to_window(mlib->utils.mlx, mlib->utils.win, mlib->data.img_ptr, 0, 0);
+	mlx_put_image_to_window(mlib->utils.mlx,
+			mlib->utils.win, mlib->data.img_ptr, 0, 0);
 	mlx_destroy_image(mlib->utils.mlx, mlib->data.img_ptr);
 	return (0);
 }
