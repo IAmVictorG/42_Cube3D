@@ -198,6 +198,11 @@ static int	parse_line(char *line)
 	{
 		return (1);
 	}
+	else if (line[0] != 'F' && line[0] != 'C' && check_if_is_wall(line) == 0 && string_is_only_space(line) == 0)
+	{
+		//printf("BON LA JAI TROUVE UN TRUC [%s]\n", line);
+		return (-1);
+	}
 	else if (check_for_1_or_0(line))
 	{
 		return (-1);

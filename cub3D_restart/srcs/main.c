@@ -42,16 +42,13 @@ int	feed_scene(t_general *general, char **copy, t_coord floor, t_coord ceil)
 	general->scene->player.pos2D = convertcoord2d(general->scene->player.pos);
 	general->scene->player.dir = get_player_orient(general->scene->map.matrix);
 	general->scene->player.speed = 0.1f * SIZE_WALL;
-	general->scene->mini_map = 1;
+	general->scene->mini_map = 0;
 	if (load_texture_png(general) == 0)
 	{
 		printf("Error : Imposible to load textures\n");
 		return (0);
 	}
-	print_scene(general->scene);
-	print_sprites(general->sprites);
 	return (1);
-
 }
 
 void	free_general(t_general *general)
@@ -165,9 +162,8 @@ int	main(int argc, char *argv[])
 	general = create_general(walls);
 	if (general == NULL)
 		return (0);
-	if (feed_scene(general, copy_of_file, ceil_floov[1], ceil_floov[0]) == 0)
-		return (0);
-	init_window(general);
+	if (feed_scene(general, copy_of_file, ceil_floov[1], ceil_floov[0]) == 1)
+		init_window(general);
 	free_main(copy_of_file, walls, ceil_floo[1], ceil_floo[0]);
 	free_general(general);
 	return (0);

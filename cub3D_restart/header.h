@@ -86,7 +86,7 @@ typedef struct s_player
 {
 	t_coord	coord_ini;
 	t_coord	pos;
-	t_coord pos2d;
+	t_coord pos2D;
 
 
 	t_vec	dir;
