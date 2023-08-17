@@ -6,7 +6,7 @@
 /*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 11:40:26 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 15:42:09 by vgiordan         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:32:11 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	s_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y - g->scene->player.speed * (*dir).y);
 		if (position_is_valid(g, (*n_p).x, (*n_p).y) == 1)
 		{
-			g->scene->player.pos2D = convertcoord2d(*n_p);
+			g->scene->player.pos2d = convertcoord2d(*n_p);
 			g->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -53,12 +53,12 @@ void	s_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		{
 			if (position_is_valid(g, g->scene->player.pos.x, (*n_p).y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.y = (*n_p).y;
 			}
 			else if (position_is_valid(g, (*n_p).x, g->scene->player.pos.y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.x = (*n_p).x;
 			}
 		}
@@ -73,7 +73,7 @@ void	w_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y + g->scene->player.speed * (*dir).y);
 		if (position_is_valid(g, (*n_p).x, (*n_p).y) == 1)
 		{
-			g->scene->player.pos2D = convertcoord2d(*n_p);
+			g->scene->player.pos2d = convertcoord2d(*n_p);
 			g->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -81,12 +81,12 @@ void	w_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		{
 			if (position_is_valid(g, g->scene->player.pos.x, (*n_p).y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.y = (*n_p).y;
 			}
 			else if (position_is_valid(g, (*n_p).x, g->scene->player.pos.y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.x = (*n_p).x;
 			}
 		}
@@ -101,7 +101,7 @@ void	d_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y + g->scene->player.speed * (*dir).x);
 		if (position_is_valid(g, (*n_p).x, (*n_p).y) == 1)
 		{
-			g->scene->player.pos2D = convertcoord2d(*n_p);
+			g->scene->player.pos2d = convertcoord2d(*n_p);
 			g->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -109,12 +109,12 @@ void	d_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		{
 			if (position_is_valid(g, g->scene->player.pos.x, (*n_p).y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.y = (*n_p).y;
 			}
 			else if (position_is_valid(g, (*n_p).x, g->scene->player.pos.y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.x = (*n_p).x;
 			}
 		}
@@ -129,7 +129,7 @@ void	a_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		(*n_p).y = round((*c_p).y - g->scene->player.speed * (*dir).x);
 		if (position_is_valid(g, (*n_p).x, (*n_p).y) == 1)
 		{
-			g->scene->player.pos2D = convertcoord2d(*n_p);
+			g->scene->player.pos2d = convertcoord2d(*n_p);
 			g->scene->player.pos = *n_p;
 			*c_p = *n_p;
 		}
@@ -137,12 +137,12 @@ void	a_key(t_general *g, t_coord *c_p, t_coord *n_p, t_vec *dir)
 		{
 			if (position_is_valid(g, g->scene->player.pos.x, (*n_p).y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.y = (*n_p).y;
 			}
 			else if (position_is_valid(g, (*n_p).x, g->scene->player.pos.y))
 			{
-				g->scene->player.pos2D = convertcoord2d(*n_p);
+				g->scene->player.pos2d = convertcoord2d(*n_p);
 				g->scene->player.pos.x = (*n_p).x;
 			}
 		}

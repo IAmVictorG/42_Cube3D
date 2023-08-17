@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcoindre <fcoindre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:52:30 by fcoindre          #+#    #+#             */
-/*   Updated: 2023/02/07 15:57:29 by fcoindre         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:23:08 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,3 @@ void	ft_print_hex(va_list args, char *base, int *ptr_c_count)
 		*ptr_c_count += 1;
 	}
 }
-
-
-

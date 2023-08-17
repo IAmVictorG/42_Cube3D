@@ -33,8 +33,6 @@ $(NAME): $(OBJS)
 	cp includes/mlx/libmlx.dylib .
 	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -L includes/mlx -lmlx $(MAC_FLAGS) -o $(NAME)
 
-#-fsanitize=address -O2
-
 $(LEAKS): $(OBJS)
 	$(CC)   $(CFLAGS) $(OBJS) $(LIBS) -lz -L includes/mlx -lmlx $(MAC_FLAGS) -o $(LEAKS)
 

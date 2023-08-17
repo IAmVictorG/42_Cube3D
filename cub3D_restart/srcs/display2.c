@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcoindre <fcoindre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 15:02:20 by fcoindre          #+#    #+#             */
-/*   Updated: 2023/08/17 15:04:20 by fcoindre         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:13:30 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	print_player(t_player player)
 	print_coord(player.coord_ini);
 	printf("pos : ");
 	print_coord(player.pos);
-	printf("pos2D : \n");
-	print_coord(player.pos2D);
+	printf("pos2d : \n");
+	print_coord(player.pos2d);
 	printf("dir : ");
 	print_vec(player.dir);
 	printf("speed = %f\n", player.speed);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcoindre <fcoindre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgiordan <vgiordan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 11:50:44 by vgiordan          #+#    #+#             */
-/*   Updated: 2023/08/17 13:21:26 by fcoindre         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:13:30 by vgiordan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	draw_player(t_general *general)
 	int		i;
 
 	mlib = general->mlib;
-	x = general->scene->player.pos2D.x;
-	y = general->scene->player.pos2D.y;
+	x = general->scene->player.pos2d.x;
+	y = general->scene->player.pos2d.y;
 	size = 3;
 	i = -size;
 	while (i <= size)
