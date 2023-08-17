@@ -1,11 +1,11 @@
 #include "render3D.h"
 
-float get_dist(t_coord pos, t_coord ray, float delta_angle)
+float	get_dist(t_coord pos, t_coord ray, float delta_angle)
 {
 	float	dist;
 
 	dist = sqrtf((ray.x - pos.x) * (ray.x - pos.x)
-			+ (ray.y - pos.y)*(ray.y - pos.y));
+			+ (ray.y - pos.y) * (ray.y - pos.y));
 	dist /= SIZE_WALL;
 	dist *= cos(delta_angle);
 	return (dist);
@@ -13,7 +13,7 @@ float get_dist(t_coord pos, t_coord ray, float delta_angle)
 
 void	display_sky(t_mlib *mlib, int w_h, int imi, unsigned int ceil)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (HEIGHT - w_h) / 2)
