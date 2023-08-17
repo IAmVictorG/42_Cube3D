@@ -228,6 +228,13 @@ int		render_mini_map(t_general *general);
 char	*get_wall (char **copy_of_file, char first, char second);
 char **walls_manager (char **copy_of_file);
 int walls_manager_exists (char **walls);
+char	*norm_get_no(char **walls, char **copy_of_file);
+char	*norm_get_so(char **walls, char **copy_of_file);
+char	*norm_get_ea(char **walls, char **copy_of_file);
+char	*norm_get_we(char **walls, char **copy_of_file);
+
+
+
 
 /* srcs/game_tools/utils.c */
 int		hit_a_wall(t_general *general, int x, int y);
